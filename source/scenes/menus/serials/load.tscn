@@ -1,0 +1,120 @@
+[gd_scene load_steps=2 format=3 uid="uid://d2g81cbh75e1i"]
+
+[ext_resource type="Script" path="res://source/scenes/menus/serials/load.gd" id="1_uvi2i"]
+
+[node name="Load" type="Control" node_paths=PackedStringArray("save_scroller", "confirm_dialog", "save_name_dialog")]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_uvi2i")
+save_scroller = NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer")
+confirm_dialog = NodePath("ConfirmationDialog")
+save_name_dialog = NodePath("unused")
+
+[node name="Panel" type="Panel" parent="."]
+offset_left = -250.0
+offset_top = -300.0
+offset_right = 250.0
+offset_bottom = 300.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+offset_right = 500.0
+offset_bottom = 600.0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/VBoxContainer"]
+offset_right = 500.0
+offset_bottom = 536.0
+size_flags_vertical = 3
+follow_focus = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/VBoxContainer/ScrollContainer"]
+offset_right = 500.0
+offset_bottom = 536.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
+custom_minimum_size = Vector2(300, 60)
+offset_top = 540.0
+offset_right = 500.0
+offset_bottom = 600.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+offset_right = 164.0
+offset_bottom = 60.0
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 10
+
+[node name="CancelButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer/MarginContainer"]
+offset_left = 20.0
+offset_top = 10.0
+offset_right = 144.0
+offset_bottom = 50.0
+text = "Cancel"
+
+[node name="MarginContainer3" type="MarginContainer" parent="Panel/VBoxContainer/HBoxContainer"]
+offset_left = 168.0
+offset_right = 332.0
+offset_bottom = 60.0
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 10
+
+[node name="DeleteButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer/MarginContainer3"]
+offset_left = 20.0
+offset_top = 10.0
+offset_right = 144.0
+offset_bottom = 50.0
+disabled = true
+text = "Delete"
+
+[node name="MarginContainer2" type="MarginContainer" parent="Panel/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+offset_left = 336.0
+offset_right = 500.0
+offset_bottom = 60.0
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 10
+
+[node name="LoadButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer/MarginContainer2"]
+offset_left = 20.0
+offset_top = 10.0
+offset_right = 144.0
+offset_bottom = 50.0
+disabled = true
+text = "Load"
+
+[node name="ConfirmationDialog" type="ConfirmationDialog" parent="."]
+title = "Confirm"
+ok_button_text = "Cancel"
+dialog_text = "Delete save?"
+cancel_button_text = "Delete"
+
+[node name="unused" type="ConfirmationDialog" parent="."]
+title = "Name save game"
+exclusive = false
+popup_window = true
+ok_button_text = "Save"
+dialog_text = "Enter name:"
+
+[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/MarginContainer/CancelButton" to="." method="_on_cancel_button_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/MarginContainer3/DeleteButton" to="." method="_on_delete_button_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/MarginContainer2/LoadButton" to="." method="_on_load_button_pressed"]

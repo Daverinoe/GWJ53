@@ -1,0 +1,96 @@
+[gd_scene load_steps=2 format=3 uid="uid://cuuj7ffahrt7l"]
+
+[ext_resource type="Script" path="res://source/scenes/menus/serials/save.gd" id="1_3ryi2"]
+
+[node name="Save" type="Control" node_paths=PackedStringArray("save_scroller", "confirm_dialog", "save_name_dialog")]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_3ryi2")
+save_scroller = NodePath("Panel/VBoxContainer/ScrollContainer/VBoxContainer")
+confirm_dialog = NodePath("ConfirmationDialog")
+save_name_dialog = NodePath("SaveNameDialog")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 0
+offset_left = -250.0
+offset_top = -300.0
+offset_right = 250.0
+offset_bottom = 300.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 0
+offset_right = 500.0
+offset_bottom = 600.0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+follow_focus = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
+custom_minimum_size = Vector2(300, 60)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 10
+
+[node name="CancelButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer/MarginContainer"]
+layout_mode = 2
+text = "Cancel"
+
+[node name="MarginContainer2" type="MarginContainer" parent="Panel/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 10
+
+[node name="SaveButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer/MarginContainer2"]
+layout_mode = 2
+text = "Save"
+
+[node name="ConfirmationDialog" type="ConfirmationDialog" parent="."]
+title = "Confirm"
+size = Vector2i(200, 101)
+exclusive = false
+popup_window = true
+extend_to_title = true
+ok_button_text = "Cancel"
+dialog_text = "Overwrite save?"
+cancel_button_text = "Save"
+
+[node name="SaveNameDialog" type="ConfirmationDialog" parent="."]
+title = "Name save game"
+size = Vector2i(500, 200)
+exclusive = false
+popup_window = true
+min_size = Vector2i(500, 200)
+ok_button_text = "Cancel"
+dialog_text = "Enter name:"
+cancel_button_text = "Save"
+
+[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/MarginContainer/CancelButton" to="." method="_on_cancel_button_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/MarginContainer2/SaveButton" to="." method="_on_save_button_pressed"]

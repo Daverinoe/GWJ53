@@ -1,0 +1,101 @@
+[gd_scene load_steps=2 format=3 uid="uid://b8pmc1h8p56wk"]
+
+[ext_resource type="Script" path="res://source/scenes/menus/serials/save_game.gd" id="1_msq0o"]
+
+[node name="SaveGame" type="Control"]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 4
+focus_mode = 2
+script = ExtResource("1_msq0o")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Panel" type="Panel" parent="MarginContainer"]
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 1147.0
+offset_bottom = 643.0
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Panel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/Panel/MarginContainer"]
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 1137.0
+offset_bottom = 633.0
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Panel/MarginContainer/HBoxContainer"]
+offset_right = 564.0
+offset_bottom = 628.0
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="SaveScreenshot" type="TextureRect" parent="MarginContainer/Panel/MarginContainer/HBoxContainer/MarginContainer"]
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 559.0
+offset_bottom = 623.0
+mouse_filter = 2
+ignore_texture_size = true
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/Panel/MarginContainer/HBoxContainer"]
+offset_left = 568.0
+offset_right = 1132.0
+offset_bottom = 628.0
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="SaveDetails" type="RichTextLabel" parent="MarginContainer/Panel/MarginContainer/HBoxContainer/MarginContainer2"]
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 559.0
+offset_bottom = 623.0
+size_flags_horizontal = 3
+mouse_filter = 2
+bbcode_enabled = true
+text = "SAVE NAME
+Date:
+Playtime:
+Area:"
+
+[connection signal="focus_entered" from="." to="." method="_on_focus_entered"]
+[connection signal="focus_exited" from="." to="." method="_on_focus_exited"]
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

@@ -1,0 +1,11 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://pco4t4ktxbc7"]
+
+[ext_resource type="FontFile" path="res://assets/fonts/settings.tres" id="1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n607h"]
+bg_color = Color(0.164706, 0.164706, 0.164706, 1)
+shadow_color = Color(0, 0, 0, 1)
+
+[resource]
+default_font = ExtResource("1")
+Panel/styles/panel = SubResource("StyleBoxFlat_n607h")
