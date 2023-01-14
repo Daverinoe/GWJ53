@@ -38,6 +38,11 @@ _global_script_classes=[{
 "class": &"Setting",
 "language": &"GDScript",
 "path": "res://source/scenes/menus/settings/setting.gd"
+}, {
+"base": "TileMap",
+"class": &"TileSystem",
+"language": &"GDScript",
+"path": "res://source/scenes/main/tile_system.gd"
 }]
 _global_script_class_icons={
 "ChangeButton": "",
@@ -45,7 +50,8 @@ _global_script_class_icons={
 "IOHelper": "",
 "MainScene": "",
 "SaveMenu": "",
-"Setting": ""
+"Setting": "",
+"TileSystem": ""
 }
 
 [application]
