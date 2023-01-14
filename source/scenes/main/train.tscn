@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://dv58t2t23jtfv"]
+
+[node name="train" type="Node2D"]
+
+[node name="train_sprite" type="Sprite2D" parent="."]
+
+[node name="path_follow" type="PathFollow2D" parent="."]

@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=3 uid="uid://dsc8hfaeygnib"]
+
+[ext_resource type="Texture2D" uid="uid://dd52j1hsde4l3" path="res://assets/tile_system/tiles.png" id="1_gmem8"]
+[ext_resource type="Script" path="res://source/scenes/main/tile_system.gd" id="2_65ace"]
+[ext_resource type="Texture2D" uid="uid://3dr5eskrq5uu" path="res://assets/tile_system/tile_selector.png" id="3_oiree"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dh25i"]
+texture = ExtResource("1_gmem8")
+texture_region_size = Vector2i(128, 96)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_jqq64"]
+tile_shape = 3
+tile_offset_axis = 1
+tile_size = Vector2i(96, 64)
+sources/0 = SubResource("TileSetAtlasSource_dh25i")
+
+[node name="tile_system" type="TileMap"]
+tile_set = SubResource("TileSet_jqq64")
+format = 2
+layer_0/tile_data = PackedInt32Array(196611, 196608, 0, 131075, 196608, 0, 327682, 196608, 0, 196609, 196608, 0, 65539, 196608, 0, 131076, 65536, 0, 262148, 65536, 0, 196610, 65536, 0, 131074, 131072, 0, 196612, 131072, 0, 262147, 131072, 0, 262146, 131072, 0, 262145, 0, 0, 327683, 0, 0, 327684, 0, 0, 131073, 0, 0, 65540, 0, 0, 65538, 0, 0)
+script = ExtResource("2_65ace")
+
+[node name="active_tile_marker" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+modulate = Color(1, 0.768627, 0, 1)
+texture = ExtResource("3_oiree")
+
+[node name="tile_select_marker" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+modulate = Color(0.529412, 0.878431, 1, 1)
+y_sort_enabled = true
+texture = ExtResource("3_oiree")
