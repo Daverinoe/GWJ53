@@ -1,43 +1,18 @@
-[gd_scene load_steps=7 format=3 uid="uid://cy0kn0ofyahqw"]
+[gd_scene load_steps=5 format=3 uid="uid://cy0kn0ofyahqw"]
 
 [ext_resource type="Script" path="res://source/scenes/main/world.gd" id="1_d1use"]
-[ext_resource type="Texture2D" uid="uid://dd52j1hsde4l3" path="res://assets/tile_system/tiles.png" id="2_7acq4"]
-[ext_resource type="Script" path="res://source/scenes/main/tile_system.gd" id="3_crav2"]
-[ext_resource type="Texture2D" uid="uid://3dr5eskrq5uu" path="res://assets/tile_system/tile_selector.png" id="3_yftot"]
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dh25i"]
-texture = ExtResource("2_7acq4")
-texture_region_size = Vector2i(64, 48)
-0:0/0 = 0
-1:0/0 = 0
-2:0/0 = 0
-3:0/0 = 0
-
-[sub_resource type="TileSet" id="TileSet_jqq64"]
-tile_shape = 3
-tile_offset_axis = 1
-tile_size = Vector2i(48, 32)
-sources/0 = SubResource("TileSetAtlasSource_dh25i")
+[ext_resource type="PackedScene" uid="uid://dsc8hfaeygnib" path="res://source/scenes/main/tile_system.tscn" id="2_kwtms"]
+[ext_resource type="PackedScene" uid="uid://dv58t2t23jtfv" path="res://source/scenes/main/train.tscn" id="4_t50p6"]
+[ext_resource type="Script" path="res://source/scenes/main/train_path.gd" id="5_varhf"]
 
 [node name="world" type="Node2D"]
 script = ExtResource("1_d1use")
 
-[node name="tile_system" type="TileMap" parent="."]
+[node name="tile_system" parent="." instance=ExtResource("2_kwtms")]
 unique_name_in_owner = true
-tile_set = SubResource("TileSet_jqq64")
-format = 2
-layer_0/tile_data = PackedInt32Array(196611, 196608, 0, 131075, 196608, 0, 327682, 196608, 0, 196609, 196608, 0, 65539, 196608, 0, 131076, 65536, 0, 262148, 65536, 0, 196610, 65536, 0, 131074, 131072, 0, 196612, 131072, 0, 262147, 131072, 0, 262146, 131072, 0, 262145, 0, 0, 327683, 0, 0, 327684, 0, 0, 131073, 0, 0, 65540, 0, 0, 65538, 0, 0)
-script = ExtResource("3_crav2")
-
-[node name="active_tile_marker" type="Sprite2D" parent="tile_system"]
-unique_name_in_owner = true
-modulate = Color(1, 0.768627, 0, 1)
-texture = ExtResource("3_yftot")
-
-[node name="tile_select_marker" type="Sprite2D" parent="tile_system"]
-unique_name_in_owner = true
-modulate = Color(0.529412, 0.878431, 1, 1)
-y_sort_enabled = true
-texture = ExtResource("3_yftot")
 
 [node name="train_path" type="Node2D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("5_varhf")
+
+[node name="train" parent="." instance=ExtResource("4_t50p6")]

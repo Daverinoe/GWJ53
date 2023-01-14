@@ -43,6 +43,16 @@ _global_script_classes=[{
 "class": &"TileSystem",
 "language": &"GDScript",
 "path": "res://source/scenes/main/tile_system.gd"
+}, {
+"base": "Node2D",
+"class": &"TrainPath",
+"language": &"GDScript",
+"path": "res://source/scenes/main/train_path.gd"
+}, {
+"base": "Node2D",
+"class": &"World",
+"language": &"GDScript",
+"path": "res://source/scenes/main/world.gd"
 }]
 _global_script_class_icons={
 "ChangeButton": "",
@@ -51,7 +61,9 @@ _global_script_class_icons={
 "MainScene": "",
 "SaveMenu": "",
 "Setting": "",
-"TileSystem": ""
+"TileSystem": "",
+"TrainPath": "",
+"World": ""
 }
 
 [application]

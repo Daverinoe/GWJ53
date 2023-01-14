@@ -1,11 +1,13 @@
-extends Node2D
+class_name World extends Node2D
+
+@onready var tile_system: TileSystem = get_node("%tile_system")
+@onready var train_path: TrainPath = get_node("%train_path")
 
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	print(tile_system)
+	train_path.initialise_path_logic(tile_system)
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
