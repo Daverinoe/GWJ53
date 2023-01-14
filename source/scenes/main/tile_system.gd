@@ -1,6 +1,5 @@
-extends Node2D
+class_name TileSystem extends TileMap
 
-@onready var world_tiles: TileMap = get_node("%world_tiles")
 @onready var active_tile_marker: Sprite2D = get_node("%active_tile_marker")
 @onready var tile_select_marker: Sprite2D = get_node("%tile_select_marker")
 
@@ -19,8 +18,8 @@ func _ready():
 func _process(delta):
 	# Find active tile (i.e. cursor)
 	curr_mouse_position = get_global_mouse_position()
-	active_tile_map_coord = world_tiles.local_to_map(curr_mouse_position)
-	active_tile_world_coord = world_tiles.map_to_local(active_tile_map_coord)  # This will make it a grid
+	active_tile_map_coord = local_to_map(curr_mouse_position)
+	active_tile_world_coord = map_to_local(active_tile_map_coord)  # This will make it a grid
 	active_tile_marker.global_position = active_tile_world_coord
 
 
@@ -29,7 +28,7 @@ func _unhandled_input(event) -> void:
 		# Update tile if appropriate
 		if selected_tile_world_coord == Vector2i(-999, -999):
 			selected_tile_world_coord = active_tile_world_coord
-			selected_tile_map_coord = world_tiles.local_to_map(selected_tile_world_coord)
+			selected_tile_map_coord = local_to_map(selected_tile_world_coord)
 			tile_select_marker.global_position = selected_tile_world_coord
 			tile_select_marker.show()
 		else:
@@ -44,11 +43,12 @@ func _unhandled_input(event) -> void:
 
 
 func _switch_tiles(map_tile_coord_1: Vector2i, map_tile_coord_2: Vector2i) -> void:
-	var tile_source_1: Vector2i = world_tiles.get_cell_atlas_coords(0, map_tile_coord_1)
-	var tile_source_2: Vector2i = world_tiles.get_cell_atlas_coords(0, map_tile_coord_2)
+	var tile_source_1: Vector2i = get_cell_atlas_coords(0, map_tile_coord_1)
+	var tile_source_2: Vector2i = get_cell_atlas_coords(0, map_tile_coord_2)
 	
-	world_tiles.set_cell(0, map_tile_coord_1, 0, tile_source_2)
-	world_tiles.set_cell(0, map_tile_coord_2, 0, tile_source_1)
+	set_cell(0, map_tile_coord_1, 0, tile_source_2)
+	set_cell(0, map_tile_coord_2, 0, tile_source_1)
 	
 	
-
+func generate_path_from(world_coord: Vector2i) -> void:
+	pass
