@@ -28,19 +28,19 @@ jobs:
           fetch-depth: 0
       - name: Download + Authorize Godot
         run: |
-          curl -L -o godot.zip https://downloads.tuxfamily.org/godotengine/${GODOT_VERSION}/${SUB_VERSION}/Godot_v${GODOT_VERSION}-${SUB_VERSION}_linux.x86_64.zip
+          curl -L -o godot.zip https://downloads.tuxfamily.org/godotengine/4.0/beta12/Godot_v4.0-beta12_linux.x86_64.zip
           unzip godot.zip
           mv Godot_v3.2.3-stable_linux_headless.64 godot
           ls
           chmod +x godot
       - name: Download Export Templates
         run: |
-          curl -L -o export_templates.zip https://downloads.tuxfamily.org/godotengine/$GODOT_VERSION/$SUB_VERSION/Godot_v$GODOT_VERSION-$SUB_VERSION_export_templates.tpz
+          curl -L -o export_templates.zip https://downloads.tuxfamily.org/godotengine/4.0/beta12/Godot_v4.0-beta12_export_templates.tpz
           unzip export_templates.zip
       - name: Install Export Templates
         run: |
-          mkdir -p ~/.local/share/godot/templates/${GODOT_VERSION}.${SUB_VERSION}
-          mv ./templates/* ~/.local/share/godot/templates/${GODOT_VERSION}.${SUB_VERSION}
+          mkdir -p ~/.local/share/godot/templates/4.0.beta12
+          mv ./templates/* ~/.local/share/godot/templates/4.0.beta12
       - name: Make Exports Folder
         run: |
           mkdir exports
