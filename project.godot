@@ -77,7 +77,6 @@ SerialisationManager="*res://source/helpers/autoloads/serialisation_manager.gd"
 
 [display]
 
-window/size/initial_screen=1
 window/stretch/mode="viewport"
 window/size/height=768
 
