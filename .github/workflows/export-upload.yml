@@ -28,7 +28,7 @@ jobs:
           fetch-depth: 0
       - name: Download + Authorize Godot
         run: |
-          curl -L -o godot.zip https://downloads.tuxfamily.org/godotengine/$GODOT_VERSION/$SUB_VERSION/Godot_v$GODOT_VERSION-$SUB_VERSION_linux_headless.64.zip
+          curl -L -o godot.zip https://downloads.tuxfamily.org/godotengine/$GODOT_VERSION/$SUB_VERSION/Godot_v$GODOT_VERSION-$SUB_VERSION_linux.64.zip
           unzip godot.zip
           mv Godot_v3.2.3-stable_linux_headless.64 godot
           ls
@@ -47,19 +47,19 @@ jobs:
       - name: Export Windows Port
         run: |
           mkdir ./exports/windows
-          ./godot --path ./project.godot --export "Windows" ./exports/windows/$PROJECT_NAME.exe
+          ./godot --headless --path ./project.godot --export "Windows" ./exports/windows/$PROJECT_NAME.exe
       - name: Export Mac Port
         run: |
           mkdir ./exports/mac
-          ./godot --path ./project.godot --export "Mac" ./exports/mac/$PROJECT_NAME.zip
+          ./godot --headless --path ./project.godot --export "Mac" ./exports/mac/$PROJECT_NAME.zip
       - name: Export Linux Port
         run: |
           mkdir ./exports/linux
-          ./godot --path ./project.godot --export "Linux" ./exports/linux/$PROJECT_NAME.x86_64
+          ./godot --headless --path ./project.godot --export "Linux" ./exports/linux/$PROJECT_NAME.x86_64
       - name: Export Web Build
         run: |
           mkdir ./exports/web
-          ./godot --path ./project.godot --export "Web" ./exports/web/index.html
+          ./godot --headless --path ./project.godot --export "Web" ./exports/web/index.html
       - name: Add Version Number to Exports
         run: |
           cp ./VERSION ./exports/VERSION
