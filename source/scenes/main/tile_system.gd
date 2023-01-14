@@ -46,8 +46,6 @@ func _unhandled_input(event) -> void:
 func _switch_tiles(map_tile_coord_1: Vector2i, map_tile_coord_2: Vector2i) -> void:
 	var tile_source_1: Vector2i = world_tiles.get_cell_atlas_coords(0, map_tile_coord_1)
 	var tile_source_2: Vector2i = world_tiles.get_cell_atlas_coords(0, map_tile_coord_2)
-
-	print("SOURCE 1: " + str(tile_source_1) + " SOURCE 2: " + str(tile_source_2))
 	
 	world_tiles.set_cell(0, map_tile_coord_1, 0, tile_source_2)
 	world_tiles.set_cell(0, map_tile_coord_2, 0, tile_source_1)

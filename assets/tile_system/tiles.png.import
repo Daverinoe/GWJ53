@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://3dr5eskrq5uu"
-path="res://.godot/imported/tile_selector.png-7f4876aedfa74ce9ecb87c64fda9a4e2.ctex"
+uid="uid://dd52j1hsde4l3"
+path="res://.godot/imported/tiles.png-dc8bc7e9ea621462835a0719ee5050ce.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/world/tile_selector.png"
-dest_files=["res://.godot/imported/tile_selector.png-7f4876aedfa74ce9ecb87c64fda9a4e2.ctex"]
+source_file="res://assets/tile_system/tiles.png"
+dest_files=["res://.godot/imported/tiles.png-dc8bc7e9ea621462835a0719ee5050ce.ctex"]
 
 [params]
 
@@ -31,4 +31,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=1
+detect_3d/compress_to=0
