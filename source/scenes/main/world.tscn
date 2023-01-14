@@ -13,9 +13,9 @@ texture_region_size = Vector2i(64, 48)
 3:0/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_jqq64"]
-tile_shape = 2
+tile_shape = 3
 tile_offset_axis = 1
-tile_size = Vector2i(32, 32)
+tile_size = Vector2i(48, 32)
 sources/0 = SubResource("TileSetAtlasSource_dh25i")
 
 [node name="world" type="Node2D"]
@@ -37,3 +37,7 @@ unique_name_in_owner = true
 modulate = Color(0.529412, 0.878431, 1, 1)
 y_sort_enabled = true
 texture = ExtResource("3_cv84q")
+
+[node name="train" type="Node2D" parent="."]
+
+[node name="train_path" type="Node2D" parent="."]
