@@ -1,4 +1,4 @@
-extends Node3D 
+extends Node2D
 # An extension of the basic node-type to include
 # some helper functions into each level.
 # Change extended node to suit game.

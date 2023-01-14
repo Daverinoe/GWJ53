@@ -20,7 +20,7 @@ func _ready() -> void:
 
 
 func _on_play_pressed() -> void:
-	SceneManager.emit_signal("change_scene_to_file", self, "res://source/scenes/main/main.tscn")
+	SceneManager.emit_signal("change_scene_to_file", self, "res://source/scenes/main/world.tscn")
 
 
 func _on_settings_pressed() -> void:
