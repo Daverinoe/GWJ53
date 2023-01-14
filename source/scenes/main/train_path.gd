@@ -24,14 +24,19 @@ const HEX_RELATIVE_POS_MAPPING = {
 # This is a map of the Atlas Map coords to the array of connection points (HexPos)
 # Todo: Organise the tilemap such that this can be generated
 const ATLAS_MAP_LOOKUP = {
-	Vector2i(0, 0): [],
-	Vector2i(1, 0): [HexPos.TOP, HexPos.BOTTOM],
-	Vector2i(2, 0): [HexPos.TOP, HexPos.LEFT_BOTTOM],
-	Vector2i(3, 0): [HexPos.TOP, HexPos.RIGHT_BOTTOM],
-	Vector2i(4, 0): [HexPos.LEFT_TOP, HexPos.BOTTOM],
-	Vector2i(5, 0): [HexPos.RIGHT_TOP, HexPos.BOTTOM],
-	Vector2i(6, 0): [HexPos.RIGHT_TOP, HexPos.LEFT_BOTTOM],
-	Vector2i(7, 0): [HexPos.LEFT_TOP, HexPos.RIGHT_BOTTOM],
+	Vector2i(0, 0): [HexPos.TOP, HexPos.BOTTOM],
+	Vector2i(1, 0): [HexPos.TOP, HexPos.LEFT_BOTTOM],
+	Vector2i(2, 0): [HexPos.TOP, HexPos.RIGHT_BOTTOM],
+	Vector2i(3, 0): [HexPos.LEFT_TOP, HexPos.RIGHT_TOP],
+	Vector2i(0, 1): [],
+	Vector2i(1, 1): [HexPos.LEFT_TOP, HexPos.BOTTOM],
+	Vector2i(2, 1): [HexPos.RIGHT_TOP, HexPos.BOTTOM],
+	Vector2i(3, 1): [HexPos.LEFT_BOTTOM, HexPos.RIGHT_BOTTOM],
+	Vector2i(1, 2): [HexPos.LEFT_TOP, HexPos.RIGHT_BOTTOM],
+	Vector2i(2, 2): [HexPos.LEFT_BOTTOM, HexPos.RIGHT_TOP],
+	Vector2i(3, 2): [HexPos.LEFT_TOP, HexPos.LEFT_BOTTOM],
+	Vector2i(4, 2): [HexPos.RIGHT_TOP, HexPos.RIGHT_BOTTOM],
+
 }
 
 var tile_system: TileSystem
