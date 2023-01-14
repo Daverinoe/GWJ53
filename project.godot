@@ -48,11 +48,6 @@ _global_script_classes=[{
 "class": &"TrainPath",
 "language": &"GDScript",
 "path": "res://source/scenes/main/train_path.gd"
-}, {
-"base": "Node2D",
-"class": &"World",
-"language": &"GDScript",
-"path": "res://source/scenes/main/world.gd"
 }]
 _global_script_class_icons={
 "ChangeButton": "",
@@ -62,8 +57,7 @@ _global_script_class_icons={
 "SaveMenu": "",
 "Setting": "",
 "TileSystem": "",
-"TrainPath": "",
-"World": ""
+"TrainPath": ""
 }
 
 [application]

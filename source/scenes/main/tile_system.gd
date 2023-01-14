@@ -9,6 +9,7 @@ var active_tile_world_coord: Vector2i
 var selected_tile_map_coord: Vector2i  # This will be the tile that the player has selected. Can be null
 var selected_tile_world_coord: Vector2i = Vector2i(-999, -999)
 # TODO: Handle the above with a selected flag, rather than a shitty placeholder vector
+var active_atlas_map: int = 0
 
 
 func _ready():
@@ -46,8 +47,8 @@ func _switch_tiles(map_tile_coord_1: Vector2i, map_tile_coord_2: Vector2i) -> vo
 	var tile_source_1: Vector2i = get_cell_atlas_coords(0, map_tile_coord_1)
 	var tile_source_2: Vector2i = get_cell_atlas_coords(0, map_tile_coord_2)
 	
-	set_cell(0, map_tile_coord_1, 0, tile_source_2)
-	set_cell(0, map_tile_coord_2, 0, tile_source_1)
+	set_cell(0, map_tile_coord_1, active_atlas_map, tile_source_2)
+	set_cell(0, map_tile_coord_2, active_atlas_map, tile_source_1)
 	
 	
 func generate_path_from(world_coord: Vector2i) -> void:

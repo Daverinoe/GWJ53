@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://cy0kn0ofyahqw"]
 
 [ext_resource type="Script" path="res://source/scenes/main/world.gd" id="1_d1use"]
-[ext_resource type="PackedScene" uid="uid://dsc8hfaeygnib" path="res://source/scenes/main/tile_system.tscn" id="2_kwtms"]
-[ext_resource type="PackedScene" uid="uid://dv58t2t23jtfv" path="res://source/scenes/main/train.tscn" id="4_t50p6"]
+[ext_resource type="PackedScene" uid="uid://brerulorr60o5" path="res://source/scenes/main/tile_system.tscn" id="2_kwtms"]
+[ext_resource type="PackedScene" uid="uid://befl37h26d4fb" path="res://source/scenes/main/train.tscn" id="4_t50p6"]
 [ext_resource type="Script" path="res://source/scenes/main/train_path.gd" id="5_varhf"]
 
 [node name="world" type="Node2D"]
@@ -10,9 +10,11 @@ script = ExtResource("1_d1use")
 
 [node name="tile_system" parent="." instance=ExtResource("2_kwtms")]
 unique_name_in_owner = true
+layer_0/tile_data = PackedInt32Array(196611, 131072, 2, 131075, 196608, 0, 327682, 196608, 0, 196609, 131072, 1, 65539, 0, 1, 131076, 65536, 0, 262148, 0, 1, 196610, 196608, 2, 131074, 131072, 0, 196612, 196608, 1, 262147, 196608, 2, 262146, 262144, 2, 262145, 131072, 0, 327683, 0, 1, 327684, 0, 1, 131073, 196608, 1, 65540, 65536, 1, 65538, 131072, 1, 3, 196608, 1, 196613, 65536, 2)
 
 [node name="train_path" type="Node2D" parent="."]
 unique_name_in_owner = true
 script = ExtResource("5_varhf")
 
 [node name="train" parent="." instance=ExtResource("4_t50p6")]
+position = Vector2(120, 303)

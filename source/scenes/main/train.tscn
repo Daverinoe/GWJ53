@@ -1,7 +1,10 @@
-[gd_scene format=3 uid="uid://dv58t2t23jtfv"]
+[gd_scene load_steps=2 format=3 uid="uid://befl37h26d4fb"]
+
+[ext_resource type="Texture2D" uid="uid://cugg77jrgt6kw" path="res://assets/train/locomotive.png" id="1_oyfmt"]
 
 [node name="train" type="Node2D"]
 
 [node name="train_sprite" type="Sprite2D" parent="."]
+texture = ExtResource("1_oyfmt")
 
 [node name="path_follow" type="PathFollow2D" parent="."]
