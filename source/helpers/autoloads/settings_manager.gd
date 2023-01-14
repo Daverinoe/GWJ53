@@ -67,7 +67,8 @@ var settings_default: Dictionary = {
 # Lifecycle methods
 
 func _ready() -> void: 
-	DisplayServer.window_set_position(Vector2(0,0))
+	# The below line removes the title bar for some reason. 
+	#DisplayServer.window_set_position(Vector2(0,0))
 	settings_load()
 	self.connect("setting_changed",Callable(self,"change_setting"))
 
