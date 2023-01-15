@@ -22,10 +22,6 @@ jobs:
   BuildAndPublish:
     runs-on: ubuntu-latest
     steps:
-      - name: Set Environment Variables
-        uses: ./.github/actions/setvars
-        with:
-          varFilePath: ./.github/variables/myvars.env
       - name: Checkout Source Code
         uses: actions/checkout@v2
         with:
