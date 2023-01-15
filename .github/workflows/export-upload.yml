@@ -149,14 +149,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Send Discord Success Message
-        if: ${{ env.IS_MAIN && env.DID_PREV_JOBS_SUCCEED == 'true' }}
         run: |
           curl --location --request POST $DISCORD_WEBHOOK \
             --header 'Content-Type: application/json' \
-            --data-raw "{\"content\": \"$PROJECT_NAME has successfully released and deployed!\"}"
-      - name: Send Discord Failure Message
-        if: ${{ env.IS_MAIN && env.DID_PREV_JOBS_SUCCEED != 'true' }}
-        run: |
-          curl --location --request POST $DISCORD_WEBHOOK \
-            --header 'Content-Type: application/json' \
-            --data-raw "{\"content\": \"$PROJECT_NAME release and/or deployment has failed!\"}"
+            --data-raw "{\"content\": \"Build and publish: needs.BuildAndPublish.result\nGithub release: needs.CreateNewGithubRelease.result\nPush to Itch: needs.PushExportsToItch.result\"}"
