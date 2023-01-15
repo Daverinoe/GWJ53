@@ -25,6 +25,7 @@ jobs:
       - name: Checkout Source Code
         uses: actions/checkout@v2
         with:
+          lfs: true
           fetch-depth: 0
       - name: Download + Authorize Godot
         run: |
