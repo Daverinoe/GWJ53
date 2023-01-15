@@ -54,7 +54,7 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://source/scenes/main/train_carriage.gd"
 }, {
-"base": "Node2D",
+"base": "MainScene",
 "class": &"World",
 "language": &"GDScript",
 "path": "res://source/scenes/main/world.gd"
@@ -69,13 +69,12 @@ _global_script_class_icons={
 "TileSystem": "",
 "Train": "",
 "TrainCarriage": "",
-
 "World": ""
 }
 
 [application]
 
-config/name="ColdStabber"
+config/name="Rail Assembly"
 run/main_scene="res://source/scenes/menus/main_menu/main_menu.tscn"
 config/features=PackedStringArray("4.0")
 config/icon="res://icon.png"
