@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Source Code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3.3.0
         with:
           lfs: true
           fetch-depth: 0
@@ -72,11 +72,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Source Code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3.3.0
         with:
           fetch-depth: 0
       - name: Download Exports
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3.0.2
         with:
           name: exports
           path: exports
@@ -90,7 +90,7 @@ jobs:
         env:
           COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
       - name: Create New Release
-        uses: actions/create-release@v1
+        uses: actions/create-release@v1.1.4
         id: create_release
         with:
           tag_name: ${{ steps.version_number.outputs.content }}
@@ -117,7 +117,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download Exports
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3.0.2
         with:
           name: exports
           path: exports
