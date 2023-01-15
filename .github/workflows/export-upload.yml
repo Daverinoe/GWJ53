@@ -91,7 +91,7 @@ jobs:
         env:
           COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
       - name: Create New Release
-        uses: actions/create-release@v1.1.4
+        uses: actions/create-release@v1
         id: create_release
         with:
           tag_name: $GITHUB_RUN_NUMBER
