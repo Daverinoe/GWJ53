@@ -22,6 +22,10 @@ jobs:
   BuildAndPublish:
     runs-on: ubuntu-latest
     steps:
+      - name: Set Environment Variables
+        uses: ./.github/actions/setvars
+        with:
+          varFilePath: ./.github/variables/myvars.env
       - name: Checkout Source Code
         uses: actions/checkout@v2
         with:
@@ -61,9 +65,6 @@ jobs:
         run: |
           mkdir ./exports/web
           ./godot --headless --path ./ --export-release "Web" ./exports/web/index.html
-      #- name: Add Version Number to Exports
-      #  run: |
-      #    cp ./VERSION ./exports/VERSION
       - name: Publish Export Artifact
         uses: actions/upload-artifact@v2
         with:
@@ -85,18 +86,12 @@ jobs:
           path: exports
       - name: Zip Exports
         run: zip -r exports.zip exports
-      - name: Read Version Number
-        id: version_number
-        uses: juliangruber/read-file-action@v1
-        with:
-          path: ./VERSION
       - name: Test Release Variables
         run: |
-          echo "Version Number $VERSION_NUMBER"
+          echo "Version Number $GITHUB_RUN_NUMBER"
           echo "Commit Message $COMMIT_MESSAGE"
           echo "Project Name $PROJECT_NAME"
         env:
-          VERSION_NUMBER: ${{ steps.version_number.outputs.content }}
           COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
       - name: Create New Release
         uses: actions/create-release@v1
@@ -117,6 +112,9 @@ jobs:
           asset_path: ./exports.zip
           asset_name: exports.zip
           asset_content_type: application/zip
+      - name: Update Minor Version
+        run: |
+          echo 
   PushExportsToItch:
     needs: BuildAndPublish
     if: ${{ contains(github.ref, 'main') }}
