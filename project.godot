@@ -24,7 +24,7 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://source/helpers/common/io_helper.gd"
 }, {
-"base": "Node3D",
+"base": "Node2D",
 "class": &"MainScene",
 "language": &"GDScript",
 "path": "res://source/scenes/main/main_scene.gd"
@@ -69,6 +69,7 @@ _global_script_class_icons={
 "TileSystem": "",
 "Train": "",
 "TrainCarriage": "",
+
 "World": ""
 }
 

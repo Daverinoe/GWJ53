@@ -1,4 +1,4 @@
-class_name World extends Node2D
+class_name World extends MainScene
 
 @onready var tile_system: TileSystem = get_node("%tile_system")
 @onready var train: Train = get_node("%train")
