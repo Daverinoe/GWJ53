@@ -152,4 +152,4 @@ jobs:
         run: |
           curl --location --request POST $DISCORD_WEBHOOK \
             --header 'Content-Type: application/json' \
-            --data-raw "{\"content\": \"Build and publish: needs.BuildAndPublish.result\nGithub release: needs.CreateNewGithubRelease.result\nPush to Itch: needs.PushExportsToItch.result\"}"
+            --data-raw "{\"content\": \"Build and publish: ${{needs.BuildAndPublish.result}}\nGithub release: ${{needs.CreateNewGithubRelease.result}}\nPush to Itch: ${{needs.PushExportsToItch.result}}\"}"
