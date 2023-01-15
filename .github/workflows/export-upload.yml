@@ -8,9 +8,9 @@ on:
     branches:
       - main
 env:
-  GITHUB_TOKEN: ${{ secrets.TOKEN }}
+  GITHUB_TOKEN: ${{ BnP.secrets.TOKEN }}
   IS_MAIN: ${{contains(github.ref, 'main')}}
-  DISCORD_WEBHOOK: ${{secrets.DISCORD_WEBHOOK}}
+  DISCORD_WEBHOOK: ${{BnP.secrets.DISCORD_WEBHOOK}}
   PROJECT_NAME: "gwj53"
   ITCH_PROJECT_NAME: "gwj53"
   ITCH_USERNAME: "daverinoe"
@@ -128,7 +128,7 @@ jobs:
           ./butler -V
       - name: Login To Butler
         env:
-          BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
+          BUTLER_API_KEY: ${{ BnP.secrets.BUTLER_API_KEY }}
         run: ./butler login
       - name: Push Windows Export To Itch
         run: ./butler push ./exports/windows/ $ITCH_USERNAME/$ITCH_PROJECT_NAME:win --userversion-file ./exports/VERSION
