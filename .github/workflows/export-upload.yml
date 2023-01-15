@@ -48,19 +48,19 @@ jobs:
       - name: Export Windows Port
         run: |
           mkdir ./exports/windows
-          ./godot --headless --path ./ --export "Windows" ./exports/windows/$PROJECT_NAME.exe
+          ./godot --headless --verbose --path ./ --export "Windows" ./exports/windows/$PROJECT_NAME.exe
       - name: Export Mac Port
         run: |
           mkdir ./exports/mac
-          ./godot --headless --path ./ --export "Mac" ./exports/mac/$PROJECT_NAME.zip
+          ./godot --headless --verbose --path ./ --export "Mac" ./exports/mac/$PROJECT_NAME.zip
       - name: Export Linux Port
         run: |
           mkdir ./exports/linux
-          ./godot --headless --path ./ --export "Linux" ./exports/linux/$PROJECT_NAME.x86_64
+          ./godot --headless --verbose --path ./ --export "Linux" ./exports/linux/$PROJECT_NAME.x86_64
       - name: Export Web Build
         run: |
           mkdir ./exports/web
-          ./godot --headless --path ./ --export "Web" ./exports/web/index.html
+          ./godot --headless --verbose --path ./ --export "Web" ./exports/web/index.html
       - name: Add Version Number to Exports
         run: |
           cp ./VERSION ./exports/VERSION
