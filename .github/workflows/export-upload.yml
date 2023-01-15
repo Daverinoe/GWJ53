@@ -40,7 +40,7 @@ jobs:
           unzip export_templates.zip
       - name: Install Export Templates
         run: |
-          mkdir -p ~/.local/share/godot/templates/4.0.beta12
+          mkdir -p ~/.local/share/godot/export_templates/4.0.beta12
           mv ./templates/* ~/.local/share/godot/export_templates/4.0.beta12
       - name: Make Exports Folder
         run: |
