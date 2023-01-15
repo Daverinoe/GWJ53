@@ -93,8 +93,8 @@ jobs:
         uses: actions/create-release@v1.1.4
         id: create_release
         with:
-          tag_name: ${{ steps.version_number.outputs.content }}
-          release_name: Release ${{ steps.version_number.outputs.content }}
+          tag_name: $GITHUB_RUN_NUMBER
+          release_name: Release $GITHUB_RUN_NUMBER
           body: ${{ github.event.head_commit.message }}
           draft: false
           prerelease: false
@@ -114,6 +114,8 @@ jobs:
     if: ${{ contains(github.ref, 'main') }}
     runs-on: ubuntu-latest
     environment: BnP
+    env:
+      BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
     steps:
       - name: Download Exports
         uses: actions/download-artifact@v3.0.2
@@ -127,8 +129,6 @@ jobs:
           chmod +x butler
           ./butler -V
       - name: Login To Butler
-        env:
-          BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
         run: ./butler login
       - name: Push Windows Export To Itch
         run: ./butler push ./exports/windows/ $ITCH_USERNAME/$ITCH_PROJECT_NAME:win
