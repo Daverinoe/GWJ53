@@ -1,10 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://befl37h26d4fb"]
+[gd_scene load_steps=3 format=3 uid="uid://bwa5t45dpu37x"]
 
-[ext_resource type="Texture2D" uid="uid://cugg77jrgt6kw" path="res://assets/train/locomotive.png" id="1_oyfmt"]
+[ext_resource type="Script" path="res://source/scenes/main/train.gd" id="1_50bbo"]
+[ext_resource type="PackedScene" uid="uid://befl37h26d4fb" path="res://source/scenes/main/train_carriage.tscn" id="2_e3wwu"]
 
 [node name="train" type="Node2D"]
+script = ExtResource("1_50bbo")
 
-[node name="train_sprite" type="Sprite2D" parent="."]
-texture = ExtResource("1_oyfmt")
-
-[node name="path_follow" type="PathFollow2D" parent="."]
+[node name="train_locomotive" parent="." instance=ExtResource("2_e3wwu")]
+y_sort_enabled = true
+is_locomotive = true

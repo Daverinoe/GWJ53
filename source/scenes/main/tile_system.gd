@@ -3,6 +3,42 @@ class_name TileSystem extends TileMap
 @onready var active_tile_marker: Sprite2D = get_node("%active_tile_marker")
 @onready var tile_select_marker: Sprite2D = get_node("%tile_select_marker")
 
+enum HexPos {
+	TOP,
+	BOTTOM,
+	RIGHT_TOP,
+	RIGHT_BOTTOM,
+	LEFT_TOP,
+	LEFT_BOTTOM
+}
+
+# NOTE: Update this if hex tile change!
+const HEX_RELATIVE_POS_MAPPING = {
+	HexPos.TOP: Vector2i(0, -32),
+	HexPos.BOTTOM: Vector2i(0, 32),
+	HexPos.RIGHT_TOP: Vector2i(36, -16),
+	HexPos.RIGHT_BOTTOM: Vector2i(36, 16),
+	HexPos.LEFT_TOP: Vector2i(-36, -16),
+	HexPos.LEFT_BOTTOM: Vector2i(-36, 16),
+}
+
+# This is a map of the Atlas Map coords to the array of connection points (HexPos)
+# Todo: Organise the tilemap such that this can be generated
+const ATLAS_MAP_LOOKUP = {
+	Vector2i(0, 0): [HexPos.TOP, HexPos.BOTTOM],
+	Vector2i(1, 0): [HexPos.TOP, HexPos.LEFT_BOTTOM],
+	Vector2i(2, 0): [HexPos.TOP, HexPos.RIGHT_BOTTOM],
+	Vector2i(3, 0): [HexPos.LEFT_TOP, HexPos.RIGHT_TOP],
+	Vector2i(0, 1): [],
+	Vector2i(1, 1): [HexPos.LEFT_TOP, HexPos.BOTTOM],
+	Vector2i(2, 1): [HexPos.RIGHT_TOP, HexPos.BOTTOM],
+	Vector2i(3, 1): [HexPos.LEFT_BOTTOM, HexPos.RIGHT_BOTTOM],
+	Vector2i(1, 2): [HexPos.LEFT_TOP, HexPos.RIGHT_BOTTOM],
+	Vector2i(2, 2): [HexPos.LEFT_BOTTOM, HexPos.RIGHT_TOP],
+	Vector2i(3, 2): [HexPos.LEFT_TOP, HexPos.LEFT_BOTTOM],
+	Vector2i(4, 2): [HexPos.RIGHT_TOP, HexPos.RIGHT_BOTTOM],
+}
+
 var curr_mouse_position: Vector2i
 var active_tile_map_coord: Vector2i  # This is the coord where the "cursor" is and moves with the mouse
 var active_tile_world_coord: Vector2i
@@ -51,5 +87,5 @@ func _switch_tiles(map_tile_coord_1: Vector2i, map_tile_coord_2: Vector2i) -> vo
 	set_cell(0, map_tile_coord_2, active_atlas_map, tile_source_1)
 	
 	
-func generate_path_from(world_coord: Vector2i) -> void:
-	pass
+func get_vectors(world_coord: Vector2i) -> Array[Vector2i]:
+	return [Vector2i.ZERO]
