@@ -8,9 +8,7 @@ on:
     branches:
       - main
 env:
-  GITHUB_TOKEN: ${{ BnP.secrets.TOKEN }}
   IS_MAIN: ${{contains(github.ref, 'main')}}
-  DISCORD_WEBHOOK: ${{BnP.secrets.DISCORD_WEBHOOK}}
   PROJECT_NAME: "gwj53"
   ITCH_PROJECT_NAME: "gwj53"
   ITCH_USERNAME: "daverinoe"
@@ -69,6 +67,7 @@ jobs:
     needs: BuildAndPublish
     if: ${{ contains(github.ref, 'main') }}
     runs-on: ubuntu-latest
+    environment: BnP
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v3.3.0
@@ -114,6 +113,7 @@ jobs:
     needs: BuildAndPublish
     if: ${{ contains(github.ref, 'main') }}
     runs-on: ubuntu-latest
+    environment: BnP
     steps:
       - name: Download Exports
         uses: actions/download-artifact@v3.0.2
@@ -128,7 +128,7 @@ jobs:
           ./butler -V
       - name: Login To Butler
         env:
-          BUTLER_API_KEY: ${{ BnP.secrets.BUTLER_API_KEY }}
+          BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
         run: ./butler login
       - name: Push Windows Export To Itch
         run: ./butler push ./exports/windows/ $ITCH_USERNAME/$ITCH_PROJECT_NAME:win --userversion-file ./exports/VERSION
@@ -141,19 +141,21 @@ jobs:
   AlertPipelineResult:
     needs: [BuildAndPublish, CreateNewGithubRelease, PushExportsToItch]
     if: ${{ always() }}
+    environment: BnP
     env:
+      DISCORD_WEBHOOK: ${{secrets.DISCORD_WEBHOOK}}
       DID_PREV_JOBS_SUCCEED: ${{ contains(needs.BuildAndPublish.result, 'success' ) && contains(needs.CreateNewGithubRelease.result, 'success' ) && contains(needs.PushExportsToItch.result, 'success' ) }}
     runs-on: ubuntu-latest
     steps:
       - name: Send Discord Success Message
         if: ${{ env.IS_MAIN && env.DID_PREV_JOBS_SUCCEED == 'true' }}
         run: |
-          curl --location --request POST ${{env.DISCORD_WEBHOOK}} \
+          curl --location --request POST $DISCORD_WEBHOOK \
             --header 'Content-Type: application/json' \
             --data-raw "{\"content\": \"$PROJECT_NAME has successfully released and deployed!\"}"
       - name: Send Discord Failure Message
         if: ${{ env.IS_MAIN && env.DID_PREV_JOBS_SUCCEED != 'true' }}
         run: |
-          curl --location --request POST ${{env.DISCORD_WEBHOOK}} \
+          curl --location --request POST $DISCORD_WEBHOOK \
             --header 'Content-Type: application/json' \
             --data-raw "{\"content\": \"$PROJECT_NAME release and/or deployment has failed!\"}"
