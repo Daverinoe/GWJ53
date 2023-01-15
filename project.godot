@@ -45,11 +45,16 @@ _global_script_classes=[{
 "path": "res://source/scenes/main/tile_system.gd"
 }, {
 "base": "Node2D",
-"class": &"TrainPath",
+"class": &"Train",
 "language": &"GDScript",
-"path": "res://source/scenes/main/train_path.gd"
+"path": "res://source/scenes/main/train.gd"
 }, {
-"base": "MainScene",
+"base": "Node2D",
+"class": &"TrainCarriage",
+"language": &"GDScript",
+"path": "res://source/scenes/main/train_carriage.gd"
+}, {
+"base": "Node2D",
 "class": &"World",
 "language": &"GDScript",
 "path": "res://source/scenes/main/world.gd"
@@ -62,13 +67,15 @@ _global_script_class_icons={
 "SaveMenu": "",
 "Setting": "",
 "TileSystem": "",
-"TrainPath": "",
+"Train": "",
+"TrainCarriage": "",
+
 "World": ""
 }
 
 [application]
 
-config/name="Rail Assembly"
+config/name="ColdStabber"
 run/main_scene="res://source/scenes/menus/main_menu/main_menu.tscn"
 config/features=PackedStringArray("4.0")
 config/icon="res://icon.png"

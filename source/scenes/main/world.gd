@@ -1,12 +1,12 @@
 class_name World extends MainScene
 
 @onready var tile_system: TileSystem = get_node("%tile_system")
-@onready var train_path: TrainPath = get_node("%train_path")
+@onready var train: Train = get_node("%train")
 
+var curr_train_speed: int = 100
 
 func _ready():
-	print(tile_system)
-	train_path.initialise_path_logic(tile_system)
+	train.initialise_train(self, tile_system)
 
 
 func _process(delta):
