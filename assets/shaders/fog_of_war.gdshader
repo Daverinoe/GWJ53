@@ -20,7 +20,7 @@ void fragment() {
 	// If not visible, make noisy
 	if (current_tex == vec4(0.0, 0.0, 0.0, 1.0)){
 		
-		vec2 cloud_mask = texture(wind_noise, vec2(UV.x + TIME * wind_speed, UV.y + sin(TIME/(2.0*PI))) * wind_stretch).xy;
+		vec2 cloud_mask = texture(wind_noise, vec2(UV.x + TIME * wind_speed, UV.y + 0.2*sin(TIME/(2.0*PI))) * wind_stretch).xy;
 		
 		float edges = wind_gaps + edge_width;
 		
