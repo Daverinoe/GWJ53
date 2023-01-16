@@ -22,9 +22,10 @@ var fog_texture : ImageTexture
 
 func _ready():
 	# This should fire every time the train enters a cell, and should reveal that area
+	
 	Event.connect("train_on_cell", update_fog)
 	
-	train.initialise_train(self, tile_system)
+	get_tree().call_group("Train", "initialise_train", self, tile_system)
 	player_camera.initialise_camera(train.locomotive_ref)
 	
 	initialise_fog()
@@ -45,7 +46,11 @@ func initialise_fog() -> void:
 	
 	light_image = light_texture.get_image()
 	light_image.convert(Image.FORMAT_RGBAH) # Ensure compatibility	
+	
 	update_fog(train.get_global_transform().origin)
+	# If you want multiple trains to be reveailing the fog of war at once: 
+	#for t in get_tree().get_nodes_in_group("Train"):
+	#	update_fog(t.get_global_transform().origin)
 
 
 func update_fog(new_position: Vector2) -> void:

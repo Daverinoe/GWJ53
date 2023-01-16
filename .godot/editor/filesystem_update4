@@ -4,3 +4,6 @@ res://source/scenes/main/train.tscn
 res://source/scenes/main/main.tscn
 res://source/scenes/main/world.tscn
 res://source/player/player_camera.gd
+res://assets/shaders/fog_of_war.gdshader
+res://source/scenes/main/world.gd
+res://source/scenes/main/train.gd
