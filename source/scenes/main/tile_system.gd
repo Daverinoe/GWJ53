@@ -12,14 +12,16 @@ enum HexPos {
 	LEFT_BOTTOM
 }
 
+const BASE_TILE_LAYER: int = 2
+
 # NOTE: Update this if hex tile change!
 const HEX_RELATIVE_POS_MAPPING = {
-	HexPos.TOP: Vector2i(0, -32),
-	HexPos.BOTTOM: Vector2i(0, 32),
-	HexPos.RIGHT_TOP: Vector2i(36, -16),
-	HexPos.RIGHT_BOTTOM: Vector2i(36, 16),
-	HexPos.LEFT_TOP: Vector2i(-36, -16),
-	HexPos.LEFT_BOTTOM: Vector2i(-36, 16),
+	HexPos.TOP: Vector2i(0, -128),
+	HexPos.BOTTOM: Vector2i(0, 128),
+	HexPos.RIGHT_TOP: Vector2i(144, -64),
+	HexPos.RIGHT_BOTTOM: Vector2i(144, 64),
+	HexPos.LEFT_TOP: Vector2i(-144, -64),
+	HexPos.LEFT_BOTTOM: Vector2i(-144, 64),
 }
 
 # This is a map of the Atlas Map coords to the array of connection points (HexPos)
@@ -43,8 +45,10 @@ var curr_mouse_position: Vector2i
 var active_tile_map_coord: Vector2i  # This is the coord where the "cursor" is and moves with the mouse
 var active_tile_world_coord: Vector2i
 var selected_tile_map_coord: Vector2i  # This will be the tile that the player has selected. Can be null
-var selected_tile_world_coord: Vector2i = Vector2i(-999, -999)
+var selected_tile_world_coord: Vector2i = Vector2i.ZERO
+
 # TODO: Handle the above with a selected flag, rather than a shitty placeholder vector
+var tile_selected: bool = false
 var active_atlas_map: int = 0
 
 
@@ -62,8 +66,12 @@ func _process(delta):
 
 func _unhandled_input(event) -> void:
 	if event.is_action_pressed("tile_select"):
+		if not local_to_map(active_tile_world_coord) in get_used_cells(0):
+			return  # TODO: Update this if further unhandled input is required
+		
 		# Update tile if appropriate
-		if selected_tile_world_coord == Vector2i(-999, -999):
+		if not tile_selected:
+			tile_selected = true
 			selected_tile_world_coord = active_tile_world_coord
 			selected_tile_map_coord = local_to_map(selected_tile_world_coord)
 			tile_select_marker.global_position = selected_tile_world_coord
@@ -74,7 +82,6 @@ func _unhandled_input(event) -> void:
 			# Find the new selection and switch them
 			_switch_tiles(selected_tile_map_coord, active_tile_map_coord)
 			tile_select_marker.hide()
-			selected_tile_world_coord = Vector2i(-999, -999)
 			tile_select_marker.modulate = Color(1.0, 0.77, 1.0, 1.0)
 			
 	elif event.is_action_pressed("tile_deselect"):
@@ -87,11 +94,11 @@ func _switch_tiles(map_tile_coord_1: Vector2i, map_tile_coord_2: Vector2i) -> vo
 		tile_deselect()
 		return
 	
-	var tile_source_1: Vector2i = get_cell_atlas_coords(0, map_tile_coord_1)
-	var tile_source_2: Vector2i = get_cell_atlas_coords(0, map_tile_coord_2)
+	var tile_source_1: Vector2i = get_cell_atlas_coords(BASE_TILE_LAYER, map_tile_coord_1)
+	var tile_source_2: Vector2i = get_cell_atlas_coords(BASE_TILE_LAYER, map_tile_coord_2)
 	
-	set_cell(0, map_tile_coord_1, active_atlas_map, tile_source_2)
-	set_cell(0, map_tile_coord_2, active_atlas_map, tile_source_1)
+	set_cell(BASE_TILE_LAYER, map_tile_coord_1, active_atlas_map, tile_source_2)
+	set_cell(BASE_TILE_LAYER, map_tile_coord_2, active_atlas_map, tile_source_1)
 	
 	
 func get_vectors(world_coord: Vector2i) -> Array[Vector2i]:
@@ -99,8 +106,9 @@ func get_vectors(world_coord: Vector2i) -> Array[Vector2i]:
 
 
 func tile_deselect() -> void:
+	# TODO: Handle logic if a tile has been "picked up"
+	tile_selected = false
 	tile_select_marker.hide()
-	selected_tile_world_coord = Vector2i(-999, -999)
 	tile_select_marker.self_modulate = Color(1.0, 0.77, 0.0, 1.0)
 
 

@@ -1,12 +1,11 @@
 class_name PlayerCamera extends Camera2D
 
-@export var min_zoom_level: float = 0.5
-@export var max_zoom_level: float = 2.5  # TODO: Set by the active tile set
+@export var min_zoom_level: float = 1.0
+@export var max_zoom_level: float = 20.0  # TODO: Set by the active tile set
 
 @export var zoom_factor: float = 0.2
 @export var zoom_duration: float = 0.2
 
-@export var drag_factor: float = 0.000000000001
 var follow_factor: float = 0.2  # The factor for following the target position - <0.5 for smooth drag, 1.0 for tight
 
 var locomotive: TrainCarriage  # Used as an anchor
@@ -37,9 +36,7 @@ func _process(delta: float):
 	if follow_train:
 		# Chase the train
 		target_pos = locomotive.global_position
-		
 	global_position = lerp(global_position, target_pos, follow_factor)
-	
 
 
 func _input(event):
@@ -58,7 +55,7 @@ func _input(event):
 		if not scroll_active:
 			follow_train = false
 			scroll_active = true
-			follow_factor = 1.0
+			follow_factor = 0.4
 		
 	if event.is_action_released("click_drag"):
 		scroll_active = false
