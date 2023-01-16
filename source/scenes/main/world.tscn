@@ -38,8 +38,8 @@ script = ExtResource("1_d1use")
 [node name="tile_system" parent="." instance=ExtResource("2_kwtms")]
 unique_name_in_owner = true
 position = Vector2(0, 0)
-layer_0/tile_data = PackedInt32Array(1, 2, 0, 65537, 131074, 0, 131074, 65538, 1, 196610, 131074, 0, 131075, 2, 1, 131073, 2, 1)
-layer_1/tile_data = PackedInt32Array(65538, 131074, 3, 196609, 131074, 3, 196611, 131074, 3)
+layer_0/tile_data = PackedInt32Array(1, 0, 0, 65537, 0, 0, 65536, 0, 0, 131072, 0, 0, 196608, 131072, 0, 131073, 131072, 0)
+layer_1/tile_data = PackedInt32Array()
 
 [node name="train" parent="." instance=ExtResource("4_t50p6")]
 unique_name_in_owner = true
@@ -74,7 +74,6 @@ mouse_filter = 2
 texture = SubResource("PlaceholderTexture2D_ckjp2")
 
 [node name="train" parent="." instance=ExtResource("4_t50p6")]
-unique_name_in_owner = true
 position = Vector2(480, 257)
 
 [node name="player_camera" parent="." instance=ExtResource("4_gs2qm")]
