@@ -45,7 +45,7 @@ jobs:
           mkdir exports
       - name: Generate cache
         run: |
-          ./godot --headless -e --quit --path ./
+          ./godot --verbose --headless -e --quit --path ./
       - name: Export Windows Port
         run: |
           mkdir ./exports/windows
