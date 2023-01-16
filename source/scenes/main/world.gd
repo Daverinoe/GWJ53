@@ -6,8 +6,9 @@ const GRID_SIZE: int = 16
 var curr_train_speed: int = 100
 
 # Fog reveal vars
-var light_image : Image = Image.load_from_file("res://assets/tile_system/fog_light_x4.png")
-var light_offset : Vector2 = Vector2(light_image.get_width()/2.0, light_image.get_height()/2.0)
+var light_texture = preload("res://assets/tile_system/fog_light_x4.png")
+var light_image : Image
+var light_offset : Vector2 = Vector2(light_texture.get_width()/2.0, light_texture.get_height()/2.0)
 # Fog vars
 var fog_image : Image
 var fog_texture : ImageTexture
@@ -40,8 +41,9 @@ func initialise_fog() -> void:
 	# Create initial fog
 	fog_image = Image.create(window_size.x, window_size.y, false, Image.FORMAT_RGBAH)
 	fog_image.fill(Color.BLACK)
-
-	light_image.convert(Image.FORMAT_RGBAH) # Ensure compatibility
+	
+	light_image = light_texture.get_image()
+	light_image.convert(Image.FORMAT_RGBAH) # Ensure compatibility	
 	update_fog(train.get_global_transform().origin)
 
 
