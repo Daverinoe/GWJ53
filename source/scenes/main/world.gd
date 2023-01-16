@@ -3,11 +3,10 @@ class_name World extends MainScene
 
 const GRID_SIZE: int = 16
 
-
 var curr_train_speed: int = 100
 
 # Fog reveal vars
-var light_texture = preload("res://assets/tile_system/fog_light.png")
+var light_texture = preload("res://assets/tile_system/fog_light_x4.png")
 var light_image : Image
 var light_offset : Vector2 = Vector2(light_texture.get_width()/2.0, light_texture.get_height()/2.0)
 # Fog vars
