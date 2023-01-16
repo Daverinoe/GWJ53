@@ -1,8 +1,4 @@
-res://source/scenes/main/tile_system.tscn
-res://assets/themes/settings.tres
 res://source/scenes/main/world.tscn
-res://source/scenes/menus/main_menu/main_menu.tscn
-res://source/scenes/main/world.gd
-res://source/scenes/main/train_carriage.gd
-res://source/helpers/autoloads/scene_manager/scene_manager.gd
+res://assets/themes/settings.tres
+res://assets/shaders/fog_of_war.gdshader
 res://source/helpers/autoloads/scene_manager/scene_manager.tscn
