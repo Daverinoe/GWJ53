@@ -45,7 +45,7 @@ jobs:
           mkdir exports
       - name: Generate cache
         run: |
-          ./godot --rendering-driver opengl3 -e --quit --path ./
+          ./godot --headless -e --quit --path ./
       - name: Export Windows Port
         run: |
           mkdir ./exports/windows
