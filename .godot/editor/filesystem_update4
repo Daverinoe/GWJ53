@@ -1,17 +1,5 @@
-<<<<<<< HEAD
 res://source/helpers/autoloads/scene_manager/scene_manager.tscn
 res://assets/themes/settings.tres
-res://source/scenes/main/world.tscn
-res://source/scenes/main/world.gd
 res://source/scenes/main/tile_system.gd
-res://source/scenes/main/tile_system.tscn
-res://source/scenes/main/train_carriage.tscn
-res://source/scenes/main/train.tscn
-res://source/player/player_camera.gd
-=======
 res://source/scenes/main/world.tscn
-res://assets/themes/settings.tres
-res://assets/shaders/fog_of_war.gdshader
-res://source/helpers/autoloads/scene_manager/scene_manager.tscn
-res://source/scenes/main/world.gd
->>>>>>> main
+res://source/scenes/main/tile_system.tscn

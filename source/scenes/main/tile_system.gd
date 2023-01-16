@@ -67,6 +67,7 @@ func _process(delta):
 func _unhandled_input(event) -> void:
 	if event.is_action_pressed("tile_select"):
 		if not local_to_map(active_tile_world_coord) in get_used_cells(0):
+			# TODO: FIX THIS SUCH AS TO NOT
 			return  # TODO: Update this if further unhandled input is required
 		
 		# Update tile if appropriate
