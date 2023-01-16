@@ -43,6 +43,9 @@ jobs:
       - name: Make Exports Folder
         run: |
           mkdir exports
+      - name: Generate cache
+        run: |
+          ./godot -e --quit --path ./
       - name: Export Windows Port
         run: |
           mkdir ./exports/windows
