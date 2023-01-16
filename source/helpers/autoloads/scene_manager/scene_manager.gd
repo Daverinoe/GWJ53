@@ -72,7 +72,7 @@ func switch_scenes(previous_scene_reference, next_scene_path, is_load_request: b
 	new_instance.visible = false
 	
 	get_tree().root.add_child(new_instance)
-	new_instance.set_process(false)
+	new_instance.set_process_mode(Node.PROCESS_MODE_DISABLED)
 	
 	# If loading, pass off instance to the load handler
 	if load_variables != null:
@@ -109,7 +109,7 @@ func finish_switch() -> void:
 	# Fade out loading scene
 	tween_load_visibility(1.0, 0.0)
 	self.visible = false
-	new_instance.set_process(true)
+	new_instance.set_process_mode(Node.PROCESS_MODE_INHERIT)
 	new_instance = null
 	is_finished_loading = false
 

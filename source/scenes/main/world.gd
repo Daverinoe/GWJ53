@@ -60,3 +60,5 @@ func update_fog_texture() -> void:
 	fog.texture = fog_texture
 
 
+func start_following() -> void:
+	player_camera.current = true
