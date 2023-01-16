@@ -9,6 +9,7 @@
 blend_mode = 3
 
 [node name="world" type="Node2D"]
+process_mode = 1
 script = ExtResource("1_d1use")
 
 [node name="tile_system" parent="." instance=ExtResource("2_kwtms")]
@@ -23,6 +24,7 @@ position = Vector2(121, 267)
 
 [node name="player_camera" parent="." instance=ExtResource("4_gs2qm")]
 unique_name_in_owner = true
+current = false
 
 [node name="Fog" type="Sprite2D" parent="."]
 unique_name_in_owner = true
