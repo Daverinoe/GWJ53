@@ -18,15 +18,3 @@ mono_crash.*.json
 exports/
 external/
 
-## Caches
-#   Shader cache
-.godot/shader_cache/
-
-#   Script editor cache
-.godot/editor/script_editor_cache.cfg
-
-#   File system editor cache
-.godot/editor/filesystem_cache*
-
-#   UID cache
-.godot/uid_cache.bin

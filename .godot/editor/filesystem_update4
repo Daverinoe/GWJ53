@@ -1,8 +1,5 @@
-res://source/scenes/main/tile_system.tscn
+res://source/helpers/autoloads/scene_manager/scene_manager.tscn
 res://assets/themes/settings.tres
 res://source/scenes/main/world.tscn
-res://source/scenes/menus/main_menu/main_menu.tscn
-res://source/scenes/main/world.gd
-res://source/scenes/main/train_carriage.gd
-res://source/helpers/autoloads/scene_manager/scene_manager.gd
-res://source/helpers/autoloads/scene_manager/scene_manager.tscn
+res://source/scenes/main/main.tscn
+res://source/scenes/main/train.tscn
