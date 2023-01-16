@@ -75,4 +75,3 @@ position = Vector2(121, 267)
 
 [node name="player_camera" parent="." instance=ExtResource("4_gs2qm")]
 unique_name_in_owner = true
-current = false
