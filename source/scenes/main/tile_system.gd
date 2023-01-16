@@ -12,7 +12,7 @@ enum HexPos {
 	LEFT_BOTTOM
 }
 
-const BASE_TILE_LAYER: int = 2
+const BASE_TILE_LAYER: int = 0
 
 # NOTE: Update this if hex tile change!
 const HEX_RELATIVE_POS_MAPPING = {
@@ -66,10 +66,11 @@ func _process(delta):
 
 func _unhandled_input(event) -> void:
 	if event.is_action_pressed("tile_select"):
-		if not local_to_map(active_tile_world_coord) in get_used_cells(0):
-			# TODO: FIX THIS SUCH AS TO NOT
-			return  # TODO: Update this if further unhandled input is required
-		
+#		if not local_to_map(active_tile_world_coord) in get_used_cells(BASE_TILE_LAYER):
+#			print("TILE NOT EXIST")
+#			# TODO: FIX THIS SUCH AS TO NOT BLOCK ALL TILE MOVEMENT
+#			return  # TODO: Update this if further unhandled input is required
+#
 		# Update tile if appropriate
 		if not tile_selected:
 			tile_selected = true
@@ -100,6 +101,7 @@ func _switch_tiles(map_tile_coord_1: Vector2i, map_tile_coord_2: Vector2i) -> vo
 	
 	set_cell(BASE_TILE_LAYER, map_tile_coord_1, active_atlas_map, tile_source_2)
 	set_cell(BASE_TILE_LAYER, map_tile_coord_2, active_atlas_map, tile_source_1)
+	tile_deselect()
 	
 	
 func get_vectors(world_coord: Vector2i) -> Array[Vector2i]:
@@ -114,5 +116,6 @@ func tile_deselect() -> void:
 
 
 func is_obstacle(map_tile_coord) -> bool:
+	# TODO: This raises an error in the debugger - need to fix the logic so we aren't checking null but instead reading what layer is active
 	var obstacle_check: TileData = get_cell_tile_data(1, map_tile_coord)
 	return true if obstacle_check != null else false
