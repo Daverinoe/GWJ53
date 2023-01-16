@@ -1,12 +1,35 @@
-[gd_scene load_steps=6 format=3 uid="uid://bdo7a0e5m3fli"]
+[gd_scene load_steps=12 format=3 uid="uid://bdo7a0e5m3fli"]
 
 [ext_resource type="Script" path="res://source/scenes/main/world.gd" id="1_d1use"]
 [ext_resource type="PackedScene" uid="uid://brerulorr60o5" path="res://source/scenes/main/tile_system.tscn" id="2_kwtms"]
 [ext_resource type="PackedScene" uid="uid://bbeu2y0wvltl1" path="res://source/player/player_camera.tscn" id="4_gs2qm"]
 [ext_resource type="PackedScene" uid="uid://bwa5t45dpu37x" path="res://source/scenes/main/train.tscn" id="4_t50p6"]
+[ext_resource type="Shader" path="res://assets/shaders/fog_of_war.gdshader" id="5_n2ols"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_7fnrg"]
 blend_mode = 3
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_lul3q"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_0vh8v"]
+seed = 30
+frequency = 0.028
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_0vsvn"]
+seamless = true
+noise = SubResource("FastNoiseLite_0vh8v")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nccvp"]
+shader = ExtResource("5_n2ols")
+shader_parameter/cloud_tint = Color(0, 0.145098, 0.286275, 0.556863)
+shader_parameter/cloud_highlight = Color(0, 0.498039, 0.847059, 0.54902)
+shader_parameter/wind_stretch = Vector2(0.1, 2)
+shader_parameter/wind_speed = 0.1
+shader_parameter/wind_gaps = 0.33
+shader_parameter/edge_width = 0.045
+shader_parameter/wind_noise = SubResource("NoiseTexture2D_0vsvn")
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ckjp2"]
 
 [node name="world" type="Node2D"]
 process_mode = 1
@@ -18,6 +41,34 @@ position = Vector2(0, 0)
 layer_0/tile_data = PackedInt32Array(196611, 131072, 2, 131075, 196608, 0, 327682, 196608, 0, 196609, 131072, 1, 131076, 65536, 0, 262148, 0, 1, 196610, 196608, 2, 131074, 131072, 0, 196612, 196608, 1, 262147, 196608, 2, 262146, 262144, 2, 262145, 131072, 0, 327683, 65536, 3, 327684, 65536, 3, 131073, 196608, 1, 65540, 65536, 1, 65538, 131072, 1, 3, 196608, 1, 196613, 65536, 2, 196615, 65536, 0, 131079, 0, 0, 262150, 196608, 0)
 layer_1/tile_data = PackedInt32Array(65542, 131072, 3, 196614, 131072, 3, 131077, 131072, 3, 262149, 131072, 3, 393220, 131072, 3, 327685, 131072, 3, 65539, 196608, 3)
 
+[node name="Fog" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+material = SubResource("CanvasItemMaterial_7fnrg")
+centered = false
+
+[node name="test_black" type="Sprite2D" parent="."]
+visible = false
+modulate = Color(0, 0, 0, 1)
+scale = Vector2(1161, 645)
+texture = SubResource("PlaceholderTexture2D_lul3q")
+centered = false
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
+
+[node name="BackBufferCopy" type="BackBufferCopy" parent="CanvasLayer"]
+copy_mode = 2
+
+[node name="FogPretty" type="TextureRect" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_nccvp")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = SubResource("PlaceholderTexture2D_ckjp2")
+
 [node name="train" parent="." instance=ExtResource("4_t50p6")]
 unique_name_in_owner = true
 position = Vector2(121, 267)
@@ -25,8 +76,3 @@ position = Vector2(121, 267)
 [node name="player_camera" parent="." instance=ExtResource("4_gs2qm")]
 unique_name_in_owner = true
 current = false
-
-[node name="Fog" type="Sprite2D" parent="."]
-unique_name_in_owner = true
-material = SubResource("CanvasItemMaterial_7fnrg")
-centered = false
