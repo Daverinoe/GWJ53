@@ -43,6 +43,7 @@ func initialise_fog() -> void:
 	fog_image.fill(Color.BLACK)
 
 	light_image.convert(Image.FORMAT_RGBAH) # Ensure compatibility	
+	update_fog(train.get_global_transform().origin)
 
 
 func update_fog(new_position: Vector2) -> void:
