@@ -68,18 +68,25 @@ func _unhandled_input(event) -> void:
 			selected_tile_map_coord = local_to_map(selected_tile_world_coord)
 			tile_select_marker.global_position = selected_tile_world_coord
 			tile_select_marker.show()
+			if is_obstacle(selected_tile_map_coord):
+				tile_select_marker.modulate = Color(1.0, 0.0, 0.0, 1.0)
 		else:
 			# Find the new selection and switch them
 			_switch_tiles(selected_tile_map_coord, active_tile_map_coord)
 			tile_select_marker.hide()
 			selected_tile_world_coord = Vector2i(-999, -999)
+			tile_select_marker.modulate = Color(1.0, 0.77, 1.0, 1.0)
 			
 	elif event.is_action_pressed("tile_deselect"):
-		tile_select_marker.hide()
-		selected_tile_world_coord = Vector2i(-999, -999)
+		tile_deselect()
 
 
 func _switch_tiles(map_tile_coord_1: Vector2i, map_tile_coord_2: Vector2i) -> void:
+	# Check for obstacles on layer 1 of the tileset. If they exist, don't swap.
+	if is_obstacle(map_tile_coord_1) or is_obstacle(map_tile_coord_2):
+		tile_deselect()
+		return
+	
 	var tile_source_1: Vector2i = get_cell_atlas_coords(0, map_tile_coord_1)
 	var tile_source_2: Vector2i = get_cell_atlas_coords(0, map_tile_coord_2)
 	
@@ -89,3 +96,14 @@ func _switch_tiles(map_tile_coord_1: Vector2i, map_tile_coord_2: Vector2i) -> vo
 	
 func get_vectors(world_coord: Vector2i) -> Array[Vector2i]:
 	return [Vector2i.ZERO]
+
+
+func tile_deselect() -> void:
+	tile_select_marker.hide()
+	selected_tile_world_coord = Vector2i(-999, -999)
+	tile_select_marker.self_modulate = Color(1.0, 0.77, 0.0, 1.0)
+
+
+func is_obstacle(map_tile_coord) -> bool:
+	var obstacle_check: TileData = get_cell_tile_data(1, map_tile_coord)
+	return true if obstacle_check != null else false
