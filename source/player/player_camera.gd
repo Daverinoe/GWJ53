@@ -48,6 +48,7 @@ func _input(event):
 	
 	if event.is_action_pressed("zoom_in"):
 		_set_zoom_level(zoom_level - zoom_factor)
+		print("I zoomed!")
 	elif event.is_action_pressed("zoom_out"):
 		_set_zoom_level(zoom_level + zoom_factor)
 	
@@ -67,10 +68,9 @@ func _input(event):
 func _set_zoom_level(value: float) -> void:
 	zoom_level = clamp(value, min_zoom_level, max_zoom_level)
 	create_tween() \
-	.bind_node(self) \
 	.tween_property(self, "zoom", Vector2(zoom_level, zoom_level), zoom_duration) \
-	.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-
+	.set_trans(Tween.TRANS_SINE) \
+	.set_ease(Tween.EASE_OUT)
 
 # TODO: This should be based on the limits of the fog of war
 func update_limits(active_blob_world_coords: Array[Vector2i]) -> void:
