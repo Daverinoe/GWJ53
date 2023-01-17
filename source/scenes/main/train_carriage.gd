@@ -2,7 +2,7 @@ class_name TrainCarriage extends Node2D
 
 @export var is_locomotive: bool = false
 var next_carriage: TrainCarriage
-var target_speed: int = 80
+var target_speed: int = 10
 var speed: int = 0  # TODO Get this from the parent
 var carriage_initialised: bool = false
 

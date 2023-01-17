@@ -2,14 +2,13 @@ class_name Train extends Node2D
 
 # A train is a group of TrainCarriage objects
 @export var train_carriage_node: PackedScene
-@export var active: bool
+@export var is_main_train: bool
 
 var locomotive_ref: TrainCarriage
 
 var train_length: int = 0
 var world: World
 var tile_system: TileSystem
-
 
 func _ready():
 	pass
@@ -34,3 +33,7 @@ func initialise_train(world_ref: World, tile_system_ref: TileSystem) -> void:
 			else:
 				child_train_carriage.initialise_train_carriage(self, tile_system, previous_carriage)
 				previous_carriage = child_train_carriage
+
+
+func get_locomotive() -> TrainCarriage:
+	return locomotive_ref

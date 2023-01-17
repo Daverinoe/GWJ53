@@ -28,6 +28,7 @@ func _ready():
 	
 	get_tree().call_group("Train", "initialise_train", self, tile_system)
 	player_camera.initialise_camera(train.locomotive_ref)
+	tile_system.initialise_tile_system(train)  # TODO: Update this to handle multiple trains using the is_main_train flag
 	
 	initialise_fog()
 	update_fog_texture()

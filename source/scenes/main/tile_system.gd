@@ -3,6 +3,11 @@ class_name TileSystem extends TileMap
 @onready var active_tile_marker: Sprite2D = get_node("%active_tile_marker")
 @onready var tile_select_marker: Sprite2D = get_node("%tile_select_marker")
 
+@onready var ghost_selection: Sprite2D = get_node("%ghost_selection")
+@onready var valid_placement: Node2D = get_node("%valid_placements")
+
+var train: Train  # Reference to player train for active blob
+
 enum HexPos {
 	TOP,
 	BOTTOM,
@@ -26,7 +31,6 @@ const HEX_RELATIVE_POS_MAPPING = {
 # This script will work so well I already know it - hype
 
 # This is a map of the Atlas Map coords to the array of connection points (HexPos)
-# Todo: Organise the tilemap such that this can be generated
 const ATLAS_MAP_LOOKUP = {
 	Vector2i(0, 0): [HexPos.TOP, HexPos.BOTTOM],
 	Vector2i(1, 0): [HexPos.TOP, HexPos.LEFT_BOTTOM],
@@ -51,10 +55,15 @@ var selected_tile_world_coord: Vector2i = Vector2i.ZERO
 # TODO: Handle the above with a selected flag, rather than a shitty placeholder vector
 var tile_selected: bool = false
 var active_atlas_map: int = 0
+var full_atlas_texture: Texture
 
 
 func _ready():
 	tile_select_marker.hide()
+	full_atlas_texture = tile_set.get_source(0).texture
+	ghost_selection.texture = full_atlas_texture
+	ghost_selection.region_enabled = true
+	ghost_selection.hide()
 
 
 func _process(delta):
@@ -66,6 +75,24 @@ func _process(delta):
 
 
 func _unhandled_input(event) -> void:
+	"""Handle the tile system interaction
+	
+	First:
+		Check if tile is selectable. 
+			Selectable means not blocked by a train carriage OR not obstacle layer
+		if not selectable, raise signal and flash cursor
+		
+	Next: tile is selectable
+		Grab tile texture and add to ghost_selection node. Raise ghost select mode from board
+		Spawn available spots to place tile outside blob (also accept swaps)
+		
+	If player right clicks OR attempts placement on invalid tile
+		return tile to tilemap. Hide ghost_selection
+	
+	If player places tile
+		if target tile is populated, animate a tile switch, else animate tile placement
+			move ghost_selection - on finish, update tilemap
+	"""
 	if event.is_action_pressed("tile_select"):
 #		if not local_to_map(active_tile_world_coord) in get_used_cells(BASE_TILE_LAYER):
 #			print("TILE NOT EXIST")
@@ -79,6 +106,11 @@ func _unhandled_input(event) -> void:
 			selected_tile_map_coord = local_to_map(selected_tile_world_coord)
 			tile_select_marker.global_position = selected_tile_world_coord
 			tile_select_marker.show()
+			
+			# +++++++++++++++++++++++
+			set_ghost_selection(selected_tile_map_coord, selected_tile_world_coord)
+			# +++++++++++++++++++++++
+			
 			if is_obstacle(selected_tile_map_coord):
 				tile_select_marker.modulate = Color(1.0, 0.0, 0.0, 1.0)
 		else:
@@ -89,6 +121,10 @@ func _unhandled_input(event) -> void:
 			
 	elif event.is_action_pressed("tile_deselect"):
 		tile_deselect()
+
+
+func initialise_tile_system(train_ref: Train) -> void:
+	train = train_ref
 
 
 func _switch_tiles(map_tile_coord_1: Vector2i, map_tile_coord_2: Vector2i) -> void:
@@ -120,3 +156,12 @@ func is_obstacle(map_tile_coord) -> bool:
 	# TODO: This raises an error in the debugger - need to fix the logic so we aren't checking null but instead reading what layer is active
 	var obstacle_check: TileData = get_cell_tile_data(1, map_tile_coord)
 	return true if obstacle_check != null else false
+
+
+func set_ghost_selection(tile_coord: Vector2i, tile_global_coord: Vector2) -> void:
+	var base_pos = tile_set.tile_size * (tile_coord + Vector2i.ONE)
+	var tile_rect: Rect2 = Rect2(base_pos[0], base_pos[1], tile_set.tile_size[0], tile_set.tile_size[1])
+	ghost_selection.region_rect = tile_rect
+	ghost_selection.global_position = tile_global_coord
+	ghost_selection.show()
+	

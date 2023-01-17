@@ -39,4 +39,3 @@ scale_amount_curve = SubResource("Curve_2cn1j")
 [node name="train_carrage" parent="." instance=ExtResource("2_e3wwu")]
 y_sort_enabled = true
 position = Vector2(0, -100)
-is_locomotive = true
