@@ -17,3 +17,6 @@ mono_crash.*.json
 # Exports
 exports/
 external/
+
+# Cache
+.godot/shader_cache/
