@@ -1,8 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://bwa5t45dpu37x"]
+[gd_scene load_steps=8 format=3 uid="uid://bwa5t45dpu37x"]
 
 [ext_resource type="Script" path="res://source/scenes/main/train.gd" id="1_50bbo"]
 [ext_resource type="PackedScene" uid="uid://befl37h26d4fb" path="res://source/scenes/main/train_carriage.tscn" id="2_e3wwu"]
 [ext_resource type="Texture2D" uid="uid://tgymvujfvx2r" path="res://assets/train/train-steam-2.png" id="3_2do42"]
+[ext_resource type="AudioStream" uid="uid://dbxf0vfkvakl2" path="res://assets/audio/sfx/train_chugg.ogg" id="4_ag3x5"]
+[ext_resource type="Script" path="res://source/scenes/main/train/chuggachugga.gd" id="5_y50ds"]
 
 [sub_resource type="AnimatedTexture" id="AnimatedTexture_gsesv"]
 frame_0/texture = ExtResource("3_2do42")
@@ -40,3 +42,10 @@ scale_amount_curve = SubResource("Curve_2cn1j")
 y_sort_enabled = true
 position = Vector2(0, -27)
 is_locomotive = true
+
+[node name="chuggachugga" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_ag3x5")
+pitch_scale = 0.01
+attenuation = 1.93187
+bus = &"Effects"
+script = ExtResource("5_y50ds")

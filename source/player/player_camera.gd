@@ -29,7 +29,9 @@ func initialise_camera(locomotive_ref: TrainCarriage) -> void:
 
 
 func _ready():
-	pass
+	VariableManager.min_zoom_level = min_zoom_level
+	VariableManager.max_zoom_level = max_zoom_level
+	Event.emit_signal("zoom_level_changed", zoom_level)
 
 
 func _process(delta: float):
@@ -47,10 +49,14 @@ func _input(event):
 		follow_train = true
 	
 	if event.is_action_pressed("zoom_in"):
-		_set_zoom_level(zoom_level - zoom_factor)
-		print("I zoomed!")
+		var new_zoom_level = zoom_level - zoom_factor
+		_set_zoom_level(new_zoom_level)
+		# Emit new zoom level to modify audio
+		Event.emit_signal("zoom_level_changed", new_zoom_level)
 	elif event.is_action_pressed("zoom_out"):
-		_set_zoom_level(zoom_level + zoom_factor)
+		var new_zoom_level = zoom_level + zoom_factor
+		_set_zoom_level(new_zoom_level)
+		Event.emit_signal("zoom_level_changed", new_zoom_level)
 	
 	if event.is_action_pressed("click_drag"):
 		if not scroll_active:
