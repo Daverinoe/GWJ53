@@ -41,10 +41,6 @@ position = Vector2(0, 0)
 layer_0/tile_data = PackedInt32Array(1, 0, 0, 65537, 0, 0, 65536, 0, 0, 131072, 0, 0, 196608, 131072, 0, 131073, 131072, 0)
 layer_1/tile_data = PackedInt32Array()
 
-[node name="train" parent="." instance=ExtResource("4_t50p6")]
-unique_name_in_owner = true
-position = Vector2(121, 281)
-
 [node name="Fog" type="Sprite2D" parent="."]
 unique_name_in_owner = true
 material = SubResource("CanvasItemMaterial_7fnrg")
@@ -74,9 +70,8 @@ mouse_filter = 2
 texture = SubResource("PlaceholderTexture2D_ckjp2")
 
 [node name="train" parent="." instance=ExtResource("4_t50p6")]
+unique_name_in_owner = true
 position = Vector2(480, 257)
 
 [node name="player_camera" parent="." instance=ExtResource("4_gs2qm")]
 unique_name_in_owner = true
-min_zoom_level = 0.2
-max_zoom_level = 10.0

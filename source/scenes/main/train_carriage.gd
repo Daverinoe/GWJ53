@@ -2,7 +2,7 @@ class_name TrainCarriage extends Node2D
 
 @export var is_locomotive: bool = false
 var next_carriage: TrainCarriage
-var target_speed: int = 20
+var target_speed: int = 80
 var speed: int = 0  # TODO Get this from the parent
 var carriage_initialised: bool = false
 
@@ -83,7 +83,6 @@ func _check_vector_change() -> void:
 		from tile_system.HEX_RELATIVE_POS_MAPPING
 		"""
 		current_heading = (current_tile_center_coord - global_position).normalized()
-		print("NEW HEADING ", str(current_heading))
 		
 		current_tile_entrypoint = _get_tile_entrypoint()
 		

@@ -1,10 +1,10 @@
 class_name PlayerCamera extends Camera2D
 
-@export var min_zoom_level: float = 1.0
-@export var max_zoom_level: float = 20.0  # TODO: Set by the active tile set
+@export var min_zoom_level: float = 0.1
+@export var max_zoom_level: float = 1.0 # TODO: Set by the active tile set
 
-@export var zoom_factor: float = 0.2
-@export var zoom_duration: float = 0.2
+@export var zoom_factor: float = 0.1
+@export var zoom_duration: float = 0.1
 
 var follow_factor: float = 0.2  # The factor for following the target position - <0.5 for smooth drag, 1.0 for tight
 
@@ -21,6 +21,7 @@ var scroll_active: bool = false
 var follow_train: bool = false
 
 var zoom_level: float = 1.0: set = _set_zoom_level
+var zoom_drag_factor: float = 1.0
 
 
 func initialise_camera(locomotive_ref: TrainCarriage) -> void:
@@ -33,6 +34,7 @@ func _ready():
 
 
 func _process(delta: float):
+	zoom_drag_factor = 0.5 / zoom[0]
 	if follow_train:
 		# Chase the train
 		target_pos = locomotive.global_position
@@ -47,22 +49,21 @@ func _input(event):
 		follow_train = true
 	
 	if event.is_action_pressed("zoom_in"):
-		_set_zoom_level(zoom_level - zoom_factor)
-		print("I zoomed!")
+		_set_zoom_level(zoom_level - (zoom_factor * 0.8 * zoom[0]))
 	elif event.is_action_pressed("zoom_out"):
-		_set_zoom_level(zoom_level + zoom_factor)
+		_set_zoom_level(zoom_level + (zoom_factor * 0.8 * zoom[0]))
 	
 	if event.is_action_pressed("click_drag"):
 		if not scroll_active:
 			follow_train = false
 			scroll_active = true
-			follow_factor = 0.4
+			follow_factor = 0.2
 		
 	if event.is_action_released("click_drag"):
 		scroll_active = false
 		
 	if event is InputEventMouseMotion and scroll_active:
-		target_pos -= event.relative
+		target_pos -= event.relative * zoom_drag_factor
 
 
 func _set_zoom_level(value: float) -> void:

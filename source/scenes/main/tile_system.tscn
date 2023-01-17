@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://brerulorr60o5"]
+[gd_scene load_steps=7 format=3 uid="uid://brerulorr60o5"]
 
 [ext_resource type="Script" path="res://source/scenes/main/tile_system.gd" id="2_65ace"]
 [ext_resource type="Texture2D" uid="uid://bvxxgiwb22mi" path="res://assets/tile_system/tiles_snow_x4.png" id="2_n1jp4"]
 [ext_resource type="Texture2D" uid="uid://3dr5eskrq5uu" path="res://assets/tile_system/tile_selector.png" id="3_oiree"]
+[ext_resource type="PackedScene" uid="uid://biav0v8xqh4lp" path="res://source/scenes/main/ghost_placement.tscn" id="4_qfdk4"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dvpok"]
 texture = ExtResource("2_n1jp4")
@@ -78,4 +79,6 @@ texture = ExtResource("3_oiree")
 
 [node name="ghost_selection" type="Sprite2D" parent="."]
 
-[node name="ghost_placement" type="Sprite2D" parent="."]
+[node name="ghost_placement" parent="." instance=ExtResource("4_qfdk4")]
+
+[node name="valid_placements" type="Node2D" parent="."]

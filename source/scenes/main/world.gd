@@ -18,8 +18,10 @@ var fog_texture : ImageTexture
 @onready var player_camera: PlayerCamera = get_node("%player_camera")
 @onready var fog: Sprite2D = $%Fog
 
+# This is a confirmation that Lil'Oni has actually done something in the code.
 
 func _ready():
+	randomize()
 	# This should fire every time the train enters a cell, and should reveal that area
 	
 	Event.connect("train_on_cell", update_fog)

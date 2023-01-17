@@ -23,6 +23,7 @@ const HEX_RELATIVE_POS_MAPPING = {
 	HexPos.LEFT_TOP: Vector2i(-144, -64),
 	HexPos.LEFT_BOTTOM: Vector2i(-144, 64),
 }
+# This script will work so well I already know it - hype
 
 # This is a map of the Atlas Map coords to the array of connection points (HexPos)
 # Todo: Organise the tilemap such that this can be generated
