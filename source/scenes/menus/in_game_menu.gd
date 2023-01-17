@@ -12,6 +12,7 @@ var is_sub_menu_open := false
 
 func _ready() -> void:
 	GlobalRefs.active_menu = self
+	print('level_ref: ', GlobalRefs.level_ref)
 	GlobalRefs.level_ref.process_mode = PROCESS_MODE_DISABLED
 
 
