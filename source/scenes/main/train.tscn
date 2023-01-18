@@ -40,10 +40,7 @@ scale_amount_curve = SubResource("Curve_2cn1j")
 
 [node name="train_carrage" parent="." instance=ExtResource("2_e3wwu")]
 y_sort_enabled = true
-<<<<<<< HEAD
 position = Vector2(0, -100)
-=======
-position = Vector2(0, -27)
 is_locomotive = true
 
 [node name="chuggachugga" type="AudioStreamPlayer2D" parent="."]
@@ -52,4 +49,3 @@ pitch_scale = 0.01
 attenuation = 1.93187
 bus = &"Effects"
 script = ExtResource("5_y50ds")
->>>>>>> main
