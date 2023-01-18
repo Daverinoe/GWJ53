@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bwa5t45dpu37x" path="res://source/scenes/main/train.tscn" id="4_t50p6"]
 [ext_resource type="Shader" path="res://assets/shaders/fog_of_war.gdshader" id="5_n2ols"]
 [ext_resource type="AudioStream" uid="uid://htkneytde3vc" path="res://assets/audio/music/train_game_sketch_thing.ogg" id="6_4cdvx"]
+[ext_resource type="PackedScene" uid="uid://d2f72av5kbjxd" path="res://source/scenes/main/TrainSpeedHUD.tscn" id="6_uckai"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_lul3q"]
 
@@ -42,7 +43,6 @@ layer_1/tile_data = PackedInt32Array()
 [node name="train" parent="." instance=ExtResource("4_t50p6")]
 unique_name_in_owner = true
 position = Vector2(193, 289)
-max_speed = 200.0
 
 [node name="Fog" type="Node2D" parent="."]
 unique_name_in_owner = true
@@ -76,6 +76,20 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 texture = SubResource("PlaceholderTexture2D_ckjp2")
+
+[node name="train" parent="." instance=ExtResource("4_t50p6")]
+position = Vector2(480, 257)
+
+[node name="player_camera" parent="." instance=ExtResource("4_gs2qm")]
+unique_name_in_owner = true
+min_zoom_level = 0.2
+max_zoom_level = 10.0
+
+[node name="TrainSpeedHUD" parent="player_camera" instance=ExtResource("6_uckai")]
+offset_left = 607.0
+offset_top = 346.0
+offset_right = 607.0
+offset_bottom = 346.0
 
 [node name="music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_4cdvx")

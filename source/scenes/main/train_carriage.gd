@@ -2,8 +2,9 @@ class_name TrainCarriage extends Node2D
 
 @export var is_locomotive: bool = false
 var next_carriage: TrainCarriage
-var target_speed: int = 20
-var speed: int = 0  # TODO Get this from the parent
+var target_speed: float = 20
+var speed_multiplier: float = 1.0
+var speed: float = 0  # TODO Get this from the parent
 var carriage_initialised: bool = false
 
 # Handle vector based movement
@@ -21,10 +22,16 @@ var tile_system: TileSystem
 func _ready():
 	pass
 
+func update_speed(new_speed):
+	speed = lerp(speed, new_speed, 0.2)
+
+func set_new_speed_multiplier(new_speed_multiplier):
+	speed_multiplier = new_speed_multiplier 
 
 func _physics_process(delta):
 	if carriage_initialised:
-		speed = lerp(speed, target_speed, 0.2)  # Provide some linear acceleration to the train
+		update_speed(target_speed * speed_multiplier)
+		#speed = lerp(speed, target_speed, 0.2)  # Provide some linear acceleration to the train
 		_check_vector_change()
 		global_position += current_heading * speed * delta
 
@@ -96,6 +103,8 @@ func _check_vector_change() -> void:
 		var available_exits: Array = tile_system.ATLAS_MAP_LOOKUP[
 			tile_system.get_cell_atlas_coords(0, current_tile_map_coord)
 			].duplicate()
+		print("current tile map coordinate:", current_tile_center_coord)
+		print("available exits:", available_exits)
 		
 		available_exits.erase(current_tile_entrypoint)
 		assert(len(available_exits) > 0)
@@ -114,10 +123,12 @@ func initialise_train_carriage(train_ref: Train, tile_system_ref: TileSystem, t_
 	# Currently handling this as dependency injection rather than globals
 	train = train_ref
 	tile_system = tile_system_ref
-	target_speed = t_speed
-	if is_locomotive:
-		current_heading = Vector2.DOWN
-	else:
+	target_speed = t_speed * speed_multiplier
+	# locomotive should decide if it is the front of the train
+	# We still want non locomotive parts of the train to move (carrages should still move). 
+	current_heading = Vector2.DOWN
+
+	if not is_locomotive:
 		next_carriage = next_carriage_ref
 		current_heading = next_carriage.current_heading
 	
