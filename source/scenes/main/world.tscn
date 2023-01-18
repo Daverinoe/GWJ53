@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bdo7a0e5m3fli"]
+[gd_scene load_steps=12 format=3 uid="uid://bdo7a0e5m3fli"]
 
 [ext_resource type="Script" path="res://source/scenes/main/world.gd" id="1_d1use"]
 [ext_resource type="PackedScene" uid="uid://brerulorr60o5" path="res://source/scenes/main/tile_system.tscn" id="2_kwtms"]
@@ -6,9 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://bwa5t45dpu37x" path="res://source/scenes/main/train.tscn" id="4_t50p6"]
 [ext_resource type="Shader" path="res://assets/shaders/fog_of_war.gdshader" id="5_n2ols"]
 [ext_resource type="AudioStream" uid="uid://htkneytde3vc" path="res://assets/audio/music/train_game_sketch_thing.ogg" id="6_4cdvx"]
-
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_7fnrg"]
-blend_mode = 3
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_lul3q"]
 
@@ -46,10 +43,8 @@ layer_1/tile_data = PackedInt32Array()
 unique_name_in_owner = true
 position = Vector2(121, 281)
 
-[node name="Fog" type="Sprite2D" parent="."]
+[node name="Fog" type="Node2D" parent="."]
 unique_name_in_owner = true
-material = SubResource("CanvasItemMaterial_7fnrg")
-centered = false
 
 [node name="test_black" type="Sprite2D" parent="."]
 visible = false
