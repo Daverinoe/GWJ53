@@ -7,12 +7,16 @@ var light_texture = preload("res://assets/tile_system/fog_light_x4.png")
 var light_image : Image
 var light_offset : Vector2 = Vector2(light_texture.get_width()/2.0, light_texture.get_height()/2.0)
 # Fog vars
+var thread = Thread.new()
 var fog_texture : ImageTexture
 var fog_images : Dictionary = {}
 var initial_view : int = 2
 var current_chunk : Dictionary = {}
+var dict_key : String = ""
+var neighbours_and_offsets : Array
 var previous_chunk : Dictionary = {}
 var fog_material : CanvasItemMaterial = preload("res://assets/materials/fog_sprite_material.tres")
+var chunk_size : Vector2i
 
 @onready var tile_system: TileSystem = get_node("%tile_system")
 @onready var train: Train = get_node("%train")
@@ -21,9 +25,10 @@ var fog_material : CanvasItemMaterial = preload("res://assets/materials/fog_spri
 
 
 func _ready():
+	chunk_size = light_texture.get_size()
 	# This should fire every time the train enters a cell, and should reveal that area
 	
-	Event.connect("train_on_cell", update_fog)
+	Event.connect("train_on_cell", threaded_update_fog)
 	
 	get_tree().call_group("Train", "initialise_train", self, tile_system)
 	player_camera.initialise_camera(train.locomotive_ref)
@@ -38,17 +43,16 @@ func _process(delta):
 
 func initialise_fog() -> void:
 	# TODO: Update for procedural generation?
-	var window_size: Vector2i = DisplayServer.screen_get_size()
 	
 	for i in range(-2, 3):
 		for j in range(-2, 3):
 			# Create initial fog
-			var fog_image = Image.create(window_size.x, window_size.y, false, Image.FORMAT_RGBAH)
+			var fog_image = Image.create(chunk_size.x, chunk_size.y, false, Image.FORMAT_RGBAH)
 			fog_image.fill(Color.BLACK)
 			
 			# Create sprite for texture
 			var fog_sprite = Sprite2D.new()
-			fog_sprite.position = window_size * Vector2i(i, j)
+			fog_sprite.position = chunk_size * Vector2i(i, j)
 			fog_sprite.centered = false
 			fog_sprite.material = fog_material
 			fog_container.add_child(fog_sprite)
@@ -77,8 +81,14 @@ func update_fog(new_position: Vector2) -> void:
 	# Create rect to blend with fog
 	var light_rect: Rect2 = Rect2(Vector2.ZERO, Vector2(light_image.get_width(), light_image.get_height()))
 	
-	var dict_key = get_current_chunk(new_position)
-	current_chunk = fog_images[dict_key]
+	if dict_key == "":
+		dict_key = get_current_chunk(new_position)
+	var this_chunk = fog_images[dict_key]
+	
+	var chunk_changed: bool = false
+	if this_chunk != current_chunk:
+		current_chunk = this_chunk
+		chunk_changed = true
 	
 	var fog_image = current_chunk["image"]
 	fog_image.blend_rect(light_image, light_rect, new_position - light_offset)
@@ -87,7 +97,8 @@ func update_fog(new_position: Vector2) -> void:
 	update_fog_texture(current_chunk)
 	
 	# Also update neighbouring chunks
-	var neighbours_and_offsets = get_neighbouring_chunks_and_offsets(dict_key)
+	if chunk_changed:
+		neighbours_and_offsets = get_neighbouring_chunks_and_offsets(dict_key)
 	var neighbours = neighbours_and_offsets[0]
 	var offsets = neighbours_and_offsets[1]
 	for i in range(neighbours.size()):
@@ -124,8 +135,6 @@ func vec2_to_dict_string(vector: Vector2) -> String:
 
 
 func get_current_chunk(new_position: Vector2) -> String:
-	if current_chunk != {}:
-		previous_chunk = current_chunk
 	# Select correct image to update
 	var key_to_use : String
 	var dict_keys = fog_images.keys()
@@ -152,10 +161,9 @@ func get_current_chunk(new_position: Vector2) -> String:
 
 
 func get_neighbouring_chunks_and_offsets(chunk_key: String) -> Array:
-	var screen_size: Vector2i = DisplayServer.screen_get_size()
 	var current_position: Vector2 = dict_string_to_vec2(chunk_key)
 	
-	# Get neighbour keys by subb/add-ing the screen size to the current position
+	# Get neighbour keys by subb/add-ing the chunk size to the current position
 	var neighbours: PackedStringArray = PackedStringArray([])
 	var offsets: Array = []
 	for i in [-1, 0, 1]:
@@ -164,10 +172,25 @@ func get_neighbouring_chunks_and_offsets(chunk_key: String) -> Array:
 			if i == 0 and j == 0:
 				continue
 			
-			var offset = (screen_size as Vector2) * Vector2(i, j)
+			var offset = (chunk_size as Vector2) * Vector2(i, j)
 			offsets.push_back(offset)
 			
 			var new_neighbour = current_position + offset
 			var new_neighbour_key = vec2_to_dict_string(new_neighbour)
 			neighbours.push_back(new_neighbour_key)
 	return [neighbours, offsets]
+
+
+func threaded_update_fog(new_position: Vector2) -> void:
+	if thread.is_alive():
+		pass
+	
+	if thread.is_started():
+		thread.wait_to_finish()
+	
+	thread.start(update_fog.bind(new_position))
+
+
+
+func _on_tree_exiting() -> void:
+	thread.wait_to_finish()
