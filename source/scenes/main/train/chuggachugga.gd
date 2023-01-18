@@ -14,11 +14,7 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
 	var train = get_parent()
-	# If the train speed is 0 we have issues
-	if train.current_speed <= 0:
-		self.pitch_scale = min_pitch_scale
-	else:
-		self.pitch_scale = train.current_speed / train.max_speed * max_pitch_scale
+	self.pitch_scale = clamp(train.current_speed / train.max_speed * max_pitch_scale, 0.01, 4.0)
 
 func set_chugga_volume(zoom_level) -> void:
 	self.volume_db = linear_to_db(zoom_level/VariableManager.max_zoom_level) + max_db
