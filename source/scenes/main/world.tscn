@@ -41,7 +41,8 @@ layer_1/tile_data = PackedInt32Array()
 
 [node name="train" parent="." instance=ExtResource("4_t50p6")]
 unique_name_in_owner = true
-position = Vector2(121, 281)
+position = Vector2(193, 289)
+max_speed = 200.0
 
 [node name="Fog" type="Node2D" parent="."]
 unique_name_in_owner = true
