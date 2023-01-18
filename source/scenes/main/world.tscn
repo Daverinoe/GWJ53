@@ -58,13 +58,20 @@ scale = Vector2(1161, 645)
 texture = SubResource("PlaceholderTexture2D_lul3q")
 centered = false
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-follow_viewport_enabled = true
+[node name="train" parent="." instance=ExtResource("4_t50p6")]
+position = Vector2(480, 257)
 
-[node name="BackBufferCopy" type="BackBufferCopy" parent="CanvasLayer"]
+[node name="player_camera" parent="." instance=ExtResource("4_gs2qm")]
+unique_name_in_owner = true
+min_zoom_level = 0.2
+max_zoom_level = 10.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="player_camera"]
+
+[node name="BackBufferCopy" type="BackBufferCopy" parent="player_camera/CanvasLayer"]
 copy_mode = 2
 
-[node name="FogPretty" type="TextureRect" parent="CanvasLayer"]
+[node name="FogPretty" type="TextureRect" parent="player_camera/CanvasLayer"]
 material = SubResource("ShaderMaterial_nccvp")
 anchors_preset = 15
 anchor_right = 1.0
@@ -73,14 +80,6 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 texture = SubResource("PlaceholderTexture2D_ckjp2")
-
-[node name="train" parent="." instance=ExtResource("4_t50p6")]
-position = Vector2(480, 257)
-
-[node name="player_camera" parent="." instance=ExtResource("4_gs2qm")]
-unique_name_in_owner = true
-min_zoom_level = 0.2
-max_zoom_level = 10.0
 
 [node name="music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_4cdvx")

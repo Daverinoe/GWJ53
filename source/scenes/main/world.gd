@@ -1,7 +1,7 @@
 class_name World extends MainScene
 
 
-const GRID_SIZE: int = 16
+const GRID_SIZE: int = 3
 
 var curr_train_speed: int = 100
 
@@ -12,6 +12,8 @@ var light_offset : Vector2 = Vector2(light_texture.get_width()/2.0, light_textur
 # Fog vars
 var fog_image : Image
 var fog_texture : ImageTexture
+var fog_images : Array
+var initial_view : int = 2
 
 @onready var tile_system: TileSystem = get_node("%tile_system")
 @onready var train: Train = get_node("%train")
@@ -37,7 +39,7 @@ func _process(delta):
 
 func initialise_fog() -> void:
 	# TODO: Update for procedural generation?
-	var window_size: Vector2i = DisplayServer.window_get_size_with_decorations()
+	var window_size: Vector2i = DisplayServer.window_get_size_with_decorations() * GRID_SIZE
 	
 	# Create initial fog
 	fog_image = Image.create(window_size.x, window_size.y, false, Image.FORMAT_RGBAH)
