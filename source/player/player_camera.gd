@@ -51,11 +51,6 @@ func _input(event):
 		follow_train = true
 	
 	if event.is_action_pressed("zoom_in"):
-<<<<<<< HEAD
-		_set_zoom_level(zoom_level - (zoom_factor * 0.8 * zoom[0]))
-	elif event.is_action_pressed("zoom_out"):
-		_set_zoom_level(zoom_level + (zoom_factor * 0.8 * zoom[0]))
-=======
 		var new_zoom_level = zoom_level - zoom_factor
 		_set_zoom_level(new_zoom_level)
 		# Emit new zoom level to modify audio
@@ -64,7 +59,6 @@ func _input(event):
 		var new_zoom_level = zoom_level + zoom_factor
 		_set_zoom_level(new_zoom_level)
 		Event.emit_signal("zoom_level_changed", new_zoom_level)
->>>>>>> main
 	
 	if event.is_action_pressed("click_drag"):
 		if not scroll_active:

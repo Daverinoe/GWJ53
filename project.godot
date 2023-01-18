@@ -50,6 +50,11 @@ _global_script_classes=[{
 "path": "res://source/scenes/main/tile_system.gd"
 }, {
 "base": "Node2D",
+"class": &"Train",
+"language": &"GDScript",
+"path": "res://source/scenes/main/train.gd"
+}, {
+"base": "Node2D",
 "class": &"TrainCarriage",
 "language": &"GDScript",
 "path": "res://source/scenes/main/train_carriage.gd"
@@ -68,6 +73,7 @@ _global_script_class_icons={
 "SaveMenu": "",
 "Setting": "",
 "TileSystem": "",
+"Train": "",
 "TrainCarriage": "",
 "World": ""
 }
