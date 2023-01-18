@@ -2,20 +2,32 @@ class_name Train extends Node2D
 
 # A train is a group of TrainCarriage objects
 @export var train_carriage_node: PackedScene
+<<<<<<< HEAD
 @export var is_main_train: bool
+=======
+@export var active: bool
+@export var max_speed: float = 100 # Only used for chuggachugga pitch scale at the moment
+>>>>>>> main
 
-var locomotive_ref: TrainCarriage
+var locomotive_ref: TrainCarriage = null
 
 var train_length: int = 0
 var world: World
 var tile_system: TileSystem
 
+<<<<<<< HEAD
+=======
+
+var current_speed: float = 0
+
+>>>>>>> main
 func _ready():
 	pass
 
 
-func _process(delta):
-	pass
+func _physics_process(delta):
+	if locomotive_ref != null:
+		current_speed = locomotive_ref.speed
 
 
 func initialise_train(world_ref: World, tile_system_ref: TileSystem) -> void:

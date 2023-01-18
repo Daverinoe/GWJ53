@@ -32,7 +32,7 @@ func _ready():
 	
 	initialise_fog()
 	update_fog_texture()
-
+	GlobalRefs.level_ref = self
 
 func _process(delta):
 	pass

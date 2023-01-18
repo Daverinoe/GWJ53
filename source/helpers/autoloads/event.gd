@@ -4,3 +4,5 @@ signal reload_main_menu # For forcing the main menu to check whether save games 
 # to display correct button schema
 
 signal train_on_cell(center_of_cell_in_global_position)
+
+signal zoom_level_changed(zoom_level)

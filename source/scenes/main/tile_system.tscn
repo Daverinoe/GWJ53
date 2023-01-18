@@ -1,8 +1,27 @@
-[gd_scene load_steps=6 format=3 uid="uid://brerulorr60o5"]
+[gd_scene load_steps=8 format=3 uid="uid://brerulorr60o5"]
 
+[ext_resource type="Texture2D" uid="uid://f03rjiy1hea2" path="res://assets/tile_system/tiles_snow_x4_bottom.png" id="2_51m1x"]
 [ext_resource type="Script" path="res://source/scenes/main/tile_system.gd" id="2_65ace"]
 [ext_resource type="Texture2D" uid="uid://bvxxgiwb22mi" path="res://assets/tile_system/tiles_snow_x4.png" id="2_n1jp4"]
 [ext_resource type="Texture2D" uid="uid://3dr5eskrq5uu" path="res://assets/tile_system/tile_selector.png" id="3_oiree"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lecrd"]
+texture = ExtResource("2_51m1x")
+texture_region_size = Vector2i(384, 384)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:1/0 = 0
+4:2/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dvpok"]
 texture = ExtResource("2_n1jp4")
@@ -48,7 +67,8 @@ texture_region_size = Vector2i(384, 256)
 tile_shape = 3
 tile_offset_axis = 1
 tile_size = Vector2i(384, 256)
-sources/0 = SubResource("TileSetAtlasSource_dvpok")
+sources/1 = SubResource("TileSetAtlasSource_dvpok")
+sources/0 = SubResource("TileSetAtlasSource_lecrd")
 
 [node name="tile_system" type="TileMap"]
 position = Vector2(1, -5)
