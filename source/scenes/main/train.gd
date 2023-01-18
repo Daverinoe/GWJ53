@@ -33,8 +33,9 @@ func initialise_train(world_ref: World, tile_system_ref: TileSystem) -> void:
 		if child_train_carriage.has_method("initialise_train_carriage"):
 			if child_train_carriage.is_locomotive:
 				locomotive_ref = child_train_carriage
-				child_train_carriage.initialise_train_carriage(self, tile_system)
+				child_train_carriage.initialise_train_carriage(self, tile_system, max_speed)
+				#train_ref: Train, tile_system_ref: TileSystem, speed: float, next_carriage_ref=null
 				previous_carriage = child_train_carriage
 			else:
-				child_train_carriage.initialise_train_carriage(self, tile_system, previous_carriage)
+				child_train_carriage.initialise_train_carriage(self, tile_system, max_speed, previous_carriage)
 				previous_carriage = child_train_carriage

@@ -110,11 +110,11 @@ func _check_vector_change() -> void:
 		print("HIT CENTRE, NEW HEADING " + str(current_heading))
 		
 
-func initialise_train_carriage(train_ref: Train, tile_system_ref: TileSystem, next_carriage_ref=null) -> void:
+func initialise_train_carriage(train_ref: Train, tile_system_ref: TileSystem, t_speed: float, next_carriage_ref=null) -> void:
 	# Currently handling this as dependency injection rather than globals
 	train = train_ref
 	tile_system = tile_system_ref
-	
+	target_speed = t_speed
 	if is_locomotive:
 		current_heading = Vector2.DOWN
 	else:
