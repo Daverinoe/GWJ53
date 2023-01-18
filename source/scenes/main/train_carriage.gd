@@ -2,8 +2,9 @@ class_name TrainCarriage extends Node2D
 
 @export var is_locomotive: bool = false
 var next_carriage: TrainCarriage
-var target_speed: int = 20
-var speed: int = 0  # TODO Get this from the parent
+var target_speed: float = 20
+var speed_multiplier: float = 1.0
+var speed: float = 0  # TODO Get this from the parent
 var carriage_initialised: bool = false
 
 # Handle vector based movement
@@ -24,9 +25,12 @@ func _ready():
 func update_speed(new_speed):
 	speed = lerp(speed, new_speed, 0.2)
 
+func set_new_speed_multiplier(new_speed_multiplier):
+	speed_multiplier = new_speed_multiplier 
+
 func _physics_process(delta):
 	if carriage_initialised:
-		update_speed(target_speed)
+		update_speed(target_speed * speed_multiplier)
 		#speed = lerp(speed, target_speed, 0.2)  # Provide some linear acceleration to the train
 		_check_vector_change()
 		global_position += current_heading * speed * delta
@@ -119,7 +123,7 @@ func initialise_train_carriage(train_ref: Train, tile_system_ref: TileSystem, t_
 	# Currently handling this as dependency injection rather than globals
 	train = train_ref
 	tile_system = tile_system_ref
-	target_speed = t_speed
+	target_speed = t_speed * speed_multiplier
 	# locomotive should decide if it is the front of the train
 	# We still want non locomotive parts of the train to move (carrages should still move). 
 	current_heading = Vector2.DOWN

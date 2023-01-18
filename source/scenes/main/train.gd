@@ -10,7 +10,6 @@ var locomotive_ref: TrainCarriage = null
 var train_length: int = 0
 var world: World
 var tile_system: TileSystem
-signal update_speed(new_target_speed)
 var current_speed: float = 0
 
 func _ready():
@@ -20,12 +19,14 @@ func _ready():
 				child_carriages.append(child_train_carriage)
 			else:
 				locomotive_ref = child_train_carriage
+	Event.connect("update_train_speed_multiplier", _on_update_train_speed_multiplier)
+	
 		
 			
-func on_update_speed(new_t_speed):
-	for child_train_carriage in child_carriages:
-		if child_train_carriage.has_method("update_speed"):
-			child_train_carriage.update_speed(new_t_speed)
+#func on_update_speed(new_t_speed):
+#	for child_train_carriage in child_carriages:
+#		if child_train_carriage.has_method("update_speed"):
+#			child_train_carriage.update_speed(new_t_speed)
 
 func _physics_process(delta):
 	if locomotive_ref != null:
@@ -52,3 +53,8 @@ func initialise_train(world_ref: World, tile_system_ref: TileSystem) -> void:
 				previous_carriage = locomotive_ref
 			child_train_carriage.initialise_train_carriage(self, tile_system, max_speed, previous_carriage)
 			previous_carriage = child_train_carriage
+
+			
+func _on_update_train_speed_multiplier(new_t_speed_multiplier):
+	print("updating speed multiplier to: ", new_t_speed_multiplier)
+	locomotive_ref.set_new_speed_multiplier(new_t_speed_multiplier)
