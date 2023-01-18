@@ -14,7 +14,9 @@ _data = [Vector2(0, 1), 0.0, -0.151534, 0, 1, Vector2(0.659919, 0.9), 0.0, 0.0, 
 point_count = 3
 
 [node name="train" type="Node2D" groups=["Train"]]
+rotation = 3.14159
 script = ExtResource("1_50bbo")
+active = false
 
 [node name="train_locomotive" parent="." instance=ExtResource("2_e3wwu")]
 y_sort_enabled = true
@@ -40,8 +42,7 @@ scale_amount_curve = SubResource("Curve_2cn1j")
 
 [node name="train_carrage" parent="." instance=ExtResource("2_e3wwu")]
 y_sort_enabled = true
-position = Vector2(0, -27)
-is_locomotive = true
+position = Vector2(0, -106)
 
 [node name="chuggachugga" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("4_ag3x5")
