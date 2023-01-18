@@ -79,13 +79,3 @@ is_main_train = true
 
 [node name="player_camera" parent="." instance=ExtResource("4_gs2qm")]
 unique_name_in_owner = true
-<<<<<<< HEAD
-=======
-min_zoom_level = 0.2
-max_zoom_level = 10.0
-
-[node name="music" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("6_4cdvx")
-autoplay = true
-bus = &"Music"
->>>>>>> main

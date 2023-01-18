@@ -34,11 +34,6 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://source/scenes/main/main_scene.gd"
 }, {
-"base": "Camera2D",
-"class": &"PlayerCamera",
-"language": &"GDScript",
-"path": "res://source/player/player_camera.gd"
-}, {
 "base": "Control",
 "class": &"SaveMenu",
 "language": &"GDScript",
@@ -53,11 +48,6 @@ _global_script_classes=[{
 "class": &"TileSystem",
 "language": &"GDScript",
 "path": "res://source/scenes/main/tile_system.gd"
-}, {
-"base": "Node2D",
-"class": &"Train",
-"language": &"GDScript",
-"path": "res://source/scenes/main/train.gd"
 }, {
 "base": "Node2D",
 "class": &"TrainCarriage",
@@ -75,11 +65,9 @@ _global_script_class_icons={
 "GhostPlacement": "",
 "IOHelper": "",
 "MainScene": "",
-"PlayerCamera": "",
 "SaveMenu": "",
 "Setting": "",
 "TileSystem": "",
-"Train": "",
 "TrainCarriage": "",
 "World": ""
 }
