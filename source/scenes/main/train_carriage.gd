@@ -7,6 +7,9 @@ var speed_multiplier: float = 1.0
 var speed: float = 0  # TODO Get this from the parent
 var carriage_initialised: bool = false
 
+@onready var locomotive_sprite: AnimatedSprite2D = get_node("locomotive_sprite")
+@onready var carriage_sprite: AnimatedSprite2D = get_node("carriage_sprite")
+
 # Handle vector based movement
 var current_heading: Vector2
 var check_tile_coord: Vector2i
@@ -20,7 +23,12 @@ var tile_system: TileSystem
 
 
 func _ready():
-	pass
+	if is_locomotive:
+		locomotive_sprite.visible = true
+		carriage_sprite.visible = false
+	else:
+		carriage_sprite.visible = true
+		locomotive_sprite.visible = false
 
 func update_speed(new_speed):
 	speed = lerp(speed, new_speed, 0.2)
@@ -34,11 +42,27 @@ func _physics_process(delta):
 		#speed = lerp(speed, target_speed, 0.2)  # Provide some linear acceleration to the train
 		_check_vector_change()
 		global_position += current_heading * speed * delta
+	if is_locomotive:
+		change_active_frames(locomotive_sprite)
+	else:
+		change_active_frames(carriage_sprite)
 
 
 func _process(delta):
 	# Look at heading in a lerp fashion
 	rotation_degrees = lerp(rotation_degrees, rad_to_deg(current_heading.angle()), 0.5)
+
+func change_active_frames(sprite: AnimatedSprite2D):
+	var current_angle = rad_to_deg(current_heading.angle())
+	print(current_angle)
+	if current_angle >= -95 && current_angle < -85:
+		sprite.set_animation("top")
+	elif current_angle >= 85 && current_angle < 95:
+		sprite.set_animation("down")
+	elif current_angle >= -85 && current_angle < -5:
+		sprite.set_animation("top_right")
+	elif current_angle >= 5 && current_angle < 85:
+		sprite.set_animation("down_right")
 
 
 func _get_tile_entrypoint() -> TileSystem.HexPos:
