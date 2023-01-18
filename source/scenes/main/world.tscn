@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bdo7a0e5m3fli"]
+[gd_scene load_steps=13 format=3 uid="uid://bdo7a0e5m3fli"]
 
 [ext_resource type="Script" path="res://source/scenes/main/world.gd" id="1_d1use"]
 [ext_resource type="PackedScene" uid="uid://brerulorr60o5" path="res://source/scenes/main/tile_system.tscn" id="2_kwtms"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bwa5t45dpu37x" path="res://source/scenes/main/train.tscn" id="4_t50p6"]
 [ext_resource type="Shader" path="res://assets/shaders/fog_of_war.gdshader" id="5_n2ols"]
 [ext_resource type="AudioStream" uid="uid://htkneytde3vc" path="res://assets/audio/music/train_game_sketch_thing.ogg" id="6_4cdvx"]
+[ext_resource type="PackedScene" uid="uid://d2f72av5kbjxd" path="res://source/scenes/main/TrainSpeedHUD.tscn" id="6_uckai"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_lul3q"]
 
@@ -36,13 +37,12 @@ script = ExtResource("1_d1use")
 [node name="tile_system" parent="." instance=ExtResource("2_kwtms")]
 unique_name_in_owner = true
 position = Vector2(0, 0)
-layer_0/tile_data = PackedInt32Array(1, 0, 0, 65537, 0, 0, 65536, 0, 0, 131072, 0, 0, 196608, 131072, 0, 131073, 131072, 0)
+layer_0/tile_data = PackedInt32Array(1, 0, 0, 65537, 0, 0, 65536, 0, 0, 131072, 0, 0, 196608, 131072, 0, 131073, 131072, 0, 196609, 65536, 1, 196610, 65536, 2, 196612, 65536, 0, 196611, 196608, 0, 262145, 0, 0, 327681, 131072, 0, 393218, 196608, 0, 327683, 131072, 2, 327684, 131072, 2, 131076, 0, 0, 65540, 0, 0, 327682, 65536, 3, 262146, 131072, 3)
 layer_1/tile_data = PackedInt32Array()
 
 [node name="train" parent="." instance=ExtResource("4_t50p6")]
 unique_name_in_owner = true
 position = Vector2(193, 289)
-max_speed = 200.0
 
 [node name="Fog" type="Node2D" parent="."]
 unique_name_in_owner = true
@@ -73,6 +73,15 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 texture = SubResource("PlaceholderTexture2D_ckjp2")
+
+[node name="TrainSpeedHUD" parent="player_camera" instance=ExtResource("6_uckai")]
+offset_left = 607.0
+offset_top = 346.0
+offset_right = 607.0
+offset_bottom = 346.0
+
+[node name="train" parent="." instance=ExtResource("4_t50p6")]
+position = Vector2(480, 257)
 
 [node name="music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_4cdvx")
