@@ -114,8 +114,12 @@ func update_fog(new_position: Vector2) -> void:
 
 func update_fog_texture(chunk: Dictionary) -> void:
 	var fog_image = chunk["image"]
-	var fog_texture = ImageTexture.create_from_image(fog_image)
-	chunk["sprite"].texture = fog_texture
+	var current_texture = chunk["sprite"].texture
+	if current_texture != null:
+		(current_texture as ImageTexture).update(fog_image)
+	else:
+		var fog_texture = ImageTexture.create_from_image(fog_image)
+		chunk["sprite"].texture = fog_texture
 
 
 func start_following() -> void:
