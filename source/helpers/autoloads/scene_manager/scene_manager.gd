@@ -18,6 +18,10 @@ var path_to_load: String
 var new_instance = null
 var is_finished_loading := false
 var load_variables = null
+var background = preload("res://source/scenes/menus/main_menu/menu_background.tscn")
+
+var train_tween : Tween
+var track_tween : Tween
 
 
 @onready var hint_ref = $VBoxContainer/hint
@@ -28,6 +32,7 @@ func _ready() -> void:
 	randomize()
 	set_process(false)
 	self.visible = false
+	
 	connect("change_scene_to_file", switch_scenes)
 	connect("load_save_from_file", switch_scenes)
 
@@ -49,10 +54,18 @@ func _input(event):
 	# Also check for action released of the select button, so it doesn't automatically load into the game if the 
 	# file is small enough.
 	if is_finished_loading and !(event is InputEventMouseMotion) and !event.is_action_released("ui_select"):
+		pass
 		finish_switch()
 
 
 func switch_scenes(previous_scene_reference, next_scene_path, is_load_request: bool = false, load_json: Dictionary = {}) -> void:
+	
+	var bg_to_load = background.instantiate()
+	self.add_child(bg_to_load)
+	self.move_child(bg_to_load, 0)
+	
+	animate_train()
+	
 	path_to_load = next_scene_path
 	
 	initiate_load(previous_scene_reference)
@@ -70,8 +83,8 @@ func switch_scenes(previous_scene_reference, next_scene_path, is_load_request: b
 	var new_scene = ResourceLoader.load_threaded_get(path_to_load)
 	new_instance = new_scene.instantiate()
 	new_instance.visible = false
+	new_instance.modulate = Color(1.0, 1.0, 1.0, 0.0)
 	
-	get_tree().root.add_child(new_instance)
 	new_instance.set_process_mode(Node.PROCESS_MODE_DISABLED)
 	
 	# If loading, pass off instance to the load handler
@@ -105,13 +118,24 @@ func tween_load_visibility(start_alpha, final_alpha) -> void:
 
 
 func finish_switch() -> void:
+	finish_train_animation()
+	
+	await train_tween.finished
+	track_tween.kill()
+	
+	$menu_background.queue_free()
+	
+	new_instance.modulate = Color(1.0, 1.0, 1.0, 1.0)
 	new_instance.visible = true
 	# Fade out loading scene
 	tween_load_visibility(1.0, 0.0)
 	self.visible = false
 	new_instance.set_process_mode(Node.PROCESS_MODE_INHERIT)
+	get_tree().root.add_child(new_instance)
 	new_instance = null
 	is_finished_loading = false
+	pass
+	
 
 
 func loading_animation(is_playing: bool) -> void:
@@ -156,3 +180,68 @@ func apply_load_variables() -> void:
 	for scene in persist_scenes:
 		var variables = load_variables[scene.name]
 		scene.load_data(variables[scene.name])
+
+
+func animate_train() -> void:
+	# Move track under the train
+	track_tween = get_tree().create_tween()
+	track_tween.set_ease(Tween.EASE_IN)
+	track_tween.tween_method(
+		set_scroll_speed,
+		0.0,
+		0.5,
+		30.0
+	)
+	
+	track_tween.play()
+	
+	# Move the train back and forth
+	var initial_position = $menu_background/train.position.x
+	train_tween = get_tree().create_tween()
+	
+	train_tween.set_loops()
+	train_tween.set_ease(Tween.EASE_IN_OUT)
+#	train_tween.set_trans(Tween.TRANS_EXPO)
+	
+	train_tween.tween_property(
+		$menu_background/train,
+		"position:x",
+		initial_position - 400,
+		8.0
+	)
+	
+	train_tween.tween_interval(2)
+	
+	train_tween.tween_property(
+		$menu_background/train,
+		"position:x",
+		initial_position,
+		8.0
+	)
+	
+	train_tween.play()
+
+
+func set_scroll_speed(speed) -> void:
+	$menu_background/background.material.set_shader_parameter("scroll_speed", speed)
+
+
+func finish_train_animation() -> void:
+	var train = $menu_background/train
+	var current_position = train.position.x
+	
+	train_tween.kill()
+	train_tween = get_tree().create_tween()
+	train_tween.set_ease(Tween.EASE_IN)
+	train_tween.set_trans(Tween.TRANS_EXPO)
+	
+	train.position.x = current_position
+	
+	train_tween.tween_property(
+		train,
+		"position:x",
+		current_position + 2 * DisplayServer.screen_get_size().x,
+		2.0
+	)
+	
+	train_tween.play()

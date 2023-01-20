@@ -20,6 +20,19 @@ func _ready() -> void:
 
 
 func _on_play_pressed() -> void:
+	var tween : Tween = get_tree().create_tween()
+	
+	tween.tween_property(
+		$HBoxContainer,
+		"modulate",
+		Color(1.0, 1.0, 1.0, 0.0),
+		2.0
+	)
+	
+	tween.play()
+	
+	await tween.finished
+	
 	SceneManager.emit_signal("change_scene_to_file", self, "res://source/scenes/main/world.tscn")
 	
 
