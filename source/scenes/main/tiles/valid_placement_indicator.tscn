@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://fyht2k51jgoa"]
+
+[ext_resource type="Texture2D" uid="uid://db6mvd4mnsrir" path="res://assets/tile_system/tile_available_indicator.png" id="1_qraju"]
+
+[node name="valid_placement_indicator" type="Sprite2D"]
+modulate = Color(0.176471, 0.596078, 0, 0.54902)
+texture = ExtResource("1_qraju")

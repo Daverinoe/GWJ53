@@ -1,12 +1,17 @@
 class_name TileSystem extends TileMap
 
+@export var valid_placement_indicator_scene: PackedScene
+
 @onready var active_tile_marker: Sprite2D = get_node("%active_tile_marker")
 @onready var tile_select_marker: Sprite2D = get_node("%tile_select_marker")
 
-@onready var ghost_selection: Sprite2D = get_node("%ghost_selection")
+@onready var ghost_selection: Node2D = get_node("%ghost_selection")
+@onready var ghost_selection_animator: AnimationPlayer = get_node("%ghost_selection_animator")
+@onready var ghost_selection_sprite: Sprite2D = get_node("%ghost_selection_sprite")
 @onready var valid_placement: Node2D = get_node("%valid_placements")
 
 var train: Train  # Reference to player train for active blob
+var current_train_map_coord: Vector2i
 
 enum HexPos {
 	TOP,
@@ -49,20 +54,23 @@ const ATLAS_MAP_LOOKUP = {
 var curr_mouse_position: Vector2i
 var active_tile_map_coord: Vector2i  # This is the coord where the "cursor" is and moves with the mouse
 var active_tile_world_coord: Vector2i
-var selected_tile_map_coord: Vector2i  # This will be the tile that the player has selected. Can be null
-var selected_tile_world_coord: Vector2i = Vector2i.ZERO
 
-# TODO: Handle the above with a selected flag, rather than a shitty placeholder vector
 var tile_selected: bool = false
 var active_atlas_map: int = 0
-var full_atlas_texture: Texture
+
+@onready var full_atlas_texture: Texture = tile_set.get_source(0).texture
+
+@onready var selected_tile = TilePack.new()
+@onready var swapped_tile = TilePack.new()
+
+var available_tiles: Array = []
 
 
 func _ready():
 	tile_select_marker.hide()
-	full_atlas_texture = tile_set.get_source(0).texture
-	ghost_selection.texture = full_atlas_texture
-	ghost_selection.region_enabled = true
+	
+	ghost_selection_sprite.texture = full_atlas_texture
+	ghost_selection_sprite.region_enabled = true
 	ghost_selection.hide()
 
 
@@ -72,6 +80,11 @@ func _process(delta):
 	active_tile_map_coord = local_to_map(curr_mouse_position)
 	active_tile_world_coord = map_to_local(active_tile_map_coord)  # This will make it a grid
 	active_tile_marker.global_position = active_tile_world_coord
+
+
+func _physics_process(delta):
+	# Find tile that train reference is currently on
+	current_train_map_coord = local_to_map(train.global_position)
 
 
 func _unhandled_input(event) -> void:
@@ -102,25 +115,65 @@ func _unhandled_input(event) -> void:
 		# Update tile if appropriate
 		if not tile_selected:
 			tile_selected = true
-			selected_tile_world_coord = active_tile_world_coord
-			selected_tile_map_coord = local_to_map(selected_tile_world_coord)
-			tile_select_marker.global_position = selected_tile_world_coord
+			selected_tile.world_coordinate = active_tile_world_coord
+			selected_tile.map_coordinate = local_to_map(selected_tile.world_coordinate)
+			selected_tile.atlas_region = get_tile_rect(selected_tile)
+			
+			tile_select_marker.global_position = selected_tile.world_coordinate
 			tile_select_marker.show()
 			
-			# +++++++++++++++++++++++
-			set_ghost_selection(selected_tile_map_coord, selected_tile_world_coord)
-			# +++++++++++++++++++++++
+			ghost_selection.global_position = selected_tile.world_coordinate
+			ghost_selection.show()
+			ghost_selection_animator.play("pickup")
+			set_cell(BASE_TILE_LAYER, selected_tile.map_coordinate, -1)  # Remove from map
 			
-			if is_obstacle(selected_tile_map_coord):
-				tile_select_marker.modulate = Color(1.0, 0.0, 0.0, 1.0)
+			# Now a tile is raised up and ready to place, determine the current available tiles 
+			_get_possible_tiles()
+			
+			for available_tile in available_tiles:
+				var valid_placement_indicator = valid_placement_indicator_scene.instantiate()
+				valid_placement_indicator.position = map_to_local(available_tile)
+				valid_placement.add_child(valid_placement_indicator)
+			
+			
+#			if is_obstacle(selected_tile_map_coord):
+#				tile_select_marker.modulate = Color(1.0, 0.0, 0.0, 1.0)
 		else:
-			# Find the new selection and switch them
-			_switch_tiles(selected_tile_map_coord, active_tile_map_coord)
+			# Check if this tile could be placed.
+#			_switch_tiles(selected_tile_map_coord, active_tile_map_coord)
 			tile_select_marker.hide()
 			tile_select_marker.modulate = Color(1.0, 0.77, 1.0, 1.0)
 			
 	elif event.is_action_pressed("tile_deselect"):
 		tile_deselect()
+
+
+func _get_possible_tiles() -> void:
+	# Flood fill out to get all tiles
+	available_tiles = []
+	var explored = []
+	var queue = [current_train_map_coord]
+	
+	var curr_node: Vector2i
+	var curr_neighbours: Array[Vector2i]
+	
+	var loops := 0
+	
+	while queue.size() > 0 and loops < 50:
+		loops += 1
+		curr_node = queue.pop_front()
+		explored.append(curr_node)
+		if get_cell_atlas_coords(BASE_TILE_LAYER, curr_node) != Vector2i(-1, -1) or is_obstacle(curr_node):
+			available_tiles.append(curr_node)
+
+		curr_neighbours = get_surrounding_cells(curr_node)
+
+		for neighbour in curr_neighbours:
+			if not (neighbour in queue) or not (neighbour in available_tiles):
+				# Not already going to check it, next check
+				queue.append(neighbour)
+				
+	print(loops)
 
 
 func initialise_tile_system(train_ref: Train) -> void:
@@ -158,10 +211,15 @@ func is_obstacle(map_tile_coord) -> bool:
 	return true if obstacle_check != null else false
 
 
-func set_ghost_selection(tile_coord: Vector2i, tile_global_coord: Vector2) -> void:
-	var base_pos = tile_set.tile_size * (tile_coord + Vector2i.ONE)
-	var tile_rect: Rect2 = Rect2(base_pos[0], base_pos[1], tile_set.tile_size[0], tile_set.tile_size[1])
-	ghost_selection.region_rect = tile_rect
-	ghost_selection.global_position = tile_global_coord
-	ghost_selection.show()
+func get_tile_rect(tile_pack: TilePack) -> Rect2:
+	var base_pos = tile_set.tile_size * (tile_pack.map_coordinate + Vector2i.ONE)
+	return Rect2(base_pos[0], base_pos[1], tile_set.tile_size[0], tile_set.tile_size[1])
+
+
+#func set_ghost_selection(tile_coord: Vector2i, tile_global_coord: Vector2) -> void:
+#	var base_pos = tile_set.tile_size * (tile_coord + Vector2i.ONE)
+#	var tile_rect: Rect2 = Rect2(base_pos[0], base_pos[1], tile_set.tile_size[0], tile_set.tile_size[1])
+#	ghost_selection.region_rect = tile_rect
+#	ghost_selection.global_position = tile_global_coord
+#	ghost_selection.show()
 	

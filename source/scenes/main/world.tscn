@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bdo7a0e5m3fli"]
+[gd_scene load_steps=11 format=3 uid="uid://bdo7a0e5m3fli"]
 
 [ext_resource type="Script" path="res://source/scenes/main/world.gd" id="1_d1use"]
 [ext_resource type="PackedScene" uid="uid://brerulorr60o5" path="res://source/scenes/main/tile_system.tscn" id="2_kwtms"]
@@ -8,8 +8,6 @@
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_7fnrg"]
 blend_mode = 3
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_lul3q"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_0vh8v"]
 seed = 30
@@ -40,22 +38,15 @@ unique_name_in_owner = true
 position = Vector2(0, 0)
 layer_0/tile_data = PackedInt32Array(65537, 131072, 0, 131074, 196608, 0, 2, 196608, 1, 1, 131072, 1, 131073, 196608, 1, 196610, 65536, 0, 131075, 131072, 0, 65539, 196608, 2, 65538, 262144, 2, 3, 196608, 2)
 layer_1/tile_data = PackedInt32Array(65540, 196608, 3, -65533, 196608, 3, 0, 196608, 3)
-layer_0/tile_data = PackedInt32Array(65537, 131072, 0, 131074, 196608, 0, 2, 196608, 1, 1, 131072, 1, 131073, 196608, 1, 196610, 65536, 0, 131075, 131072, 0, 65539, 196608, 2, 65538, 262144, 2, 3, 196608, 2)
-layer_1/tile_data = PackedInt32Array(65540, 196608, 3, -65533, 196608, 3, 0, 196608, 3)
 
 [node name="Fog" type="Sprite2D" parent="."]
 unique_name_in_owner = true
+visible = false
 material = SubResource("CanvasItemMaterial_7fnrg")
 centered = false
 
-[node name="test_black" type="Sprite2D" parent="."]
-visible = false
-modulate = Color(0, 0, 0, 1)
-scale = Vector2(1161, 645)
-texture = SubResource("PlaceholderTexture2D_lul3q")
-centered = false
-
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+visible = false
 follow_viewport_enabled = true
 
 [node name="BackBufferCopy" type="BackBufferCopy" parent="CanvasLayer"]
