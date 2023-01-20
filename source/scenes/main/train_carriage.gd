@@ -107,7 +107,8 @@ func _check_vector_change() -> void:
 		current_tile_center_coord = tile_system.map_to_local(current_tile_map_coord)
 		
 		# Emit signal to fog of war process
-		Event.emit_signal("train_on_cell", current_tile_center_coord)
+		if get_parent().is_main:
+			Event.emit_signal("train_on_cell", current_tile_center_coord)
 		
 		""" TODO: Fix this - using the current global_position can cause the train to be
 		offset from the track. This should instead snap to a tile property, such as
