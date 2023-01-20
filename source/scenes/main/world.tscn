@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bwa5t45dpu37x" path="res://source/scenes/main/train.tscn" id="4_t50p6"]
 [ext_resource type="Shader" path="res://assets/shaders/fog_of_war.gdshader" id="5_n2ols"]
 [ext_resource type="AudioStream" uid="uid://htkneytde3vc" path="res://assets/audio/music/train_game_sketch_thing.ogg" id="6_4cdvx"]
-[ext_resource type="PackedScene" uid="uid://d2f72av5kbjxd" path="res://source/scenes/main/TrainSpeedHUD.tscn" id="6_uckai"]
+[ext_resource type="PackedScene" path="res://source/scenes/main/TrainSpeedHUD.tscn" id="6_uckai"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_lul3q"]
 

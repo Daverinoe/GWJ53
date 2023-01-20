@@ -1,0 +1,119 @@
+[gd_scene load_steps=5 format=3 uid="uid://bc0p34mqvniv4"]
+
+[ext_resource type="Texture2D" uid="uid://wle8iwgugi2" path="res://assets/sprites/menu_background.png" id="1_c5gqg"]
+[ext_resource type="Shader" path="res://source/scenes/menus/main_menu/menu_background.gdshader" id="1_n6oq2"]
+[ext_resource type="PackedScene" uid="uid://bwa5t45dpu37x" path="res://source/scenes/main/train.tscn" id="2_ofb8s"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fl4sp"]
+shader = ExtResource("1_n6oq2")
+shader_parameter/scroll_speed = 0.0
+shader_parameter/track_texture = ExtResource("1_c5gqg")
+
+[node name="menu_background" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="background" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_fl4sp")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1440.0
+offset_top = -200.0
+offset_right = 1440.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_c5gqg")
+stretch_mode = 2
+
+[node name="train" parent="." instance=ExtResource("2_ofb8s")]
+
+[node name="train_carrage" parent="train" index="0"]
+visible = false
+position = Vector2(-503.999, -324.001)
+
+[node name="train_locomotive" parent="train" index="1"]
+position = Vector2(-625.999, -324.002)
+
+[node name="CPUParticles2D" parent="train/train_locomotive" index="3"]
+visible = false
+
+[node name="train2" parent="train" instance=ExtResource("2_ofb8s")]
+rotation = 0.0
+
+[node name="train_carrage" parent="train/train2" index="0"]
+visible = false
+position = Vector2(-503.999, -324.001)
+
+[node name="train_locomotive" parent="train/train2" index="1"]
+position = Vector2(-5.99915, -320)
+
+[node name="CPUParticles2D" parent="train/train2/train_locomotive" index="3"]
+visible = false
+
+[node name="train3" parent="train" instance=ExtResource("2_ofb8s")]
+rotation = 0.0
+
+[node name="train_carrage" parent="train/train3" index="0"]
+visible = false
+position = Vector2(-503.999, -324.001)
+
+[node name="train_locomotive" parent="train/train3" index="1"]
+position = Vector2(-130.999, -322)
+
+[node name="CPUParticles2D" parent="train/train3/train_locomotive" index="3"]
+visible = false
+
+[node name="train4" parent="train" instance=ExtResource("2_ofb8s")]
+rotation = 0.0
+
+[node name="train_carrage" parent="train/train4" index="0"]
+visible = false
+position = Vector2(-503.999, -324.001)
+
+[node name="train_locomotive" parent="train/train4" index="1"]
+position = Vector2(-254.999, -323.001)
+
+[node name="CPUParticles2D" parent="train/train4/train_locomotive" index="3"]
+visible = false
+
+[node name="train5" parent="train" instance=ExtResource("2_ofb8s")]
+rotation = 0.0
+
+[node name="train_carrage" parent="train/train5" index="0"]
+visible = false
+position = Vector2(-503.999, -324.001)
+
+[node name="train_locomotive" parent="train/train5" index="1"]
+position = Vector2(-377.999, -324.001)
+
+[node name="CPUParticles2D" parent="train/train5/train_locomotive" index="3"]
+visible = false
+
+[node name="train6" parent="train" instance=ExtResource("2_ofb8s")]
+rotation = 0.0
+
+[node name="train_carrage" parent="train/train6" index="0"]
+visible = false
+position = Vector2(-503.999, -324.001)
+
+[node name="train_locomotive" parent="train/train6" index="1"]
+position = Vector2(-501.999, -325.001)
+
+[node name="CPUParticles2D" parent="train/train6/train_locomotive" index="3"]
+visible = false
+
+[editable path="train"]
+[editable path="train/train2"]
+[editable path="train/train3"]
+[editable path="train/train4"]
+[editable path="train/train5"]
+[editable path="train/train6"]
