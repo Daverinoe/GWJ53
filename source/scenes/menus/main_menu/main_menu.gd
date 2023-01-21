@@ -22,6 +22,8 @@ func _ready() -> void:
 func _on_play_pressed() -> void:
 	var tween : Tween = get_tree().create_tween()
 	
+	$train_whistle.play()
+	
 	tween.tween_property(
 		$HBoxContainer,
 		"modulate",
@@ -32,6 +34,7 @@ func _on_play_pressed() -> void:
 	tween.play()
 	
 	await tween.finished
+	await $train_whistle.finished
 	
 	SceneManager.emit_signal("change_scene_to_file", self, "res://source/scenes/main/world.tscn")
 	
@@ -73,3 +76,5 @@ func check_menu_items() -> void:
 		$HBoxContainer/MarginContainer/VBoxContainer/play.text = "Play"
 		$HBoxContainer/MarginContainer/VBoxContainer/continue.visible = false
 		$HBoxContainer/MarginContainer/VBoxContainer/load.visible = false
+
+	

@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://8p0ggd3ry7gg"]
+[gd_scene load_steps=8 format=3 uid="uid://8p0ggd3ry7gg"]
 
 [ext_resource type="Script" path="res://source/helpers/autoloads/scene_manager/scene_manager.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://d1dos37ndi1vl" path="res://source/helpers/autoloads/scene_manager/70.png" id="2_cfblx"]
 [ext_resource type="PackedScene" uid="uid://bc0p34mqvniv4" path="res://source/scenes/menus/main_menu/menu_background.tscn" id="2_pg8qa"]
+[ext_resource type="AudioStream" uid="uid://dbxf0vfkvakl2" path="res://assets/audio/sfx/train_chugg.ogg" id="4_n160t"]
 
 [sub_resource type="Animation" id="Animation_3ab45"]
 length = 0.001
@@ -54,6 +55,13 @@ script = ExtResource("1")
 [node name="menu_background" parent="." instance=ExtResource("2_pg8qa")]
 layout_mode = 1
 
+[node name="chuggachugga" type="AudioStreamPlayer2D" parent="menu_background/train" index="7"]
+rotation = -3.14159
+stream = ExtResource("4_n160t")
+volume_db = -10.0
+attenuation = 1.93187
+bus = &"Effects"
+
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 0
 anchor_right = 1.0
@@ -96,3 +104,5 @@ metadata/_edit_use_anchors_ = true
 libraries = {
 "": SubResource("AnimationLibrary_hj7qr")
 }
+
+[editable path="menu_background"]

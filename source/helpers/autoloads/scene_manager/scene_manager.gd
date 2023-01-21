@@ -23,9 +23,13 @@ var background = preload("res://source/scenes/menus/main_menu/menu_background.ts
 var train_tween : Tween
 var track_tween : Tween
 
+var max_shader_scroll_speed : float = 0.5
+
 
 @onready var hint_ref = $VBoxContainer/hint
 @onready var finished_ref = $VBoxContainer/finished
+@onready var smoke = $menu_background/train/GPUParticles2D
+@onready var chugga_player = $menu_background/train/chuggachugga
 
 
 func _ready() -> void:
@@ -183,13 +187,16 @@ func apply_load_variables() -> void:
 
 
 func animate_train() -> void:
+	chugga_player.play()
+	smoke.emitting = true
+	
 	# Move track under the train
 	track_tween = get_tree().create_tween()
 	track_tween.set_ease(Tween.EASE_IN)
 	track_tween.tween_method(
 		set_scroll_speed,
 		0.0,
-		0.5,
+		max_shader_scroll_speed,
 		30.0
 	)
 	
@@ -224,6 +231,8 @@ func animate_train() -> void:
 
 func set_scroll_speed(speed) -> void:
 	$menu_background/background.material.set_shader_parameter("scroll_speed", speed)
+	
+	set_smoke_and_sound(speed)
 
 
 func finish_train_animation() -> void:
@@ -245,3 +254,26 @@ func finish_train_animation() -> void:
 	)
 	
 	train_tween.play()
+
+
+
+
+func set_smoke_and_sound(inc_speed: float) -> void:
+	var process_material : ParticleProcessMaterial = smoke.process_material
+
+	var max_smoke_velocity = 240
+	var max_pitch_scale = 8
+	
+	var ratio = inc_speed / max_shader_scroll_speed
+	
+	var speed = max_smoke_velocity * ratio
+	print(speed)
+	# Set speed of emission to 0
+	if speed <= 30.0:
+		process_material.initial_velocity_min = 20
+		process_material.initial_velocity_max = 30
+	else:
+		process_material.initial_velocity_min = speed - 10.0
+		process_material.initial_velocity_max = speed
+	
+	chugga_player.pitch_scale = clamp(1 + max_pitch_scale * ratio / 2, 1, 3)
