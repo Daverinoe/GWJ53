@@ -20,10 +20,11 @@ active = false
 
 [node name="train_carrage" parent="." instance=ExtResource("2_e3wwu")]
 y_sort_enabled = true
-position = Vector2(0, -106)
+position = Vector2(-0.0002738, 2)
 
 [node name="train_locomotive" parent="." instance=ExtResource("2_e3wwu")]
 y_sort_enabled = true
+position = Vector2(0.00027887, -110)
 is_locomotive = true
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="train_locomotive"]
