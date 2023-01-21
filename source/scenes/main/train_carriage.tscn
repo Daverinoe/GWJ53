@@ -1,12 +1,14 @@
-[gd_scene load_steps=10 format=3 uid="uid://befl37h26d4fb"]
+[gd_scene load_steps=12 format=3 uid="uid://befl37h26d4fb"]
 
 [ext_resource type="Script" path="res://source/scenes/main/train_carriage.gd" id="1_qgacr"]
 [ext_resource type="Texture2D" uid="uid://bx7m4skq1g67d" path="res://assets/train/locomotive_x4.png" id="2_ynwjr"]
-[ext_resource type="Texture2D" uid="uid://k7d658yd8i6p" path="res://assets/train/carriage_x4_side_down.png" id="3_6pl0q"]
+[ext_resource type="Texture2D" uid="uid://pw3hs8dfb4ln" path="res://assets/train/locomotive_x4_side_left.png" id="3_1063g"]
 [ext_resource type="Texture2D" uid="uid://cd4k3wasy1nmr" path="res://assets/train/locomotive_x4_back.png" id="3_w870i"]
 [ext_resource type="Texture2D" uid="uid://dhttq1qoo14i2" path="res://assets/train/carriage_x4_front.png" id="3_xbgys"]
+[ext_resource type="Texture2D" uid="uid://gxpurhbn1bbe" path="res://assets/train/locomotive_x4_side_right.png" id="4_6xcqe"]
 [ext_resource type="Texture2D" uid="uid://bkn0t0rmnygda" path="res://assets/train/carriage_x4_back.png" id="4_iax4l"]
-[ext_resource type="Texture2D" uid="uid://de16uvpgdxc3l" path="res://assets/train/carriage_x4_side_top.png" id="4_nau3u"]
+[ext_resource type="Texture2D" uid="uid://blka1ybumbqak" path="res://assets/train/carriage_x4_side_left.png" id="6_yg5yu"]
+[ext_resource type="Texture2D" uid="uid://d16o8y03tmyvv" path="res://assets/train/carriage_x4_side_right.png" id="7_dlkbm"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_qic5n"]
 animations = [{
@@ -20,7 +22,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("3_6pl0q")
+"texture": ExtResource("3_1063g")
 }],
 "loop": true,
 "name": &"down_left",
@@ -28,7 +30,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("4_nau3u")
+"texture": ExtResource("4_6xcqe")
 }],
 "loop": true,
 "name": &"down_right",
@@ -44,7 +46,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("3_6pl0q")
+"texture": ExtResource("3_1063g")
 }],
 "loop": true,
 "name": &"top_left",
@@ -52,7 +54,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("4_nau3u")
+"texture": ExtResource("4_6xcqe")
 }],
 "loop": true,
 "name": &"top_right",
@@ -71,7 +73,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("3_6pl0q")
+"texture": ExtResource("6_yg5yu")
 }],
 "loop": true,
 "name": &"down_left",
@@ -79,7 +81,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("4_nau3u")
+"texture": ExtResource("7_dlkbm")
 }],
 "loop": true,
 "name": &"down_right",
@@ -95,7 +97,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("3_6pl0q")
+"texture": ExtResource("6_yg5yu")
 }],
 "loop": true,
 "name": &"top_left",
@@ -103,7 +105,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("4_nau3u")
+"texture": ExtResource("7_dlkbm")
 }],
 "loop": true,
 "name": &"top_right",
@@ -121,10 +123,10 @@ texture = ExtResource("2_ynwjr")
 [node name="locomotive_sprite" type="AnimatedSprite2D" parent="."]
 rotation = 1.5708
 frames = SubResource("SpriteFrames_qic5n")
-animation = &"top"
+animation = &"down"
 
 [node name="carriage_sprite" type="AnimatedSprite2D" parent="."]
 visible = false
 rotation = 1.5708
 frames = SubResource("SpriteFrames_lpqm3")
-animation = &"top"
+animation = &"down"
