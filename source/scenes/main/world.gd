@@ -22,6 +22,7 @@ var chunk_size : Vector2i
 @onready var train: Train = get_node("%train")
 @onready var player_camera: PlayerCamera = get_node("%player_camera")
 @onready var fog_container: Node2D = $%Fog
+@onready var gameover_graphic: TextureRect = get_node("%GameOverGraphic")
 
 
 func _ready():
@@ -29,7 +30,7 @@ func _ready():
 	# This should fire every time the train enters a cell, and should reveal that area
 	
 	Event.connect("train_on_cell", threaded_update_fog)
-	
+	Event.connect("you_died", you_died)
 	get_tree().call_group("Train", "initialise_train", self, tile_system)
 	player_camera.initialise_camera(train.locomotive_ref)
 	
@@ -40,7 +41,9 @@ func _ready():
 func _process(delta):
 	pass
 
-
+func you_died():
+	gameover_graphic.visible = true
+	
 func initialise_fog() -> void:
 	# TODO: Update for procedural generation?
 	

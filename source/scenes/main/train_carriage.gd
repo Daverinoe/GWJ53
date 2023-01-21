@@ -6,9 +6,11 @@ var target_speed: float = 20
 var speed_multiplier: float = 1.0
 var speed: float = 0  # TODO Get this from the parent
 var carriage_initialised: bool = false
+var crashed: bool = false
 
 @onready var locomotive_sprite: AnimatedSprite2D = get_node("locomotive_sprite")
 @onready var carriage_sprite: AnimatedSprite2D = get_node("carriage_sprite")
+@onready var steam_particles: CPUParticles2D = get_node("CPUParticles2D")
 
 # Handle vector based movement
 var current_heading: Vector2
@@ -29,12 +31,17 @@ func _ready():
 	else:
 		carriage_sprite.visible = true
 		locomotive_sprite.visible = false
+	Event.connect("you_died", train_died)
+
+func train_died():
+	steam_particles.emitting = false
 
 func update_speed(new_speed):
 	speed = lerp(speed, new_speed, 0.2)
 
 func set_new_speed_multiplier(new_speed_multiplier):
-	speed_multiplier = new_speed_multiplier 
+	if not crashed:
+		speed_multiplier = new_speed_multiplier 
 
 func _physics_process(delta):
 	if carriage_initialised:
@@ -54,7 +61,7 @@ func _process(delta):
 
 func change_active_frames(sprite: AnimatedSprite2D):
 	var current_angle = rad_to_deg(current_heading.angle())
-	print(current_angle)
+	#print(current_angle)
 	if current_angle >= -95 && current_angle < -85:
 		sprite.set_animation("top")
 	elif current_angle >= 85 && current_angle < 95:
@@ -91,8 +98,9 @@ func _get_tile_entrypoint() -> TileSystem.HexPos:
 
 
 func _check_close_enough_to_center() -> bool:
-	return abs(global_position.x - current_tile_center_coord.x) < 1.0 \
-			and abs(global_position.y - current_tile_center_coord.y) < 1.0
+	#return false
+	return abs(global_position.x - current_tile_center_coord.x) < 40.0 \
+			and abs(global_position.y - current_tile_center_coord.y) < 40.0
 
 
 func _check_vector_change() -> void:
@@ -125,23 +133,37 @@ func _check_vector_change() -> void:
 		tile_centre_reached = true
 		
 		# Note: Duplicated here to ensure that the original lookup is unaffected
-		var available_exits: Array = tile_system.ATLAS_MAP_LOOKUP[
-			tile_system.get_cell_atlas_coords(0, current_tile_map_coord)
-			].duplicate()
-		print("current tile map coordinate:", current_tile_center_coord)
-		print("available exits:", available_exits)
-		
-		available_exits.erase(current_tile_entrypoint)
-		assert(len(available_exits) > 0)
-		
-		# TODO: IF LEN > 1 support random choice
-		current_heading = (
-			(current_tile_center_coord + Vector2(tile_system.HEX_RELATIVE_POS_MAPPING[available_exits[0]])
-			) - global_position).normalized()
+		#var test_exit: Array = tile_system.ATLAS_MAP_LOOKUP[tile_system.get_cell_atlas_coords(0, Vector2(-1, -1))]
+		#print("test_exit:", test_exit)
+		if current_tile_map_coord != Vector2i(-1, -1):
+			print("current tile map coord:", current_tile_map_coord)
+			var available_exits: Array = tile_system.ATLAS_MAP_LOOKUP[
+				tile_system.get_cell_atlas_coords(0, current_tile_map_coord)
+				].duplicate()
+				
+			if available_exits == [0, 0]:
+				# TODO: Game over time from here. 
+				update_speed(float(0))
+				set_new_speed_multiplier(float(0))
+				crashed = true
+				print("!!!!! YOU DIED !!!!!")
+				Event.emit_signal("you_died")
+				return
+				
+			print("current tile map coordinate:", current_tile_center_coord)
+			print("available exits:", available_exits)
 			
-		# Lock carriage to center
-		global_position = current_tile_center_coord
-		print("HIT CENTRE, NEW HEADING " + str(current_heading))
+			available_exits.erase(current_tile_entrypoint)
+			assert(len(available_exits) > 0)
+			
+			# TODO: IF LEN > 1 support random choice
+			current_heading = (
+				(current_tile_center_coord + Vector2(tile_system.HEX_RELATIVE_POS_MAPPING[available_exits[0]])
+				) - global_position).normalized()
+				
+			# Lock carriage to center
+			global_position = current_tile_center_coord
+			print("HIT CENTRE, NEW HEADING " + str(current_heading))
 		
 
 func initialise_train_carriage(train_ref: Train, tile_system_ref: TileSystem, t_speed: float, next_carriage_ref=null) -> void:
