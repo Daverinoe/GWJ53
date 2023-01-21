@@ -2,9 +2,13 @@ class_name TrainCarriage extends Node2D
 
 @export var is_locomotive: bool = false
 var next_carriage: TrainCarriage
-var target_speed: int = 10
-var speed: int = 0  # TODO Get this from the parent
+var target_speed: float = 20
+var speed_multiplier: float = 1.0
+var speed: float = 0  # TODO Get this from the parent
 var carriage_initialised: bool = false
+
+@onready var locomotive_sprite: AnimatedSprite2D = get_node("locomotive_sprite")
+@onready var carriage_sprite: AnimatedSprite2D = get_node("carriage_sprite")
 
 # Handle vector based movement
 var current_heading: Vector2
@@ -19,19 +23,46 @@ var tile_system: TileSystem
 
 
 func _ready():
-	pass
+	if is_locomotive:
+		locomotive_sprite.visible = true
+		carriage_sprite.visible = false
+	else:
+		carriage_sprite.visible = true
+		locomotive_sprite.visible = false
 
+func update_speed(new_speed):
+	speed = lerp(speed, new_speed, 0.2)
+
+func set_new_speed_multiplier(new_speed_multiplier):
+	speed_multiplier = new_speed_multiplier 
 
 func _physics_process(delta):
 	if carriage_initialised:
-		speed = lerp(speed, target_speed, 0.2)  # Provide some linear acceleration to the train
+		update_speed(target_speed * speed_multiplier)
+		#speed = lerp(speed, target_speed, 0.2)  # Provide some linear acceleration to the train
 		_check_vector_change()
 		global_position += current_heading * speed * delta
+	if is_locomotive:
+		change_active_frames(locomotive_sprite)
+	else:
+		change_active_frames(carriage_sprite)
 
 
 func _process(delta):
 	# Look at heading in a lerp fashion
 	rotation_degrees = lerp(rotation_degrees, rad_to_deg(current_heading.angle()), 0.5)
+
+func change_active_frames(sprite: AnimatedSprite2D):
+	var current_angle = rad_to_deg(current_heading.angle())
+	print(current_angle)
+	if current_angle >= -95 && current_angle < -85:
+		sprite.set_animation("top")
+	elif current_angle >= 85 && current_angle < 95:
+		sprite.set_animation("down")
+	elif current_angle >= -85 && current_angle < -5:
+		sprite.set_animation("top_right")
+	elif current_angle >= 5 && current_angle < 85:
+		sprite.set_animation("down_right")
 
 
 func _get_tile_entrypoint() -> TileSystem.HexPos:
@@ -76,7 +107,8 @@ func _check_vector_change() -> void:
 		current_tile_center_coord = tile_system.map_to_local(current_tile_map_coord)
 		
 		# Emit signal to fog of war process
-		Event.emit_signal("train_on_cell", current_tile_center_coord)
+		if get_parent().is_main:
+			Event.emit_signal("train_on_cell", current_tile_center_coord)
 		
 		""" TODO: Fix this - using the current global_position can cause the train to be
 		offset from the track. This should instead snap to a tile property, such as
@@ -95,6 +127,8 @@ func _check_vector_change() -> void:
 		var available_exits: Array = tile_system.ATLAS_MAP_LOOKUP[
 			tile_system.get_cell_atlas_coords(0, current_tile_map_coord)
 			].duplicate()
+		print("current tile map coordinate:", current_tile_center_coord)
+		print("available exits:", available_exits)
 		
 		available_exits.erase(current_tile_entrypoint)
 		assert(len(available_exits) > 0)
@@ -109,14 +143,16 @@ func _check_vector_change() -> void:
 		print("HIT CENTRE, NEW HEADING " + str(current_heading))
 		
 
-func initialise_train_carriage(train_ref: Train, tile_system_ref: TileSystem, next_carriage_ref=null) -> void:
+func initialise_train_carriage(train_ref: Train, tile_system_ref: TileSystem, t_speed: float, next_carriage_ref=null) -> void:
 	# Currently handling this as dependency injection rather than globals
 	train = train_ref
 	tile_system = tile_system_ref
-	
-	if is_locomotive:
-		current_heading = Vector2.DOWN
-	else:
+	target_speed = t_speed * speed_multiplier
+	# locomotive should decide if it is the front of the train
+	# We still want non locomotive parts of the train to move (carrages should still move). 
+	current_heading = Vector2.DOWN
+
+	if not is_locomotive:
 		next_carriage = next_carriage_ref
 		current_heading = next_carriage.current_heading
 	

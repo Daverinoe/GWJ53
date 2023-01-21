@@ -8,6 +8,8 @@
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_7fnrg"]
 blend_mode = 3
+[ext_resource type="AudioStream" uid="uid://htkneytde3vc" path="res://assets/audio/music/train_game_sketch_thing.ogg" id="6_4cdvx"]
+[ext_resource type="PackedScene" uid="uid://d2f72av5kbjxd" path="res://source/scenes/main/TrainSpeedHUD.tscn" id="6_uckai"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_0vh8v"]
 seed = 30
@@ -36,11 +38,18 @@ script = ExtResource("1_d1use")
 [node name="tile_system" parent="." instance=ExtResource("2_kwtms")]
 unique_name_in_owner = true
 position = Vector2(0, 0)
-layer_0/tile_data = PackedInt32Array(65537, 131072, 0, 131074, 196608, 0, 2, 196608, 1, 1, 131072, 1, 131073, 196608, 1, 196610, 65536, 0, 131075, 131072, 0, 65539, 196608, 2, 65538, 262144, 2, 3, 196608, 2)
-layer_1/tile_data = PackedInt32Array(65540, 196608, 3, -65533, 196608, 3, 0, 196608, 3)
+layer_0/tile_data = PackedInt32Array(1, 0, 0, 65537, 0, 0, 65536, 0, 0, 131072, 0, 0, 196608, 131072, 0, 131073, 131072, 0, 196609, 65536, 1, 196610, 65536, 2, 196612, 65536, 0, 196611, 196608, 0, 262145, 0, 0, 327681, 131072, 0, 393218, 196608, 0, 327683, 131072, 2, 327684, 131072, 2, 131076, 0, 0, 65540, 0, 0, 327682, 65536, 3, 262146, 131072, 3)
+layer_1/tile_data = PackedInt32Array()
 
-[node name="Fog" type="Sprite2D" parent="."]
+[node name="train" parent="." instance=ExtResource("4_t50p6")]
 unique_name_in_owner = true
+position = Vector2(193, 289)
+is_main = true
+
+[node name="Fog" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="test_black" type="Sprite2D" parent="."]
 visible = false
 material = SubResource("CanvasItemMaterial_7fnrg")
 centered = false
@@ -48,11 +57,17 @@ centered = false
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 visible = false
 follow_viewport_enabled = true
+[node name="player_camera" parent="." instance=ExtResource("4_gs2qm")]
+unique_name_in_owner = true
+min_zoom_level = 0.2
+max_zoom_level = 10.0
 
-[node name="BackBufferCopy" type="BackBufferCopy" parent="CanvasLayer"]
+[node name="CanvasLayer" type="CanvasLayer" parent="player_camera"]
+
+[node name="BackBufferCopy" type="BackBufferCopy" parent="player_camera/CanvasLayer"]
 copy_mode = 2
 
-[node name="FogPretty" type="TextureRect" parent="CanvasLayer"]
+[node name="FogPretty" type="TextureRect" parent="player_camera/CanvasLayer"]
 material = SubResource("ShaderMaterial_nccvp")
 anchors_preset = 15
 anchor_right = 1.0
@@ -68,3 +83,18 @@ unique_name_in_owner = true
 [node name="train" parent="." instance=ExtResource("5_7w2o5")]
 unique_name_in_owner = true
 position = Vector2(477, 373)
+[node name="TrainSpeedHUD" parent="player_camera" instance=ExtResource("6_uckai")]
+offset_left = 607.0
+offset_top = 346.0
+offset_right = 607.0
+offset_bottom = 346.0
+
+[node name="train3" parent="." instance=ExtResource("4_t50p6")]
+position = Vector2(480, 257)
+
+[node name="music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_4cdvx")
+autoplay = true
+bus = &"Music"
+
+[connection signal="tree_exiting" from="." to="." method="_on_tree_exiting"]

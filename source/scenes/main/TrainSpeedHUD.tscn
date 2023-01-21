@@ -1,0 +1,83 @@
+[gd_scene load_steps=5 format=3 uid="uid://d2f72av5kbjxd"]
+
+[ext_resource type="Script" path="res://source/scenes/main/TrainSpeedHUD.gd" id="1_tu5yn"]
+[ext_resource type="Texture2D" uid="uid://dyf4i2b6hmgp8" path="res://assets/train/speed_stick-progress-speed-bg-circle.png" id="2_13355"]
+[ext_resource type="Texture2D" uid="uid://dxnnn2karxsgt" path="res://assets/train/speed_stick-progress-speed-stick-straight.png" id="3_apryx"]
+[ext_resource type="Texture2D" uid="uid://6obmiyeq60kt" path="res://assets/train/speed_stick-progress-base.png" id="4_xhfa0"]
+
+[node name="TrainSpeedHUD" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_tu5yn")
+
+[node name="SpeedController" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -40.0
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(0.5, 0.5)
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="SpeedController"]
+layout_mode = 1
+offset_left = -448.0
+offset_top = -266.0
+offset_right = -408.0
+offset_bottom = -226.0
+scale = Vector2(15.9229, 15.9229)
+fill_mode = 4
+texture_under = ExtResource("2_13355")
+
+[node name="SpeedKnobTexture" type="TextureRect" parent="SpeedController/TextureProgressBar"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -16.1062
+offset_top = 1.57006
+offset_right = 10.8938
+offset_bottom = 22.5701
+grow_horizontal = 2
+scale = Vector2(1.133, 1.133)
+pivot_offset = Vector2(11.299, 19.8)
+texture = ExtResource("3_apryx")
+stretch_mode = 1
+
+[node name="WoodenBase" type="TextureRect" parent="SpeedController/TextureProgressBar"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -17.7391
+offset_top = -33.3141
+offset_right = 9.26089
+offset_bottom = -12.3141
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.069, 1.997)
+texture = ExtResource("4_xhfa0")
+
+[node name="HiddenSpeedSlider" type="HSlider" parent="SpeedController"]
+visibility_layer = 0
+layout_mode = 0
+offset_left = -396.0
+offset_top = -265.0
+offset_right = 11.945
+offset_bottom = 35.0
+min_value = -1.0
+max_value = 1.0
+step = 0.01
+value = -1.0
+
+[connection signal="value_changed" from="SpeedController/HiddenSpeedSlider" to="." method="_on_hidden_speed_slider_value_changed"]
