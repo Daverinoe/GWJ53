@@ -16,11 +16,9 @@ point_count = 3
 [node name="train" type="Node2D" groups=["Train"]]
 rotation = 3.14159
 script = ExtResource("1_50bbo")
+is_main = null
 active = false
-
-[node name="train_carrage" parent="." instance=ExtResource("2_e3wwu")]
-y_sort_enabled = true
-position = Vector2(-0.0002738, 2)
+max_speed = null
 
 [node name="train_locomotive" parent="." instance=ExtResource("2_e3wwu")]
 y_sort_enabled = true

@@ -21,14 +21,13 @@ func _ready():
 			else:
 				locomotive_ref = child_train_carriage
 	Event.connect("update_train_speed_multiplier", _on_update_train_speed_multiplier)
-	
 		
 			
 #func on_update_speed(new_t_speed):
 #	for child_train_carriage in child_carriages:
 #		if child_train_carriage.has_method("update_speed"):
 #			child_train_carriage.update_speed(new_t_speed)
-
+	
 func _physics_process(delta):
 	if locomotive_ref != null:
 		current_speed = locomotive_ref.speed

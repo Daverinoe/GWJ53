@@ -4,6 +4,7 @@ class_name TileSystem extends TileMap
 @onready var tile_select_marker: Sprite2D = get_node("%tile_select_marker")
 
 enum HexPos {
+	BORKED,
 	TOP,
 	BOTTOM,
 	RIGHT_TOP,
@@ -16,6 +17,7 @@ const BASE_TILE_LAYER: int = 0
 
 # NOTE: Update this if hex tile change!
 const HEX_RELATIVE_POS_MAPPING = {
+	HexPos.BORKED: Vector2i(0, 0),
 	HexPos.TOP: Vector2i(0, -128),
 	HexPos.BOTTOM: Vector2i(0, 128),
 	HexPos.RIGHT_TOP: Vector2i(144, -64),
@@ -27,11 +29,12 @@ const HEX_RELATIVE_POS_MAPPING = {
 # This is a map of the Atlas Map coords to the array of connection points (HexPos)
 # Todo: Organise the tilemap such that this can be generated
 const ATLAS_MAP_LOOKUP = {
+	Vector2i(-1, -1): [HexPos.BORKED, HexPos.BORKED],
 	Vector2i(0, 0): [HexPos.TOP, HexPos.BOTTOM],
 	Vector2i(1, 0): [HexPos.TOP, HexPos.LEFT_BOTTOM],
 	Vector2i(2, 0): [HexPos.TOP, HexPos.RIGHT_BOTTOM],
 	Vector2i(3, 0): [HexPos.LEFT_TOP, HexPos.RIGHT_TOP],
-	Vector2i(0, 1): [],
+	Vector2i(0, 1): [HexPos.BORKED, HexPos.BORKED],
 	Vector2i(1, 1): [HexPos.LEFT_TOP, HexPos.BOTTOM],
 	Vector2i(2, 1): [HexPos.RIGHT_TOP, HexPos.BOTTOM],
 	Vector2i(3, 1): [HexPos.LEFT_BOTTOM, HexPos.RIGHT_BOTTOM],
