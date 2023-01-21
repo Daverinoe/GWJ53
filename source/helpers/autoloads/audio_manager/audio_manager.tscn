@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://b0sx4qkimwejr"]
+
+[ext_resource type="Script" path="res://source/helpers/autoloads/audio_manager/audio_manager.gd" id="1_nghd2"]
+[ext_resource type="AudioStream" uid="uid://cyttpu0hva5pb" path="res://assets/audio/sfx/ui_click.ogg" id="2_2db6p"]
+
+[node name="AudioManager" type="Node"]
+script = ExtResource("1_nghd2")
+
+[node name="ui_click" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_2db6p")
+volume_db = -10.0
+pitch_scale = 3.0
+bus = &"Effects"

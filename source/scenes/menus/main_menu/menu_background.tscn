@@ -1,13 +1,57 @@
-[gd_scene load_steps=5 format=3 uid="uid://bc0p34mqvniv4"]
+[gd_scene load_steps=16 format=3 uid="uid://bc0p34mqvniv4"]
 
 [ext_resource type="Texture2D" uid="uid://wle8iwgugi2" path="res://assets/sprites/menu_background.png" id="1_c5gqg"]
 [ext_resource type="Shader" path="res://source/scenes/menus/main_menu/menu_background.gdshader" id="1_n6oq2"]
-[ext_resource type="PackedScene" uid="uid://bwa5t45dpu37x" path="res://source/scenes/main/train.tscn" id="2_ofb8s"]
+[ext_resource type="Script" path="res://source/scenes/main/train.gd" id="3_qxy0j"]
+[ext_resource type="PackedScene" uid="uid://befl37h26d4fb" path="res://source/scenes/main/train_carriage.tscn" id="4_acv4u"]
+[ext_resource type="Texture2D" uid="uid://tgymvujfvx2r" path="res://assets/train/train-steam-2.png" id="5_17iei"]
+[ext_resource type="Texture2D" uid="uid://dsqp2govyssc" path="res://assets/train/train-steam.png" id="6_sfhs8"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_fl4sp"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_d3vx1"]
 shader = ExtResource("1_n6oq2")
 shader_parameter/scroll_speed = 0.0
 shader_parameter/track_texture = ExtResource("1_c5gqg")
+
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_gsesv"]
+frame_0/texture = ExtResource("5_17iei")
+
+[sub_resource type="Curve" id="Curve_2cn1j"]
+_data = [Vector2(0, 1), 0.0, -0.151534, 0, 1, Vector2(0.659919, 0.9), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.64643, 0.0, 1, 0]
+point_count = 3
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_rf1uy"]
+particles_animation = true
+particles_anim_h_frames = 3
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="Gradient" id="Gradient_too68"]
+offsets = PackedFloat32Array(0, 0.814672, 1)
+colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ck6e6"]
+gradient = SubResource("Gradient_too68")
+
+[sub_resource type="Curve" id="Curve_mckl0"]
+max_value = 4.0
+_data = [Vector2(0, 1.09091), 0.0, 0.0, 0, 0, Vector2(1, 4), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_q3ea2"]
+curve = SubResource("Curve_mckl0")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_rgswe"]
+lifetime_randomness = 0.12
+particle_flag_disable_z = true
+spread = 10.0
+flatness = 1.0
+gravity = Vector3(0, 0, 0)
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+damping_max = 1.0
+scale_curve = SubResource("CurveTexture_q3ea2")
+color_ramp = SubResource("GradientTexture1D_ck6e6")
+anim_speed_max = 1.0
 
 [node name="menu_background" type="Control"]
 layout_mode = 3
@@ -18,7 +62,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="background" type="TextureRect" parent="."]
-material = SubResource("ShaderMaterial_fl4sp")
+material = SubResource("ShaderMaterial_d3vx1")
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -34,86 +78,193 @@ grow_vertical = 2
 texture = ExtResource("1_c5gqg")
 stretch_mode = 2
 
-[node name="train" parent="." instance=ExtResource("2_ofb8s")]
+[node name="train" type="Node2D" parent="." groups=["Train"]]
+rotation = 3.14159
+script = ExtResource("3_qxy0j")
+is_main = null
+active = false
+max_speed = null
 
-[node name="train_carrage" parent="train" index="0"]
-visible = false
-position = Vector2(-503.999, -324.001)
-
-[node name="train_locomotive" parent="train" index="1"]
+[node name="train_locomotive" parent="train" instance=ExtResource("4_acv4u")]
+y_sort_enabled = true
 position = Vector2(-625.999, -324.002)
+is_locomotive = true
 
-[node name="CPUParticles2D" parent="train/train_locomotive" index="3"]
+[node name="CPUParticles2D" type="CPUParticles2D" parent="train/train_locomotive"]
 visible = false
+z_index = 20
+position = Vector2(7, -8)
+amount = 12
+lifetime = 1.3
+speed_scale = 0.3
+randomness = 0.42
+lifetime_randomness = 0.22
+texture = SubResource("AnimatedTexture_gsesv")
+emission_shape = 1
+emission_sphere_radius = 1.0
+gravity = Vector2(0, -100)
+orbit_velocity_min = 0.05
+orbit_velocity_max = 0.1
+scale_amount_min = 0.5
+scale_amount_max = 2.0
+scale_amount_curve = SubResource("Curve_2cn1j")
 
-[node name="train2" parent="train" instance=ExtResource("2_ofb8s")]
-rotation = 0.0
+[node name="train2" type="Node2D" parent="train" groups=["Train"]]
+script = ExtResource("3_qxy0j")
+is_main = null
+active = false
+max_speed = null
 
-[node name="train_carrage" parent="train/train2" index="0"]
-visible = false
-position = Vector2(-503.999, -324.001)
-
-[node name="train_locomotive" parent="train/train2" index="1"]
+[node name="train_locomotive" parent="train/train2" instance=ExtResource("4_acv4u")]
+y_sort_enabled = true
 position = Vector2(-5.99915, -320)
+is_locomotive = true
 
-[node name="CPUParticles2D" parent="train/train2/train_locomotive" index="3"]
+[node name="CPUParticles2D" type="CPUParticles2D" parent="train/train2/train_locomotive"]
 visible = false
+z_index = 20
+position = Vector2(7, -8)
+amount = 12
+lifetime = 1.3
+speed_scale = 0.3
+randomness = 0.42
+lifetime_randomness = 0.22
+texture = SubResource("AnimatedTexture_gsesv")
+emission_shape = 1
+emission_sphere_radius = 1.0
+gravity = Vector2(0, -100)
+orbit_velocity_min = 0.05
+orbit_velocity_max = 0.1
+scale_amount_min = 0.5
+scale_amount_max = 2.0
+scale_amount_curve = SubResource("Curve_2cn1j")
 
-[node name="train3" parent="train" instance=ExtResource("2_ofb8s")]
-rotation = 0.0
+[node name="train3" type="Node2D" parent="train" groups=["Train"]]
+script = ExtResource("3_qxy0j")
+is_main = null
+active = false
+max_speed = null
 
-[node name="train_carrage" parent="train/train3" index="0"]
-visible = false
-position = Vector2(-503.999, -324.001)
-
-[node name="train_locomotive" parent="train/train3" index="1"]
+[node name="train_locomotive" parent="train/train3" instance=ExtResource("4_acv4u")]
+y_sort_enabled = true
 position = Vector2(-130.999, -322)
+is_locomotive = true
 
-[node name="CPUParticles2D" parent="train/train3/train_locomotive" index="3"]
+[node name="CPUParticles2D" type="CPUParticles2D" parent="train/train3/train_locomotive"]
 visible = false
+z_index = 20
+position = Vector2(7, -8)
+amount = 12
+lifetime = 1.3
+speed_scale = 0.3
+randomness = 0.42
+lifetime_randomness = 0.22
+texture = SubResource("AnimatedTexture_gsesv")
+emission_shape = 1
+emission_sphere_radius = 1.0
+gravity = Vector2(0, -100)
+orbit_velocity_min = 0.05
+orbit_velocity_max = 0.1
+scale_amount_min = 0.5
+scale_amount_max = 2.0
+scale_amount_curve = SubResource("Curve_2cn1j")
 
-[node name="train4" parent="train" instance=ExtResource("2_ofb8s")]
-rotation = 0.0
+[node name="train4" type="Node2D" parent="train" groups=["Train"]]
+script = ExtResource("3_qxy0j")
+is_main = null
+active = false
+max_speed = null
 
-[node name="train_carrage" parent="train/train4" index="0"]
-visible = false
-position = Vector2(-503.999, -324.001)
-
-[node name="train_locomotive" parent="train/train4" index="1"]
+[node name="train_locomotive" parent="train/train4" instance=ExtResource("4_acv4u")]
+y_sort_enabled = true
 position = Vector2(-254.999, -323.001)
+is_locomotive = true
 
-[node name="CPUParticles2D" parent="train/train4/train_locomotive" index="3"]
+[node name="CPUParticles2D" type="CPUParticles2D" parent="train/train4/train_locomotive"]
 visible = false
+z_index = 20
+position = Vector2(7, -8)
+amount = 12
+lifetime = 1.3
+speed_scale = 0.3
+randomness = 0.42
+lifetime_randomness = 0.22
+texture = SubResource("AnimatedTexture_gsesv")
+emission_shape = 1
+emission_sphere_radius = 1.0
+gravity = Vector2(0, -100)
+orbit_velocity_min = 0.05
+orbit_velocity_max = 0.1
+scale_amount_min = 0.5
+scale_amount_max = 2.0
+scale_amount_curve = SubResource("Curve_2cn1j")
 
-[node name="train5" parent="train" instance=ExtResource("2_ofb8s")]
-rotation = 0.0
+[node name="train5" type="Node2D" parent="train" groups=["Train"]]
+script = ExtResource("3_qxy0j")
+is_main = null
+active = false
+max_speed = null
 
-[node name="train_carrage" parent="train/train5" index="0"]
-visible = false
-position = Vector2(-503.999, -324.001)
-
-[node name="train_locomotive" parent="train/train5" index="1"]
+[node name="train_locomotive" parent="train/train5" instance=ExtResource("4_acv4u")]
+y_sort_enabled = true
 position = Vector2(-377.999, -324.001)
+is_locomotive = true
 
-[node name="CPUParticles2D" parent="train/train5/train_locomotive" index="3"]
+[node name="CPUParticles2D" type="CPUParticles2D" parent="train/train5/train_locomotive"]
 visible = false
+z_index = 20
+position = Vector2(7, -8)
+amount = 12
+lifetime = 1.3
+speed_scale = 0.3
+randomness = 0.42
+lifetime_randomness = 0.22
+texture = SubResource("AnimatedTexture_gsesv")
+emission_shape = 1
+emission_sphere_radius = 1.0
+gravity = Vector2(0, -100)
+orbit_velocity_min = 0.05
+orbit_velocity_max = 0.1
+scale_amount_min = 0.5
+scale_amount_max = 2.0
+scale_amount_curve = SubResource("Curve_2cn1j")
 
-[node name="train6" parent="train" instance=ExtResource("2_ofb8s")]
-rotation = 0.0
+[node name="train6" type="Node2D" parent="train" groups=["Train"]]
+script = ExtResource("3_qxy0j")
+is_main = null
+active = false
+max_speed = null
 
-[node name="train_carrage" parent="train/train6" index="0"]
-visible = false
-position = Vector2(-503.999, -324.001)
-
-[node name="train_locomotive" parent="train/train6" index="1"]
+[node name="train_locomotive" parent="train/train6" instance=ExtResource("4_acv4u")]
+y_sort_enabled = true
 position = Vector2(-501.999, -325.001)
+is_locomotive = true
 
-[node name="CPUParticles2D" parent="train/train6/train_locomotive" index="3"]
+[node name="CPUParticles2D" type="CPUParticles2D" parent="train/train6/train_locomotive"]
 visible = false
+z_index = 20
+position = Vector2(7, -8)
+amount = 12
+lifetime = 1.3
+speed_scale = 0.3
+randomness = 0.42
+lifetime_randomness = 0.22
+texture = SubResource("AnimatedTexture_gsesv")
+emission_shape = 1
+emission_sphere_radius = 1.0
+gravity = Vector2(0, -100)
+orbit_velocity_min = 0.05
+orbit_velocity_max = 0.1
+scale_amount_min = 0.5
+scale_amount_max = 2.0
+scale_amount_curve = SubResource("Curve_2cn1j")
 
-[editable path="train"]
-[editable path="train/train2"]
-[editable path="train/train3"]
-[editable path="train/train4"]
-[editable path="train/train5"]
-[editable path="train/train6"]
+[node name="GPUParticles2D" type="GPUParticles2D" parent="train"]
+material = SubResource("CanvasItemMaterial_rf1uy")
+position = Vector2(-666.999, -323.002)
+emitting = false
+amount = 32
+process_material = SubResource("ParticleProcessMaterial_rgswe")
+texture = ExtResource("6_sfhs8")
+lifetime = 3.0
+local_coords = true
