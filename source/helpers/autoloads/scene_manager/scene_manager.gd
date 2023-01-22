@@ -64,10 +64,6 @@ func _input(event):
 
 func switch_scenes(previous_scene_reference, next_scene_path, is_load_request: bool = false, load_json: Dictionary = {}) -> void:
 	
-	var bg_to_load = background.instantiate()
-	self.add_child(bg_to_load)
-	self.move_child(bg_to_load, 0)
-	
 	animate_train()
 	
 	path_to_load = next_scene_path
@@ -127,7 +123,7 @@ func finish_switch() -> void:
 	await train_tween.finished
 	track_tween.kill()
 	
-	$menu_background.queue_free()
+	$menu_background.free()
 	
 	new_instance.modulate = Color(1.0, 1.0, 1.0, 1.0)
 	new_instance.visible = true
