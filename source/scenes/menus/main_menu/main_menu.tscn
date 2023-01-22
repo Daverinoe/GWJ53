@@ -1,6 +1,5 @@
-[gd_scene load_steps=7 format=3 uid="uid://smt6ks8tnyxg"]
+[gd_scene load_steps=6 format=3 uid="uid://smt6ks8tnyxg"]
 
-[ext_resource type="Texture2D" uid="uid://cysbys3kvxbh0" path="res://icon.png" id="1"]
 [ext_resource type="Script" path="res://source/scenes/menus/settings/custom_button.gd" id="2"]
 [ext_resource type="PackedScene" uid="uid://bc0p34mqvniv4" path="res://source/scenes/menus/main_menu/menu_background.tscn" id="2_6fmhc"]
 [ext_resource type="Script" path="res://source/scenes/menus/main_menu/main_menu.gd" id="3"]
@@ -26,24 +25,25 @@ offset_bottom = -1.0
 
 [node name="HBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
-anchors_preset = 9
+anchors_preset = -1
+anchor_right = 0.133681
 anchor_bottom = 1.0
 offset_right = 79.0
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+metadata/_edit_use_anchors_ = true
 
 [node name="MarginContainer2" type="MarginContainer" parent="HBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 7
 size_flags_vertical = 3
 
-[node name="title" type="TextureRect" parent="HBoxContainer/MarginContainer2"]
+[node name="RichTextLabel" type="RichTextLabel" parent="HBoxContainer/MarginContainer2"]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture = ExtResource("1")
-stretch_mode = 5
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 43
+bbcode_enabled = true
+text = "[center]Rail Assembly"
 
 [node name="MarginContainer" type="MarginContainer" parent="HBoxContainer"]
 layout_mode = 2
@@ -74,6 +74,7 @@ script = ExtResource("2")
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 30
 text = "Play"
 flat = true
 script = ExtResource("2")
@@ -81,6 +82,7 @@ script = ExtResource("2")
 [node name="settings" type="Button" parent="HBoxContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 30
 text = "Settings"
 flat = true
 script = ExtResource("2")
@@ -88,6 +90,7 @@ script = ExtResource("2")
 [node name="quit" type="Button" parent="HBoxContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 30
 text = "Quit"
 flat = true
 script = ExtResource("2")

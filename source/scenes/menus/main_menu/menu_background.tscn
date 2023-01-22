@@ -1,6 +1,5 @@
-[gd_scene load_steps=17 format=3 uid="uid://bc0p34mqvniv4"]
+[gd_scene load_steps=16 format=3 uid="uid://bc0p34mqvniv4"]
 
-[ext_resource type="Texture2D" uid="uid://wle8iwgugi2" path="res://assets/sprites/menu_background.png" id="1_c5gqg"]
 [ext_resource type="Shader" path="res://source/scenes/menus/main_menu/menu_background.gdshader" id="1_n6oq2"]
 [ext_resource type="Script" path="res://source/scenes/main/train.gd" id="3_qxy0j"]
 [ext_resource type="Texture2D" uid="uid://cpr2hhrbg5ci8" path="res://assets/sprites/menu_background_new.png" id="3_smho3"]
@@ -8,40 +7,40 @@
 [ext_resource type="Texture2D" uid="uid://tgymvujfvx2r" path="res://assets/train/train-steam-2.png" id="5_17iei"]
 [ext_resource type="Texture2D" uid="uid://dsqp2govyssc" path="res://assets/train/train-steam.png" id="6_sfhs8"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ndok2"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1l7x8"]
 shader = ExtResource("1_n6oq2")
 shader_parameter/scroll_speed = 0.0
-shader_parameter/track_texture = ExtResource("1_c5gqg")
+shader_parameter/track_texture = ExtResource("3_smho3")
 
-[sub_resource type="AnimatedTexture" id="AnimatedTexture_2lmce"]
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_eleqb"]
 frame_0/texture = ExtResource("5_17iei")
 
-[sub_resource type="Curve" id="Curve_kr6sd"]
+[sub_resource type="Curve" id="Curve_e531y"]
 _data = [Vector2(0, 1), 0.0, -0.151534, 0, 1, Vector2(0.659919, 0.9), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.64643, 0.0, 1, 0]
 point_count = 3
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_2df1m"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_qqjg8"]
 particles_animation = true
 particles_anim_h_frames = 3
 particles_anim_v_frames = 1
 particles_anim_loop = false
 
-[sub_resource type="Gradient" id="Gradient_vu8wm"]
+[sub_resource type="Gradient" id="Gradient_yst3g"]
 offsets = PackedFloat32Array(0, 0.814672, 1)
 colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_6oet6"]
-gradient = SubResource("Gradient_vu8wm")
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_d8jur"]
+gradient = SubResource("Gradient_yst3g")
 
-[sub_resource type="Curve" id="Curve_y0fpr"]
+[sub_resource type="Curve" id="Curve_wnd7q"]
 max_value = 4.0
 _data = [Vector2(0, 1.09091), 0.0, 0.0, 0, 0, Vector2(1, 4), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="CurveTexture" id="CurveTexture_wd0y7"]
-curve = SubResource("Curve_y0fpr")
+[sub_resource type="CurveTexture" id="CurveTexture_jp2e4"]
+curve = SubResource("Curve_wnd7q")
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_siaju"]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_6uhuf"]
 lifetime_randomness = 0.12
 particle_flag_disable_z = true
 spread = 10.0
@@ -50,8 +49,8 @@ gravity = Vector3(0, 0, 0)
 orbit_velocity_min = 0.0
 orbit_velocity_max = 0.0
 damping_max = 1.0
-scale_curve = SubResource("CurveTexture_wd0y7")
-color_ramp = SubResource("GradientTexture1D_6oet6")
+scale_curve = SubResource("CurveTexture_jp2e4")
+color_ramp = SubResource("GradientTexture1D_d8jur")
 anim_speed_max = 1.0
 
 [node name="menu_background" type="Control"]
@@ -63,21 +62,20 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="background" type="TextureRect" parent="."]
-material = SubResource("ShaderMaterial_ndok2")
+material = SubResource("ShaderMaterial_1l7x8")
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -1440.0
-offset_top = -200.0
-offset_right = 1440.0
-offset_bottom = 200.0
+offset_left = -2227.0
+offset_top = -305.0
+offset_right = 2158.0
+offset_bottom = 304.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("3_smho3")
-stretch_mode = 2
 
 [node name="train" type="Node2D" parent="." groups=["Train"]]
 rotation = 3.14159
@@ -98,7 +96,7 @@ lifetime = 1.3
 speed_scale = 0.3
 randomness = 0.42
 lifetime_randomness = 0.22
-texture = SubResource("AnimatedTexture_2lmce")
+texture = SubResource("AnimatedTexture_eleqb")
 emission_shape = 1
 emission_sphere_radius = 1.0
 gravity = Vector2(0, -100)
@@ -106,7 +104,7 @@ orbit_velocity_min = 0.05
 orbit_velocity_max = 0.1
 scale_amount_min = 0.5
 scale_amount_max = 2.0
-scale_amount_curve = SubResource("Curve_kr6sd")
+scale_amount_curve = SubResource("Curve_e531y")
 
 [node name="train2" type="Node2D" parent="train" groups=["Train"]]
 script = ExtResource("3_qxy0j")
@@ -125,7 +123,7 @@ lifetime = 1.3
 speed_scale = 0.3
 randomness = 0.42
 lifetime_randomness = 0.22
-texture = SubResource("AnimatedTexture_2lmce")
+texture = SubResource("AnimatedTexture_eleqb")
 emission_shape = 1
 emission_sphere_radius = 1.0
 gravity = Vector2(0, -100)
@@ -133,7 +131,7 @@ orbit_velocity_min = 0.05
 orbit_velocity_max = 0.1
 scale_amount_min = 0.5
 scale_amount_max = 2.0
-scale_amount_curve = SubResource("Curve_kr6sd")
+scale_amount_curve = SubResource("Curve_e531y")
 
 [node name="train3" type="Node2D" parent="train" groups=["Train"]]
 script = ExtResource("3_qxy0j")
@@ -152,7 +150,7 @@ lifetime = 1.3
 speed_scale = 0.3
 randomness = 0.42
 lifetime_randomness = 0.22
-texture = SubResource("AnimatedTexture_2lmce")
+texture = SubResource("AnimatedTexture_eleqb")
 emission_shape = 1
 emission_sphere_radius = 1.0
 gravity = Vector2(0, -100)
@@ -160,7 +158,7 @@ orbit_velocity_min = 0.05
 orbit_velocity_max = 0.1
 scale_amount_min = 0.5
 scale_amount_max = 2.0
-scale_amount_curve = SubResource("Curve_kr6sd")
+scale_amount_curve = SubResource("Curve_e531y")
 
 [node name="train4" type="Node2D" parent="train" groups=["Train"]]
 script = ExtResource("3_qxy0j")
@@ -179,7 +177,7 @@ lifetime = 1.3
 speed_scale = 0.3
 randomness = 0.42
 lifetime_randomness = 0.22
-texture = SubResource("AnimatedTexture_2lmce")
+texture = SubResource("AnimatedTexture_eleqb")
 emission_shape = 1
 emission_sphere_radius = 1.0
 gravity = Vector2(0, -100)
@@ -187,7 +185,7 @@ orbit_velocity_min = 0.05
 orbit_velocity_max = 0.1
 scale_amount_min = 0.5
 scale_amount_max = 2.0
-scale_amount_curve = SubResource("Curve_kr6sd")
+scale_amount_curve = SubResource("Curve_e531y")
 
 [node name="train5" type="Node2D" parent="train" groups=["Train"]]
 script = ExtResource("3_qxy0j")
@@ -206,7 +204,7 @@ lifetime = 1.3
 speed_scale = 0.3
 randomness = 0.42
 lifetime_randomness = 0.22
-texture = SubResource("AnimatedTexture_2lmce")
+texture = SubResource("AnimatedTexture_eleqb")
 emission_shape = 1
 emission_sphere_radius = 1.0
 gravity = Vector2(0, -100)
@@ -214,7 +212,7 @@ orbit_velocity_min = 0.05
 orbit_velocity_max = 0.1
 scale_amount_min = 0.5
 scale_amount_max = 2.0
-scale_amount_curve = SubResource("Curve_kr6sd")
+scale_amount_curve = SubResource("Curve_e531y")
 
 [node name="train6" type="Node2D" parent="train" groups=["Train"]]
 script = ExtResource("3_qxy0j")
@@ -233,7 +231,7 @@ lifetime = 1.3
 speed_scale = 0.3
 randomness = 0.42
 lifetime_randomness = 0.22
-texture = SubResource("AnimatedTexture_2lmce")
+texture = SubResource("AnimatedTexture_eleqb")
 emission_shape = 1
 emission_sphere_radius = 1.0
 gravity = Vector2(0, -100)
@@ -241,14 +239,14 @@ orbit_velocity_min = 0.05
 orbit_velocity_max = 0.1
 scale_amount_min = 0.5
 scale_amount_max = 2.0
-scale_amount_curve = SubResource("Curve_kr6sd")
+scale_amount_curve = SubResource("Curve_e531y")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="train"]
-material = SubResource("CanvasItemMaterial_2df1m")
+material = SubResource("CanvasItemMaterial_qqjg8")
 position = Vector2(-666.999, -323.002)
 emitting = false
 amount = 32
-process_material = SubResource("ParticleProcessMaterial_siaju")
+process_material = SubResource("ParticleProcessMaterial_6uhuf")
 texture = ExtResource("6_sfhs8")
 lifetime = 3.0
 local_coords = true

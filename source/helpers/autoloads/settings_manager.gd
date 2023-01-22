@@ -43,9 +43,9 @@ var settings: Dictionary = {}
 var settings_default: Dictionary = {
 	"audio": {
 		"master": 0.8,
-		"music": 0.7,
-		"effects": 0.8,
-		"ambience": 0.8,
+		"music": 1.0,
+		"effects": 1.0,
+		"ambience": 1.0,
 	},
 	"input": {
 		"move_left": KEY_A,

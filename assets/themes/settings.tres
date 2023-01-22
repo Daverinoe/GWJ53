@@ -2,10 +2,10 @@
 
 [ext_resource type="FontFile" path="res://assets/fonts/settings.tres" id="1"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n607h"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ksj2e"]
 bg_color = Color(0.164706, 0.164706, 0.164706, 1)
 shadow_color = Color(0, 0, 0, 1)
 
 [resource]
 default_font = ExtResource("1")
-Panel/styles/panel = SubResource("StyleBoxFlat_n607h")
+Panel/styles/panel = SubResource("StyleBoxFlat_ksj2e")
