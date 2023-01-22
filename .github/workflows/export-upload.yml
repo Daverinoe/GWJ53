@@ -7,7 +7,7 @@ on:
 env:
   IS_MAIN: ${{contains(github.ref, 'main')}}
   PROJECT_NAME: "gwj53"
-  ITCH_PROJECT_NAME: "gwj53"
+  ITCH_PROJECT_NAME: "rail-assembly"
   ITCH_USERNAME: "daverinoe"
   GODOT_VERSION: 4.0
   SUB_VERSION: beta12
