@@ -8,76 +8,6 @@
 
 config_version=5
 
-_global_script_classes=[{
-"base": "CustomButton",
-"class": &"ChangeButton",
-"language": &"GDScript",
-"path": "res://source/scenes/menus/settings/change_button.gd"
-}, {
-"base": "Button",
-"class": &"CustomButton",
-"language": &"GDScript",
-"path": "res://source/scenes/menus/settings/custom_button.gd"
-}, {
-"base": "RefCounted",
-"class": &"IOHelper",
-"language": &"GDScript",
-"path": "res://source/helpers/common/io_helper.gd"
-}, {
-"base": "Node2D",
-"class": &"MainScene",
-"language": &"GDScript",
-"path": "res://source/scenes/main/main_scene.gd"
-}, {
-"base": "Camera2D",
-"class": &"PlayerCamera",
-"language": &"GDScript",
-"path": "res://source/player/player_camera.gd"
-}, {
-"base": "Control",
-"class": &"SaveMenu",
-"language": &"GDScript",
-"path": "res://source/scenes/menus/serials/save.gd"
-}, {
-"base": "Control",
-"class": &"Setting",
-"language": &"GDScript",
-"path": "res://source/scenes/menus/settings/setting.gd"
-}, {
-"base": "TileMap",
-"class": &"TileSystem",
-"language": &"GDScript",
-"path": "res://source/scenes/main/tile_system.gd"
-}, {
-"base": "Node2D",
-"class": &"Train",
-"language": &"GDScript",
-"path": "res://source/scenes/main/train.gd"
-}, {
-"base": "Node2D",
-"class": &"TrainCarriage",
-"language": &"GDScript",
-"path": "res://source/scenes/main/train_carriage.gd"
-}, {
-"base": "MainScene",
-"class": &"World",
-"language": &"GDScript",
-"path": "res://source/scenes/main/world.gd"
-}]
-_global_script_class_icons={
-"ChangeButton": "",
-"CustomButton": "",
-"IOHelper": "",
-"MainScene": "",
-"PlayerCamera": "",
-"SaveMenu": "",
-"Setting": "",
-"TileSystem": "",
-"Train": "",
-"TrainCarriage": "",
-"World": ""
-}
-
 [application]
 
 config/name="Rail Assembly"
@@ -117,23 +47,23 @@ theme/custom="res://assets/themes/main.theme"
 ui_select={
 "deadzone": 0.5,
 "events": [Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":3,"pressure":0.0,"pressed":false,"script":null)
-, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":32,"physical_keycode":0,"unicode":32,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":32,"physical_keycode":0,"key_label":0,"unicode":32,"echo":false,"script":null)
 , Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":0,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"button_index":1,"pressed":false,"double_click":false,"script":null)
 ]
 }
 move_left={
 "deadzone": 0.5,
-"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":0,"unicode":0,"echo":false,"script":null)
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":0,"key_label":0,"unicode":0,"echo":false,"script":null)
 ]
 }
 move_right={
 "deadzone": 0.5,
-"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":0,"unicode":0,"echo":false,"script":null)
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":0,"key_label":0,"unicode":0,"echo":false,"script":null)
 ]
 }
 jump={
 "deadzone": 0.5,
-"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":0,"unicode":0,"echo":false,"script":null)
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":0,"key_label":0,"unicode":0,"echo":false,"script":null)
 ]
 }
 menu={
@@ -167,7 +97,7 @@ click_drag={
 }
 reset_camera={
 "deadzone": 0.5,
-"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":70,"unicode":0,"echo":false,"script":null)
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":70,"key_label":0,"unicode":0,"echo":false,"script":null)
 ]
 }
 

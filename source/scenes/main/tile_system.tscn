@@ -1,83 +1,12 @@
-[gd_scene load_steps=8 format=3 uid="uid://brerulorr60o5"]
+[gd_scene load_steps=4 format=3 uid="uid://brerulorr60o5"]
 
-[ext_resource type="Texture2D" uid="uid://f03rjiy1hea2" path="res://assets/tile_system/tiles_snow_x4_bottom.png" id="2_51m1x"]
+[ext_resource type="TileSet" uid="uid://cbhhto6ondnfa" path="res://source/scenes/main/tileset.tres" id="1_og72c"]
 [ext_resource type="Script" path="res://source/scenes/main/tile_system.gd" id="2_65ace"]
-[ext_resource type="Texture2D" uid="uid://bvxxgiwb22mi" path="res://assets/tile_system/tiles_snow_x4.png" id="2_n1jp4"]
 [ext_resource type="Texture2D" uid="uid://3dr5eskrq5uu" path="res://assets/tile_system/tile_selector.png" id="3_oiree"]
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lecrd"]
-texture = ExtResource("2_51m1x")
-texture_region_size = Vector2i(384, 384)
-0:0/0 = 0
-1:0/0 = 0
-2:0/0 = 0
-3:0/0 = 0
-0:1/0 = 0
-1:1/0 = 0
-2:1/0 = 0
-3:1/0 = 0
-0:2/0 = 0
-1:2/0 = 0
-2:2/0 = 0
-3:2/0 = 0
-4:1/0 = 0
-4:2/0 = 0
-0:3/0 = 0
-1:3/0 = 0
-2:3/0 = 0
-3:3/0 = 0
-4:3/0 = 0
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dvpok"]
-texture = ExtResource("2_n1jp4")
-texture_region_size = Vector2i(384, 256)
-0:0/0 = 0
-1:0/0 = 0
-2:0/0 = 0
-3:0/0 = 0
-4:0/0 = 0
-5:0/0 = 0
-6:0/0 = 0
-7:0/0 = 0
-8:0/0 = 0
-0:1/0 = 0
-1:1/0 = 0
-2:1/0 = 0
-3:1/0 = 0
-4:1/0 = 0
-5:1/0 = 0
-6:1/0 = 0
-7:1/0 = 0
-8:1/0 = 0
-0:2/0 = 0
-1:2/0 = 0
-2:2/0 = 0
-3:2/0 = 0
-4:2/0 = 0
-5:2/0 = 0
-6:2/0 = 0
-7:2/0 = 0
-8:2/0 = 0
-0:3/0 = 0
-1:3/0 = 0
-2:3/0 = 0
-3:3/0 = 0
-4:3/0 = 0
-5:3/0 = 0
-6:3/0 = 0
-7:3/0 = 0
-8:3/0 = 0
-
-[sub_resource type="TileSet" id="TileSet_jqq64"]
-tile_shape = 3
-tile_offset_axis = 1
-tile_size = Vector2i(384, 256)
-sources/1 = SubResource("TileSetAtlasSource_dvpok")
-sources/0 = SubResource("TileSetAtlasSource_lecrd")
 
 [node name="tile_system" type="TileMap"]
 position = Vector2(1, -5)
-tile_set = SubResource("TileSet_jqq64")
+tile_set = ExtResource("1_og72c")
 format = 2
 layer_0/name = "Tracks"
 layer_0/y_sort_enabled = true
@@ -87,18 +16,20 @@ layer_1/modulate = Color(1, 1, 1, 1)
 layer_1/y_sort_enabled = true
 layer_1/y_sort_origin = 0
 layer_1/z_index = 0
-layer_1/tile_data = PackedInt32Array(65537, 131074, 0, 131074, 65538, 2, 131075, 65538, 1, 196611, 131074, 0, 262148, 196610, 0, 196613, 65538, 0, 131077, 2, 0, 196612, 196610, 3, 131076, 196610, 3, 196614, 196610, 3, 1, 2, 0)
+layer_1/tile_data = PackedInt32Array()
 script = ExtResource("2_65ace")
 
 [node name="active_tile_marker" type="Sprite2D" parent="."]
 unique_name_in_owner = true
 modulate = Color(1, 0.768627, 0, 1)
+scale = Vector2(8, 8)
 texture = ExtResource("3_oiree")
 
 [node name="tile_select_marker" type="Sprite2D" parent="."]
 unique_name_in_owner = true
 modulate = Color(0.529412, 0.878431, 1, 1)
 y_sort_enabled = true
+scale = Vector2(8, 8)
 texture = ExtResource("3_oiree")
 
 [node name="ghost_selection" type="Sprite2D" parent="."]

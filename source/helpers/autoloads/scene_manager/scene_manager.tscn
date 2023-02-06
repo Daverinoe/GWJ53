@@ -55,6 +55,9 @@ script = ExtResource("1")
 [node name="menu_background" parent="." instance=ExtResource("2_pg8qa")]
 layout_mode = 1
 
+[node name="GPUParticles2D" parent="menu_background/train" index="6"]
+local_coords = false
+
 [node name="chuggachugga" type="AudioStreamPlayer2D" parent="menu_background/train" index="7"]
 rotation = -3.14159
 stream = ExtResource("4_n160t")

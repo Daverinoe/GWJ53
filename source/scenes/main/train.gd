@@ -13,7 +13,11 @@ var world: World
 var tile_system: TileSystem
 var current_speed: float = 0
 
+var hex_check : RayCast2D
+
 func _ready():
+	hex_check = get_node_or_null("TileCheck")
+	
 	for child_train_carriage in get_children():
 		if child_train_carriage.has_method("initialise_train_carriage"):
 			if not child_train_carriage.is_locomotive:
@@ -21,8 +25,17 @@ func _ready():
 			else:
 				locomotive_ref = child_train_carriage
 	Event.connect("update_train_speed_multiplier", _on_update_train_speed_multiplier)
-		
-			
+	Event.connect("get_next_hex", get_next_hex)
+	if hex_check != null:
+		# Wait for a few hundred milliseconds, because waiting for ready signal doesn't seem to work?
+		# Also tried waiting the draw signal, also didn't work.
+		await get_tree().create_timer(0.2).timeout
+		start_pathing()
+
+
+func start_pathing() -> void:
+	Event.emit_signal("generate_hex_path", get_next_hex())
+
 #func on_update_speed(new_t_speed):
 #	for child_train_carriage in child_carriages:
 #		if child_train_carriage.has_method("update_speed"):
@@ -58,3 +71,9 @@ func initialise_train(world_ref: World, tile_system_ref: TileSystem) -> void:
 func _on_update_train_speed_multiplier(new_t_speed_multiplier):
 	print("updating speed multiplier to: ", new_t_speed_multiplier)
 	locomotive_ref.set_new_speed_multiplier(new_t_speed_multiplier)
+
+
+func get_next_hex():
+	hex_check.force_raycast_update()
+	var collider = hex_check.get_collider()
+	return collider

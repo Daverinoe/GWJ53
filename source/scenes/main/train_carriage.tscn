@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://befl37h26d4fb"]
+[gd_scene load_steps=12 format=3]
 
 [ext_resource type="Script" path="res://source/scenes/main/train_carriage.gd" id="1_qgacr"]
 [ext_resource type="Texture2D" uid="uid://bx7m4skq1g67d" path="res://assets/train/locomotive_x4.png" id="2_ynwjr"]

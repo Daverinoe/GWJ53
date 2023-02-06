@@ -79,14 +79,14 @@ func _set_zoom_level(value: float) -> void:
 	.set_ease(Tween.EASE_OUT)
 
 # TODO: This should be based on the limits of the fog of war
-func update_limits(active_blob_world_coords: Array[Vector2i]) -> void:
-	var new_min_x: int = 1e10
-	var new_max_x: int = -1e10
-	var new_min_y: int = 1e10
-	var new_max_y: int = -1e10
-	
-	for coord in active_blob_world_coords:
-		new_min_x = min(new_min_x, coord[0])
-		new_max_x = max(new_max_x, coord[0])
-		new_min_y = max(new_min_y, coord[1])
-		new_max_y = max(new_max_y, coord[1])
+#func update_limits(active_blob_world_coords: Array[Vector2i]) -> void:
+#	var new_min_x: int = 1e10
+#	var new_max_x: int = -1e10
+#	var new_min_y: int = 1e10
+#	var new_max_y: int = -1e10
+#
+#	for coord in active_blob_world_coords:
+#		new_min_x = min(new_min_x, coord[0])
+#		new_max_x = max(new_max_x, coord[0])
+#		new_min_y = max(new_min_y, coord[1])
+#		new_max_y = max(new_max_y, coord[1])

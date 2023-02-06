@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://d2f72av5kbjxd"]
+[gd_scene load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://source/scenes/main/TrainSpeedHUD.gd" id="1_tu5yn"]
 [ext_resource type="Texture2D" uid="uid://dyf4i2b6hmgp8" path="res://assets/train/speed_stick-progress-speed-bg-circle.png" id="2_13355"]

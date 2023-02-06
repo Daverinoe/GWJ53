@@ -1,9 +1,9 @@
-[gd_scene load_steps=17 format=3 uid="uid://bc0p34mqvniv4"]
+[gd_scene load_steps=17 format=3]
 
 [ext_resource type="Shader" path="res://source/scenes/menus/main_menu/menu_background.gdshader" id="1_n6oq2"]
 [ext_resource type="Script" path="res://source/scenes/main/train.gd" id="3_qxy0j"]
 [ext_resource type="Texture2D" uid="uid://cpr2hhrbg5ci8" path="res://assets/sprites/menu_background_new.png" id="3_smho3"]
-[ext_resource type="PackedScene" uid="uid://befl37h26d4fb" path="res://source/scenes/main/train_carriage.tscn" id="4_acv4u"]
+[ext_resource type="PackedScene" path="res://source/scenes/main/train_carriage.tscn" id="4_acv4u"]
 [ext_resource type="Texture2D" uid="uid://tgymvujfvx2r" path="res://assets/train/train-steam-2.png" id="5_17iei"]
 [ext_resource type="Texture2D" uid="uid://dsqp2govyssc" path="res://assets/train/train-steam.png" id="6_sfhs8"]
 

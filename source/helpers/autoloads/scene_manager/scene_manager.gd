@@ -265,11 +265,11 @@ func set_smoke_and_sound(inc_speed: float) -> void:
 	var speed = max_smoke_velocity * ratio
 	
 	# Set speed of emission to 0
-	if speed <= 30.0:
-		process_material.initial_velocity_min = 20
-		process_material.initial_velocity_max = 30
+	if speed <= 50.0:
+		process_material.initial_velocity_min = 50
+		process_material.initial_velocity_max = 60
 	else:
-		process_material.initial_velocity_min = speed - 10.0
-		process_material.initial_velocity_max = speed
+		process_material.initial_velocity_min = speed
+		process_material.initial_velocity_max = speed + 10
 	
 	chugga_player.pitch_scale = clamp(1 + max_pitch_scale * ratio / 2, 1, 3)

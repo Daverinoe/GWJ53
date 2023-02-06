@@ -57,17 +57,18 @@ var active_atlas_map: int = 0
 
 func _ready():
 	tile_select_marker.hide()
+	Event.connect("generate_hex_path", generate_hex_path)
 
 
 func _process(delta):
 	# Find active tile (i.e. cursor)
-	curr_mouse_position = get_global_mouse_position()
+	curr_mouse_position = to_local(get_global_mouse_position())
 	active_tile_map_coord = local_to_map(curr_mouse_position)
 	active_tile_world_coord = map_to_local(active_tile_map_coord)  # This will make it a grid
 	active_tile_marker.global_position = active_tile_world_coord
 
 
-func _unhandled_input(event) -> void:
+func _input(event) -> void:
 	if event.is_action_pressed("tile_select"):
 #		if not local_to_map(active_tile_world_coord) in get_used_cells(BASE_TILE_LAYER):
 #			print("TILE NOT EXIST")
@@ -122,3 +123,8 @@ func is_obstacle(map_tile_coord) -> bool:
 	# TODO: This raises an error in the debugger - need to fix the logic so we aren't checking null but instead reading what layer is active
 	var obstacle_check: TileData = get_cell_tile_data(1, map_tile_coord)
 	return true if obstacle_check != null else false
+
+
+func generate_hex_path(hex) -> Array:
+	print(hex)
+	return []

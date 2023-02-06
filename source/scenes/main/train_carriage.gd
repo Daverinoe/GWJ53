@@ -44,20 +44,12 @@ func set_new_speed_multiplier(new_speed_multiplier):
 		speed_multiplier = new_speed_multiplier 
 
 func _physics_process(delta):
-	if carriage_initialised:
-		update_speed(target_speed * speed_multiplier)
-		#speed = lerp(speed, target_speed, 0.2)  # Provide some linear acceleration to the train
-		_check_vector_change()
-		global_position += current_heading * speed * delta
+	VariableManager.train_speed = speed
 	if is_locomotive:
 		change_active_frames(locomotive_sprite)
 	else:
 		change_active_frames(carriage_sprite)
 
-
-func _process(delta):
-	# Look at heading in a lerp fashion
-	rotation_degrees = lerp(rotation_degrees, rad_to_deg(current_heading.angle()), 0.5)
 
 func change_active_frames(sprite: AnimatedSprite2D):
 	var current_angle = rad_to_deg(current_heading.angle())
@@ -71,100 +63,6 @@ func change_active_frames(sprite: AnimatedSprite2D):
 	elif current_angle >= 5 && current_angle < 85:
 		sprite.set_animation("down_right")
 
-
-func _get_tile_entrypoint() -> TileSystem.HexPos:
-	# Get the entry position (as TileSystem.HexPos) to ensure we don't head to
-	# that from the center point
-	var heading_x = current_heading.sign()[0]
-	var heading_y = current_heading.sign()[1]
-	
-	if heading_x == -1.0 and abs(current_heading[0]) > 0.1:  # entered from the right
-		if heading_y == -1.0:  # entered from bottom
-			return tile_system.HexPos.RIGHT_BOTTOM
-		else:
-			return tile_system.HexPos.RIGHT_TOP
-	
-	elif heading_x == 1.0 and abs(current_heading[0]) > 0.1:  # entered from the left
-		if heading_y == -1.0:  # entered from bottom
-			return tile_system.HexPos.LEFT_BOTTOM
-		else:
-			return tile_system.HexPos.LEFT_TOP
-			
-	else:  # Entered from the top/bottom
-		if heading_y == -1.0:
-			return tile_system.HexPos.BOTTOM
-		else:
-			return tile_system.HexPos.TOP
-
-
-func _check_close_enough_to_center() -> bool:
-	#return false
-	return abs(global_position.x - current_tile_center_coord.x) < 40.0 \
-			and abs(global_position.y - current_tile_center_coord.y) < 40.0
-
-
-func _check_vector_change() -> void:
-	check_tile_coord = tile_system.local_to_map(global_position)
-	if check_tile_coord != current_tile_map_coord:
-		# In this case, we have entered a new tile. Do checks here
-		tile_centre_reached = false
-		if is_locomotive:
-			pass  # TODO: Check illegal tile
-				
-		current_tile_map_coord = check_tile_coord
-		current_tile_center_coord = tile_system.map_to_local(current_tile_map_coord)
-		
-		# Emit signal to fog of war process
-		if get_parent().is_main:
-			Event.emit_signal("train_on_cell", current_tile_center_coord)
-		
-		""" TODO: Fix this - using the current global_position can cause the train to be
-		offset from the track. This should instead snap to a tile property, such as
-		from tile_system.HEX_RELATIVE_POS_MAPPING
-		"""
-		current_heading = (current_tile_center_coord - global_position).normalized()
-		print("NEW HEADING ", str(current_heading))
-		
-		current_tile_entrypoint = _get_tile_entrypoint()
-		
-	# If not a new tile, then we need to check if we have hit the center
-	elif _check_close_enough_to_center() and not tile_centre_reached:
-		# Get new heading at this point
-		tile_centre_reached = true
-		
-		# Note: Duplicated here to ensure that the original lookup is unaffected
-		#var test_exit: Array = tile_system.ATLAS_MAP_LOOKUP[tile_system.get_cell_atlas_coords(0, Vector2(-1, -1))]
-		#print("test_exit:", test_exit)
-		if current_tile_map_coord != Vector2i(-1, -1):
-			print("current tile map coord:", current_tile_map_coord)
-			var available_exits: Array = tile_system.ATLAS_MAP_LOOKUP[
-				tile_system.get_cell_atlas_coords(0, current_tile_map_coord)
-				].duplicate()
-				
-			if available_exits == [0, 0]:
-				# TODO: Game over time from here. 
-				update_speed(float(0))
-				set_new_speed_multiplier(float(0))
-				crashed = true
-				print("!!!!! YOU DIED !!!!!")
-				Event.emit_signal("you_died")
-				return
-				
-			print("current tile map coordinate:", current_tile_center_coord)
-			print("available exits:", available_exits)
-			
-			available_exits.erase(current_tile_entrypoint)
-			assert(len(available_exits) > 0)
-			
-			# TODO: IF LEN > 1 support random choice
-			current_heading = (
-				(current_tile_center_coord + Vector2(tile_system.HEX_RELATIVE_POS_MAPPING[available_exits[0]])
-				) - global_position).normalized()
-				
-			# Lock carriage to center
-			global_position = current_tile_center_coord
-			print("HIT CENTRE, NEW HEADING " + str(current_heading))
-		
 
 func initialise_train_carriage(train_ref: Train, tile_system_ref: TileSystem, t_speed: float, next_carriage_ref=null) -> void:
 	# Currently handling this as dependency injection rather than globals

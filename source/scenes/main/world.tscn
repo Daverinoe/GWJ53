@@ -1,15 +1,19 @@
-[gd_scene load_steps=14 format=3 uid="uid://bdo7a0e5m3fli"]
+[gd_scene load_steps=17 format=3 uid="uid://d0s35rggx6tcu"]
 
 [ext_resource type="Script" path="res://source/scenes/main/world.gd" id="1_d1use"]
 [ext_resource type="PackedScene" uid="uid://brerulorr60o5" path="res://source/scenes/main/tile_system.tscn" id="2_kwtms"]
+[ext_resource type="Script" path="res://source/scenes/main/train/TrainPath.gd" id="3_jruss"]
 [ext_resource type="PackedScene" uid="uid://bbeu2y0wvltl1" path="res://source/player/player_camera.tscn" id="4_gs2qm"]
-[ext_resource type="PackedScene" uid="uid://bwa5t45dpu37x" path="res://source/scenes/main/train.tscn" id="4_t50p6"]
+[ext_resource type="Script" path="res://source/scenes/main/train/TrainPathFollow.gd" id="4_puns2"]
+[ext_resource type="PackedScene" uid="uid://b85g01ar6eec8" path="res://source/scenes/main/train.tscn" id="4_t50p6"]
 [ext_resource type="Shader" path="res://assets/shaders/fog_of_war.gdshader" id="5_n2ols"]
 [ext_resource type="AudioStream" uid="uid://htkneytde3vc" path="res://assets/audio/music/train_game_sketch_thing.ogg" id="6_4cdvx"]
-[ext_resource type="PackedScene" uid="uid://d2f72av5kbjxd" path="res://source/scenes/main/TrainSpeedHUD.tscn" id="6_uckai"]
+[ext_resource type="PackedScene" path="res://source/scenes/main/TrainSpeedHUD.tscn" id="6_uckai"]
 [ext_resource type="Texture2D" uid="uid://bcmwt75dkx71j" path="res://assets/train/uded.png" id="7_uthab"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_lul3q"]
+
+[sub_resource type="Curve2D" id="Curve2D_jpapx"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_0vh8v"]
 seed = 30
@@ -35,13 +39,27 @@ shader_parameter/wind_noise = SubResource("NoiseTexture2D_0vsvn")
 process_mode = 1
 script = ExtResource("1_d1use")
 
+[node name="test_black" type="Sprite2D" parent="."]
+modulate = Color(0, 0, 0, 1)
+position = Vector2(-1537, -533)
+scale = Vector2(5167, 3515)
+texture = SubResource("PlaceholderTexture2D_lul3q")
+centered = false
+
 [node name="tile_system" parent="." instance=ExtResource("2_kwtms")]
 unique_name_in_owner = true
 position = Vector2(0, 0)
 layer_0/tile_data = PackedInt32Array(1, 0, 0, 65537, 0, 0, 65536, 0, 0, 131073, 131072, 0, 196609, 65536, 1, 196610, 65536, 2, 196612, 65536, 0, 196611, 196608, 0, 327681, 0, 0, 393218, 196608, 0, 327683, 131072, 1, 327684, 131072, 2, 131076, 0, 0, 65540, 0, 0, 327682, 65536, 3, 262146, 131072, 3, 196608, 0, 0, 262144, 0, 0, 131072, 131072, 0, 262145, 0, 0, 393217, 0, 0, 458754, 196608, 0, 393219, 65536, 0, 458753, 131072, 0)
-layer_1/tile_data = PackedInt32Array()
 
-[node name="train" parent="." instance=ExtResource("4_t50p6")]
+[node name="TrainPath" type="Path2D" parent="."]
+curve = SubResource("Curve2D_jpapx")
+script = ExtResource("3_jruss")
+
+[node name="TrainPathFollow" type="PathFollow2D" parent="TrainPath"]
+loop = false
+script = ExtResource("4_puns2")
+
+[node name="train" parent="TrainPath/TrainPathFollow" instance=ExtResource("4_t50p6")]
 unique_name_in_owner = true
 position = Vector2(481, 991)
 is_main = true
@@ -49,13 +67,6 @@ active = true
 
 [node name="Fog" type="Node2D" parent="."]
 unique_name_in_owner = true
-
-[node name="test_black" type="Sprite2D" parent="."]
-visible = false
-modulate = Color(0, 0, 0, 1)
-scale = Vector2(1161, 645)
-texture = SubResource("PlaceholderTexture2D_lul3q")
-centered = false
 
 [node name="player_camera" parent="." instance=ExtResource("4_gs2qm")]
 unique_name_in_owner = true
