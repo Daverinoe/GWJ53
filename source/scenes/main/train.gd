@@ -13,7 +13,7 @@ var world: World
 var tile_system: TileSystem
 var current_speed: float = 0
 
-var hex_check : RayCast2D
+var hex_check : Marker2D
 
 func _ready():
 	hex_check = get_node_or_null("TileCheck")
@@ -26,11 +26,7 @@ func _ready():
 				locomotive_ref = child_train_carriage
 	Event.connect("update_train_speed_multiplier", _on_update_train_speed_multiplier)
 	Event.connect("get_next_hex", get_next_hex)
-	if hex_check != null:
-		# Wait for a few hundred milliseconds, because waiting for ready signal doesn't seem to work?
-		# Also tried waiting the draw signal, also didn't work.
-		await get_tree().create_timer(0.2).timeout
-		start_pathing()
+	Event.connect("start_pathing", start_pathing)
 
 
 func start_pathing() -> void:
@@ -74,6 +70,9 @@ func _on_update_train_speed_multiplier(new_t_speed_multiplier):
 
 
 func get_next_hex():
-	hex_check.force_raycast_update()
-	var collider = hex_check.get_collider()
-	return collider
+	# The marker should move locally with the train via the pathfollow, and so should always be 100px ahead of the train.
+	# Therefore when we reach the end of the path, we just need to get the position of the marker and check which hex it is.
+	var marker_position = hex_check.get_global_transform().origin
+	var local_position = tile_system.to_local(marker_position)
+	var next_hex = tile_system.local_to_map(local_position)
+	return next_hex

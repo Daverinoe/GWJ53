@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://smt6ks8tnyxg"]
 
 [ext_resource type="Script" path="res://source/scenes/menus/settings/custom_button.gd" id="2"]
-[ext_resource type="PackedScene" uid="uid://bc0p34mqvniv4" path="res://source/scenes/menus/main_menu/menu_background.tscn" id="2_6fmhc"]
+[ext_resource type="PackedScene" path="res://source/scenes/menus/main_menu/menu_background.tscn" id="2_6fmhc"]
 [ext_resource type="Script" path="res://source/scenes/menus/main_menu/main_menu.gd" id="3"]
 [ext_resource type="AudioStream" uid="uid://mxitkcc2ichh" path="res://assets/audio/sfx/idle.ogg" id="5_sflj8"]
 [ext_resource type="AudioStream" uid="uid://cup07t8h0ln18" path="res://assets/audio/sfx/whistle.ogg" id="6_4dmac"]

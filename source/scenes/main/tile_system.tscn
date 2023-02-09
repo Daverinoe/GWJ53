@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://3dr5eskrq5uu" path="res://assets/tile_system/tile_selector.png" id="3_oiree"]
 
 [node name="tile_system" type="TileMap"]
+y_sort_enabled = true
 position = Vector2(1, -5)
 tile_set = ExtResource("1_og72c")
 format = 2

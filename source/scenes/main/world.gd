@@ -38,10 +38,17 @@ func _ready():
 	initialise_fog()
 	update_fog_texture(fog_images["0_0:0_0"])
 	GlobalRefs.level_ref = self
+	
+	var timer = get_tree().create_timer(0.3)
+	timer.connect("timeout", start_game)
 
 
 func _process(delta):
 	pass
+
+
+func start_game() -> void:
+	Event.emit_signal("start_pathing")
 
 
 func you_died():

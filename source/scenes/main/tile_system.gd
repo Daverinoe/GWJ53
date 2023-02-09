@@ -125,6 +125,10 @@ func is_obstacle(map_tile_coord) -> bool:
 	return true if obstacle_check != null else false
 
 
-func generate_hex_path(hex) -> Array:
-	print(hex)
+func generate_hex_path(hex_coords) -> Array:
+	print("Current hex coords: %s" % hex_coords)
+	
+	var new_path : Curve2D = Curve2D.new()
+	
+	
 	return []

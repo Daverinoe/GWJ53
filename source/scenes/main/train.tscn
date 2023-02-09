@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://b85g01ar6eec8"]
+[gd_scene load_steps=9 format=3 uid="uid://b85g01ar6eec8"]
 
 [ext_resource type="Script" path="res://source/scenes/main/train.gd" id="1_50bbo"]
 [ext_resource type="PackedScene" path="res://source/scenes/main/train_carriage.tscn" id="2_e3wwu"]
 [ext_resource type="Texture2D" uid="uid://tgymvujfvx2r" path="res://assets/train/train-steam-2.png" id="3_2do42"]
 [ext_resource type="AudioStream" uid="uid://dbxf0vfkvakl2" path="res://assets/audio/sfx/train_chugg.ogg" id="4_ag3x5"]
 [ext_resource type="Script" path="res://source/scenes/main/train/chuggachugga.gd" id="5_y50ds"]
+[ext_resource type="Texture2D" uid="uid://cysbys3kvxbh0" path="res://icon.png" id="6_csqd7"]
 
 [sub_resource type="AnimatedTexture" id="AnimatedTexture_gsesv"]
 frame_0/texture = ExtResource("3_2do42")
@@ -48,8 +49,9 @@ attenuation = 1.93187
 bus = &"Effects"
 script = ExtResource("5_y50ds")
 
-[node name="TileCheck" type="RayCast2D" parent="."]
-exclude_parent = false
-target_position = Vector2(100, 0)
-hit_from_inside = true
-collide_with_areas = true
+[node name="TileCheck" type="Marker2D" parent="."]
+position = Vector2(60, 0)
+gizmo_extents = 20.0
+
+[node name="Sprite2D" type="Sprite2D" parent="TileCheck"]
+texture = ExtResource("6_csqd7")
