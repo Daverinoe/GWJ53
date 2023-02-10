@@ -16,3 +16,4 @@ signal generate_hex_path(hex_to_generate_path_for)
 signal get_next_hex
 signal path_generated(path : Array)
 signal start_pathing
+signal curve_generated(curve : Curve2D)

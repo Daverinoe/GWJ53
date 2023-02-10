@@ -125,10 +125,21 @@ func is_obstacle(map_tile_coord) -> bool:
 	return true if obstacle_check != null else false
 
 
-func generate_hex_path(hex_coords) -> Array:
+func generate_hex_path(hex_coords) -> void:
 	print("Current hex coords: %s" % hex_coords)
 	
-	var new_path : Curve2D = Curve2D.new()
+	if is_obstacle(hex_coords):
+		Event.emit_signal("curve_generated", null)
 	
+	var atlas_cell : Vector2i = get_cell_atlas_coords(BASE_TILE_LAYER, hex_coords)
+	var mapping : Array = ATLAS_MAP_LOOKUP[atlas_cell]
 	
-	return []
+	var new_curve : Curve2D = Curve2D.new()
+	
+	# All paths will have 3 points at the moment
+	# TODO: Generalise for multi-path tiles
+	new_curve.add_point(HEX_RELATIVE_POS_MAPPING[mapping[0]])
+	new_curve.add_point(Vector2.ZERO)
+	new_curve.add_point(HEX_RELATIVE_POS_MAPPING[mapping[1]])
+	
+	Event.emit_signal("curve_generated", new_curve)
