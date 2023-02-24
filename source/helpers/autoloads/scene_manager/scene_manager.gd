@@ -18,19 +18,20 @@ var path_to_load: String
 var new_instance = null
 var is_finished_loading := false
 var load_variables = null
-var background = preload("res://source/scenes/menus/main_menu/menu_background.tscn")
 
 var train_tween : Tween
 var track_tween : Tween
 
 var max_shader_scroll_speed : float = 0.5
 
+var background = preload("res://source/scenes/menus/main_menu/menu_background.tscn")
+var visible_background
+var smoke
+var chugga_player
+
 
 @onready var hint_ref = $VBoxContainer/hint
 @onready var finished_ref = $VBoxContainer/finished
-@onready var smoke = $menu_background/train/GPUParticles2D
-@onready var chugga_player = $menu_background/train/chuggachugga
-
 
 func _ready() -> void:
 	randomize()
@@ -63,6 +64,10 @@ func _input(event):
 
 
 func switch_scenes(previous_scene_reference, next_scene_path, is_load_request: bool = false, load_json: Dictionary = {}) -> void:
+	visible_background = background.instantiate()
+	smoke = visible_background.get_node('train/GPUParticles2D')
+	chugga_player = visible_background.get_node('train/chuggachugga')
+	self.add_child(visible_background)
 	
 	animate_train()
 	
@@ -85,7 +90,7 @@ func switch_scenes(previous_scene_reference, next_scene_path, is_load_request: b
 	new_instance.visible = false
 	new_instance.modulate = Color(1.0, 1.0, 1.0, 0.0)
 	
-	new_instance.set_process_mode(Node.PROCESS_MODE_DISABLED)
+	new_instance.set_process(Node.PROCESS_MODE_DISABLED)
 	
 	# If loading, pass off instance to the load handler
 	if load_variables != null:
@@ -123,7 +128,7 @@ func finish_switch() -> void:
 	await train_tween.finished
 	track_tween.kill()
 	
-	$menu_background.free()
+	visible_background.queue_free()
 	
 	new_instance.modulate = Color(1.0, 1.0, 1.0, 1.0)
 	new_instance.visible = true

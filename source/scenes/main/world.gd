@@ -24,6 +24,9 @@ var chunk_size : Vector2i
 @onready var fog_container: Node2D = $%Fog
 @onready var gameover_graphic: TextureRect = get_node("%GameOverGraphic")
 
+func _init() -> void:
+	GlobalRefs.world = self
+
 
 func _ready():
 	chunk_size = light_texture.get_size()
@@ -32,13 +35,13 @@ func _ready():
 	Event.connect("train_on_cell", threaded_update_fog)
 	
 	Event.connect("you_died", you_died)
-	get_tree().call_group("Train", "initialise_train", self, tile_system)
 	player_camera.initialise_camera(train.locomotive_ref)
 	
 	initialise_fog()
-	update_fog_texture(fog_images["0_0:0_0"])
+#	update_fog_texture(fog_images["0_0:0_0"])
 	GlobalRefs.level_ref = self
-	
+
+func _enter_tree() -> void:
 	var timer = get_tree().create_timer(0.3)
 	timer.connect("timeout", start_game)
 
@@ -85,7 +88,7 @@ func initialise_fog() -> void:
 	light_image = light_texture.get_image()
 	light_image.convert(Image.FORMAT_RGBAH) # Ensure compatibility	
 	
-	update_fog(train.get_global_transform().origin)
+#	update_fog(train.get_global_transform().origin)
 	# If you want multiple trains to be reveailing the fog of war at once: 
 	#for t in get_tree().get_nodes_in_group("Train"):
 	#	update_fog(t.get_global_transform().origin)
@@ -205,6 +208,8 @@ func threaded_update_fog(new_position: Vector2) -> void:
 	
 	if thread.is_started():
 		thread.wait_to_finish()
+	
+	print_debug(new_position)
 	
 	thread.start(update_fog.bind(new_position))
 

@@ -7,3 +7,4 @@ var max_zoom_level
 
 # Train globals
 var train_speed : float = 0.0
+var train_rotation : float

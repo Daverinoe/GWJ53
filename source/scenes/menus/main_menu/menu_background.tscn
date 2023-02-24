@@ -1,11 +1,13 @@
-[gd_scene load_steps=17 format=3]
+[gd_scene load_steps=19 format=3 uid="uid://cex10rmyawx1"]
 
 [ext_resource type="Shader" path="res://source/scenes/menus/main_menu/menu_background.gdshader" id="1_n6oq2"]
 [ext_resource type="Script" path="res://source/scenes/main/train.gd" id="3_qxy0j"]
 [ext_resource type="Texture2D" uid="uid://cpr2hhrbg5ci8" path="res://assets/sprites/menu_background_new.png" id="3_smho3"]
-[ext_resource type="PackedScene" path="res://source/scenes/main/train_carriage.tscn" id="4_acv4u"]
+[ext_resource type="PackedScene" uid="uid://ccegws1tnhowo" path="res://source/scenes/main/train_carriage.tscn" id="4_acv4u"]
 [ext_resource type="Texture2D" uid="uid://tgymvujfvx2r" path="res://assets/train/train-steam-2.png" id="5_17iei"]
 [ext_resource type="Texture2D" uid="uid://dsqp2govyssc" path="res://assets/train/train-steam.png" id="6_sfhs8"]
+[ext_resource type="AudioStream" uid="uid://dbxf0vfkvakl2" path="res://assets/audio/sfx/train_chugg.ogg" id="7_ctpr7"]
+[ext_resource type="Script" path="res://source/scenes/main/train/chuggachugga.gd" id="8_mds3v"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6jm3r"]
 shader = ExtResource("1_n6oq2")
@@ -82,7 +84,6 @@ texture = SubResource("PlaceholderTexture2D_jsyut")
 [node name="train" type="Node2D" parent="." groups=["Train"]]
 rotation = 3.14159
 script = ExtResource("3_qxy0j")
-active = false
 
 [node name="train_locomotive" parent="train" instance=ExtResource("4_acv4u")]
 y_sort_enabled = true
@@ -108,15 +109,11 @@ scale_amount_min = 0.5
 scale_amount_max = 2.0
 scale_amount_curve = SubResource("Curve_w3ylh")
 
-[node name="train2" type="Node2D" parent="train" groups=["Train"]]
-script = ExtResource("3_qxy0j")
-active = false
-
-[node name="train_locomotive" parent="train/train2" instance=ExtResource("4_acv4u")]
+[node name="train_locomotive2" parent="train" instance=ExtResource("4_acv4u")]
 y_sort_enabled = true
-position = Vector2(-5.99915, -320)
+position = Vector2(-500, -324.002)
 
-[node name="CPUParticles2D" type="CPUParticles2D" parent="train/train2/train_locomotive"]
+[node name="CPUParticles2D" type="CPUParticles2D" parent="train/train_locomotive2"]
 visible = false
 z_index = 20
 position = Vector2(7, -8)
@@ -135,15 +132,11 @@ scale_amount_min = 0.5
 scale_amount_max = 2.0
 scale_amount_curve = SubResource("Curve_w3ylh")
 
-[node name="train3" type="Node2D" parent="train" groups=["Train"]]
-script = ExtResource("3_qxy0j")
-active = false
-
-[node name="train_locomotive" parent="train/train3" instance=ExtResource("4_acv4u")]
+[node name="train_locomotive3" parent="train" instance=ExtResource("4_acv4u")]
 y_sort_enabled = true
-position = Vector2(-130.999, -322)
+position = Vector2(-375, -324.002)
 
-[node name="CPUParticles2D" type="CPUParticles2D" parent="train/train3/train_locomotive"]
+[node name="CPUParticles2D" type="CPUParticles2D" parent="train/train_locomotive3"]
 visible = false
 z_index = 20
 position = Vector2(7, -8)
@@ -162,15 +155,11 @@ scale_amount_min = 0.5
 scale_amount_max = 2.0
 scale_amount_curve = SubResource("Curve_w3ylh")
 
-[node name="train4" type="Node2D" parent="train" groups=["Train"]]
-script = ExtResource("3_qxy0j")
-active = false
-
-[node name="train_locomotive" parent="train/train4" instance=ExtResource("4_acv4u")]
+[node name="train_locomotive4" parent="train" instance=ExtResource("4_acv4u")]
 y_sort_enabled = true
-position = Vector2(-254.999, -323.001)
+position = Vector2(-250, -324.002)
 
-[node name="CPUParticles2D" type="CPUParticles2D" parent="train/train4/train_locomotive"]
+[node name="CPUParticles2D" type="CPUParticles2D" parent="train/train_locomotive4"]
 visible = false
 z_index = 20
 position = Vector2(7, -8)
@@ -189,15 +178,11 @@ scale_amount_min = 0.5
 scale_amount_max = 2.0
 scale_amount_curve = SubResource("Curve_w3ylh")
 
-[node name="train5" type="Node2D" parent="train" groups=["Train"]]
-script = ExtResource("3_qxy0j")
-active = false
-
-[node name="train_locomotive" parent="train/train5" instance=ExtResource("4_acv4u")]
+[node name="train_locomotive5" parent="train" instance=ExtResource("4_acv4u")]
 y_sort_enabled = true
-position = Vector2(-377.999, -324.001)
+position = Vector2(-125, -324.002)
 
-[node name="CPUParticles2D" type="CPUParticles2D" parent="train/train5/train_locomotive"]
+[node name="CPUParticles2D" type="CPUParticles2D" parent="train/train_locomotive5"]
 visible = false
 z_index = 20
 position = Vector2(7, -8)
@@ -216,15 +201,11 @@ scale_amount_min = 0.5
 scale_amount_max = 2.0
 scale_amount_curve = SubResource("Curve_w3ylh")
 
-[node name="train6" type="Node2D" parent="train" groups=["Train"]]
-script = ExtResource("3_qxy0j")
-active = false
-
-[node name="train_locomotive" parent="train/train6" instance=ExtResource("4_acv4u")]
+[node name="train_locomotive6" parent="train" instance=ExtResource("4_acv4u")]
 y_sort_enabled = true
-position = Vector2(-501.999, -325.001)
+position = Vector2(0, -324.002)
 
-[node name="CPUParticles2D" type="CPUParticles2D" parent="train/train6/train_locomotive"]
+[node name="CPUParticles2D" type="CPUParticles2D" parent="train/train_locomotive6"]
 visible = false
 z_index = 20
 position = Vector2(7, -8)
@@ -252,3 +233,10 @@ process_material = SubResource("ParticleProcessMaterial_5vml6")
 texture = ExtResource("6_sfhs8")
 lifetime = 3.0
 local_coords = true
+
+[node name="chuggachugga" type="AudioStreamPlayer2D" parent="train"]
+stream = ExtResource("7_ctpr7")
+pitch_scale = 0.01
+attenuation = 1.93187
+bus = &"Effects"
+script = ExtResource("8_mds3v")

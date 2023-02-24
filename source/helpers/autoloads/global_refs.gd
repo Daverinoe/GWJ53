@@ -12,3 +12,8 @@ var main_menu_path := "res://source/scenes/menus/main_menu/main_menu.tscn"
 var level_ref
 var active_menu
 var active_scene
+
+
+# World settings
+var world
+var tileset

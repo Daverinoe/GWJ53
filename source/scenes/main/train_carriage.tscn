@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3]
+[gd_scene load_steps=12 format=3 uid="uid://ccegws1tnhowo"]
 
 [ext_resource type="Script" path="res://source/scenes/main/train_carriage.gd" id="1_qgacr"]
 [ext_resource type="Texture2D" uid="uid://bx7m4skq1g67d" path="res://assets/train/locomotive_x4.png" id="2_ynwjr"]
@@ -122,11 +122,11 @@ texture = ExtResource("2_ynwjr")
 
 [node name="locomotive_sprite" type="AnimatedSprite2D" parent="."]
 rotation = 1.5708
-frames = SubResource("SpriteFrames_qic5n")
+sprite_frames = SubResource("SpriteFrames_qic5n")
 animation = &"down"
 
 [node name="carriage_sprite" type="AnimatedSprite2D" parent="."]
 visible = false
 rotation = 1.5708
-frames = SubResource("SpriteFrames_lpqm3")
+sprite_frames = SubResource("SpriteFrames_lpqm3")
 animation = &"down"

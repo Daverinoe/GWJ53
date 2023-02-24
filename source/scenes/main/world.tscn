@@ -40,6 +40,7 @@ process_mode = 1
 script = ExtResource("1_d1use")
 
 [node name="test_black" type="Sprite2D" parent="."]
+visible = false
 modulate = Color(0, 0, 0, 1)
 position = Vector2(-1537, -533)
 scale = Vector2(5167, 3515)
@@ -49,9 +50,10 @@ centered = false
 [node name="tile_system" parent="." instance=ExtResource("2_kwtms")]
 unique_name_in_owner = true
 position = Vector2(0, 0)
-layer_0/tile_data = PackedInt32Array(1, 0, 0, 65537, 0, 0, 65536, 0, 0, 131073, 131072, 0, 196609, 65536, 1, 196610, 65536, 2, 196612, 65536, 0, 196611, 196608, 0, 327681, 0, 0, 393218, 196608, 0, 327683, 131072, 1, 327684, 131072, 2, 131076, 0, 0, 65540, 0, 0, 327682, 65536, 3, 262146, 131072, 3, 196608, 0, 0, 262144, 0, 0, 131072, 131072, 0, 262145, 0, 0, 393217, 0, 0, 458754, 196608, 0, 393219, 65536, 0, 458753, 131072, 0)
+layer_0/tile_data = PackedInt32Array(1, 0, 0, 65537, 0, 0, 65536, 0, 0, 131073, 131072, 0, 196609, 65536, 1, 196610, 65536, 2, 196612, 65536, 0, 196611, 196608, 0, 327681, 0, 0, 393218, 196608, 0, 327683, 131072, 1, 327684, 131072, 2, 131076, 0, 0, 65540, 0, 0, 327682, 65536, 3, 262146, 131072, 3, 196608, 0, 0, 262144, 0, 0, 131072, 131072, 0, 262145, 0, 0, 393217, 0, 0, 458754, 196608, 0, 393219, 65536, 0, 458753, 131072, 0, 0, 65536, 1, -1, 131072, 0, -65537, 0, 0, -65536, 0, 0)
 
 [node name="TrainPath" type="Path2D" parent="."]
+top_level = true
 curve = SubResource("Curve2D_jpapx")
 script = ExtResource("3_jruss")
 
@@ -61,12 +63,12 @@ script = ExtResource("4_puns2")
 
 [node name="train" parent="TrainPath/TrainPathFollow" instance=ExtResource("4_t50p6")]
 unique_name_in_owner = true
-position = Vector2(481, 991)
 is_main = true
 active = true
 
 [node name="Fog" type="Node2D" parent="."]
 unique_name_in_owner = true
+visible = false
 
 [node name="player_camera" parent="." instance=ExtResource("4_gs2qm")]
 unique_name_in_owner = true
@@ -114,7 +116,6 @@ stretch_mode = 3
 
 [node name="music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_4cdvx")
-autoplay = true
 bus = &"Music"
 
 [connection signal="tree_exiting" from="." to="." method="_on_tree_exiting"]

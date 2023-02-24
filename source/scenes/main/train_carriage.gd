@@ -4,7 +4,7 @@ class_name TrainCarriage extends Node2D
 var next_carriage: TrainCarriage
 var target_speed: float = 20
 var speed_multiplier: float = 1.0
-var speed: float = 0  # TODO Get this from the parent
+var speed: float = 1  # TODO Get this from the parent
 var carriage_initialised: bool = false
 var crashed: bool = false
 
@@ -32,6 +32,7 @@ func _ready():
 		carriage_sprite.visible = true
 		locomotive_sprite.visible = false
 	Event.connect("you_died", train_died)
+
 
 func train_died():
 	steam_particles.emitting = false
@@ -77,8 +78,9 @@ func initialise_train_carriage(train_ref: Train, tile_system_ref: TileSystem, t_
 		next_carriage = next_carriage_ref
 		current_heading = next_carriage.current_heading
 	
-	current_tile_map_coord = tile_system.local_to_map(global_position)
-	current_tile_center_coord = tile_system.map_to_local(current_tile_map_coord)
+	if tile_system != null:
+		current_tile_map_coord = tile_system.local_to_map(global_position)
+		current_tile_center_coord = tile_system.map_to_local(current_tile_map_coord)
 	
 	carriage_initialised = true
 	print("TRAIN CARRIAGE INIT, CURRENT HEADING" + str(current_heading))

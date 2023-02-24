@@ -1,5 +1,7 @@
 class_name TileSystem extends TileMap
 
+var first_run : bool = true
+
 @onready var active_tile_marker: Sprite2D = get_node("%active_tile_marker")
 @onready var tile_select_marker: Sprite2D = get_node("%tile_select_marker")
 
@@ -14,6 +16,9 @@ enum HexPos {
 }
 
 const BASE_TILE_LAYER: int = 0
+
+## Needed to offset the path on the hex, for some reason.
+const HEX_OFFSET : Vector2 = Vector2(0, 0)
 
 # NOTE: Update this if hex tile change!
 const HEX_RELATIVE_POS_MAPPING = {
@@ -53,6 +58,10 @@ var selected_tile_world_coord: Vector2i = Vector2i.ZERO
 # TODO: Handle the above with a selected flag, rather than a shitty placeholder vector
 var tile_selected: bool = false
 var active_atlas_map: int = 0
+
+
+func _init() -> void:
+	GlobalRefs.tileset = self
 
 
 func _ready():
@@ -126,20 +135,52 @@ func is_obstacle(map_tile_coord) -> bool:
 
 
 func generate_hex_path(hex_coords) -> void:
-	print("Current hex coords: %s" % hex_coords)
+	print_debug("Current hex coords: %s" % hex_coords)
 	
 	if is_obstacle(hex_coords):
 		Event.emit_signal("curve_generated", null)
+		return
 	
 	var atlas_cell : Vector2i = get_cell_atlas_coords(BASE_TILE_LAYER, hex_coords)
 	var mapping : Array = ATLAS_MAP_LOOKUP[atlas_cell]
 	
+	var offset : Vector2i = to_global(map_to_local(hex_coords))
+	print_debug(offset)
 	var new_curve : Curve2D = Curve2D.new()
+	
+	var initial_direction : Vector2i = get_initial_direction()
+	var first_point : Vector2i = HEX_RELATIVE_POS_MAPPING[mapping[0]]
+	
+	var same_direction : bool = initial_direction == first_point
+	
+	if !first_run and not same_direction:
+		Event.emit_signal("curve_generated", null)
+		return
 	
 	# All paths will have 3 points at the moment
 	# TODO: Generalise for multi-path tiles
-	new_curve.add_point(HEX_RELATIVE_POS_MAPPING[mapping[0]])
-	new_curve.add_point(Vector2.ZERO)
-	new_curve.add_point(HEX_RELATIVE_POS_MAPPING[mapping[1]])
+	new_curve.add_point(first_point + offset)
+	new_curve.add_point(Vector2i.ZERO + offset)
+	new_curve.add_point(HEX_RELATIVE_POS_MAPPING[mapping[1]] + offset)
 	
 	Event.emit_signal("curve_generated", new_curve)
+	Event.emit_signal("train_on_cell", (offset as Vector2))
+	if first_run: first_run = false
+
+
+func get_initial_direction() -> Vector2i:
+	var current_angle = VariableManager.train_rotation
+	
+	if current_angle >= -95 && current_angle < -85:
+		return self.HEX_RELATIVE_POS_MAPPING[HexPos.BOTTOM]
+		
+	elif current_angle >= 85 && current_angle < 95:
+		return self.HEX_RELATIVE_POS_MAPPING[HexPos.TOP]
+		
+	elif current_angle >= -85 && current_angle < -5:
+		return self.HEX_RELATIVE_POS_MAPPING[HexPos.LEFT_BOTTOM]
+		
+	elif current_angle >= 5 && current_angle < 85:
+		return self.HEX_RELATIVE_POS_MAPPING[HexPos.LEFT_TOP]
+	
+	return self.HEX_RELATIVE_POS_MAPPING[HexPos.BORKED]

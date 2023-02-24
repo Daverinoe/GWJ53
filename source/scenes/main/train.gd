@@ -13,20 +13,26 @@ var world: World
 var tile_system: TileSystem
 var current_speed: float = 0
 
-var hex_check : Marker2D
+var hex_check : Marker2D 
 
 func _ready():
-	hex_check = get_node_or_null("TileCheck")
 	
 	for child_train_carriage in get_children():
 		if child_train_carriage.has_method("initialise_train_carriage"):
-			if not child_train_carriage.is_locomotive:
-				child_carriages.append(child_train_carriage)
-			else:
+			if child_train_carriage.is_locomotive:
 				locomotive_ref = child_train_carriage
-	Event.connect("update_train_speed_multiplier", _on_update_train_speed_multiplier)
-	Event.connect("get_next_hex", get_next_hex)
-	Event.connect("start_pathing", start_pathing)
+			else:
+				child_carriages.append(child_train_carriage)
+	
+	if is_main:
+		hex_check = %TileCheck
+		Event.connect("get_next_hex", get_next_hex)
+		Event.connect("start_pathing", start_pathing)
+		Event.connect("at_end_of_path", start_pathing)
+		Event.connect("update_train_speed_multiplier", _on_update_train_speed_multiplier)
+	
+	
+	get_tree().call_group("Train", "initialise_train", GlobalRefs.world, GlobalRefs.tileset)
 
 
 func start_pathing() -> void:
@@ -64,7 +70,7 @@ func initialise_train(world_ref: World, tile_system_ref: TileSystem) -> void:
 			previous_carriage = child_train_carriage
 
 			
-func _on_update_train_speed_multiplier(new_t_speed_multiplier):
+func _on_update_train_speed_multiplier(new_t_speed_multiplier) -> void:
 	print("updating speed multiplier to: ", new_t_speed_multiplier)
 	locomotive_ref.set_new_speed_multiplier(new_t_speed_multiplier)
 

@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://b85g01ar6eec8"]
 
 [ext_resource type="Script" path="res://source/scenes/main/train.gd" id="1_50bbo"]
-[ext_resource type="PackedScene" path="res://source/scenes/main/train_carriage.tscn" id="2_e3wwu"]
+[ext_resource type="PackedScene" uid="uid://ccegws1tnhowo" path="res://source/scenes/main/train_carriage.tscn" id="2_e3wwu"]
 [ext_resource type="Texture2D" uid="uid://tgymvujfvx2r" path="res://assets/train/train-steam-2.png" id="3_2do42"]
 [ext_resource type="AudioStream" uid="uid://dbxf0vfkvakl2" path="res://assets/audio/sfx/train_chugg.ogg" id="4_ag3x5"]
 [ext_resource type="Script" path="res://source/scenes/main/train/chuggachugga.gd" id="5_y50ds"]
@@ -15,7 +15,6 @@ _data = [Vector2(0, 1), 0.0, -0.151534, 0, 1, Vector2(0.659919, 0.9), 0.0, 0.0, 
 point_count = 3
 
 [node name="train" type="Node2D" groups=["Train"]]
-rotation = 3.14159
 script = ExtResource("1_50bbo")
 train_carriage_node = ExtResource("2_e3wwu")
 
@@ -50,8 +49,10 @@ bus = &"Effects"
 script = ExtResource("5_y50ds")
 
 [node name="TileCheck" type="Marker2D" parent="."]
+unique_name_in_owner = true
 position = Vector2(60, 0)
 gizmo_extents = 20.0
 
 [node name="Sprite2D" type="Sprite2D" parent="TileCheck"]
+visible = false
 texture = ExtResource("6_csqd7")
