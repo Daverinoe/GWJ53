@@ -209,8 +209,6 @@ func threaded_update_fog(new_position: Vector2) -> void:
 	if thread.is_started():
 		thread.wait_to_finish()
 	
-	print_debug(new_position)
-	
 	thread.start(update_fog.bind(new_position))
 
 

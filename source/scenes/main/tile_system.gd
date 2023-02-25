@@ -145,7 +145,6 @@ func generate_hex_path(hex_coords) -> void:
 	var mapping : Array = ATLAS_MAP_LOOKUP[atlas_cell]
 	
 	var offset : Vector2i = to_global(map_to_local(hex_coords))
-	print_debug(offset)
 	var new_curve : Curve2D = Curve2D.new()
 	
 	var initial_direction : Vector2i = get_initial_direction()
