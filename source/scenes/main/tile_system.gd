@@ -150,18 +150,25 @@ func generate_hex_path(hex_coords) -> void:
 	
 	var initial_direction : Vector2i = get_initial_direction()
 	var first_point : Vector2i = HEX_RELATIVE_POS_MAPPING[mapping[0]]
+	var last_point : Vector2i = HEX_RELATIVE_POS_MAPPING[mapping[1]]
 	
-	var same_direction : bool = initial_direction == first_point
+	var same_direction_first : bool = initial_direction == first_point
+	var same_direction_last : bool = initial_direction == last_point
 	
-	if !first_run and not same_direction:
+	if !first_run and not same_direction_first and not same_direction_last:
 		Event.emit_signal("curve_generated", null)
 		return
 	
 	# All paths will have 3 points at the moment
 	# TODO: Generalise for multi-path tiles
-	new_curve.add_point(first_point + offset)
-	new_curve.add_point(Vector2i.ZERO + offset)
-	new_curve.add_point(HEX_RELATIVE_POS_MAPPING[mapping[1]] + offset)
+	if same_direction_first or first_run:
+		new_curve.add_point(first_point + offset)
+		new_curve.add_point(Vector2i.ZERO + offset)
+		new_curve.add_point(last_point + offset)
+	if same_direction_last:
+		new_curve.add_point(last_point + offset)
+		new_curve.add_point(Vector2i.ZERO + offset)
+		new_curve.add_point(first_point + offset)
 	
 	Event.emit_signal("curve_generated", new_curve)
 	Event.emit_signal("train_on_cell", (offset as Vector2))
